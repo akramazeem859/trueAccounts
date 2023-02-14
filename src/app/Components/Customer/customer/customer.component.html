@@ -1,0 +1,109 @@
+<div class="m-3">
+    <h1 class="mb-2">Customer</h1>
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                <h4>Add Customer</h4>
+            </div>
+            <div class="card-body">
+                <form #addCustomerForm="ngForm" name="addCustomerForm" (ngSubmit)="addCustomer()">
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="customerName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="customerName" name="customerName"
+                            [(ngModel)]="customerRequest.customerName">
+                        </div>
+                        <div class="col">
+                            <label for="customerNumber" class="form-label">Number</label>
+                            <input type="text" class="form-control" id="customerNumber" name="customerNumber"
+                            [(ngModel)]="customerRequest.customerNumber">
+                        </div>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="customerAddress" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="customerAddress" name="customerAddress"
+                            [(ngModel)]="customerRequest.customerAddress">
+                        </div>
+                    </div>
+
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+                            <label for="customerOpenBal" class="form-label">Open Balance</label>
+                            <input type="text" class="form-control" id="customerOpenBal" name="customerOpenBal"
+                            [(ngModel)]="customerRequest.customerOpeningbalance">
+                        </div>
+
+                        <div class="col">
+                            <label for="customerBalance" class="form-label">Balance</label>
+                            <input type="text" class="form-control" id="customerBalance" name="customerBalance"
+                            [(ngModel)]="customerRequest.customerCurrentbalance">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="customerBranch" class="form-label">Branch</label>
+                            <select class="form-control" name="customerBranch"
+                            [(ngModel)]="customerRequest.customerBranchId">
+                                <option *ngFor="let branch of branches" [value]="branch.id">{{branch.branchName}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label for="action" class="form-label">Action</label>
+                            <br>
+                            <button type="submit" class="btn btn-primary mr-2" [disabled]="!isAddBtn">Add Customer</button>
+                            <button type="button" class="btn btn-warning mr-2" (click)="editCustomer()"[disabled]="!isEditBtn">Edit</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteCustomer(customerRequest.id)" [disabled]="!isDeletBtn">Delete</button>
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                <h3>Customer List</h3>
+            </div>
+
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <th>Sr#</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Number</th>
+                        <th>Address</th>
+                        <th>O-Balance</th>
+                        <th>Balance</th>
+                        <th>Branch</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cus of customers$ ; index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{cus.customerCode}}</td>
+                            <td>{{cus.customerName}}</td>
+                            <td>{{cus.customerNumber}}</td>
+                            <td>{{cus.customerAddress}}</td>
+                            <td>{{cus.customerOpeningbalance}}</td>
+                            <td>{{cus.customerCurrentbalance}}</td>
+                            <td>{{cus.customerBranch.branchName}}</td>
+                            <td><button type="button" class="btn btn-primary" (click)="getCustomerById(cus.id)">Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

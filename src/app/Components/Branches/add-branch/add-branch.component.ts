@@ -38,7 +38,7 @@ export class AddBranchComponent implements OnInit {
   }
 
   addBranch(): void{
-    console.log(this.branchRequest);
+   
    this.comapanyService.addBranch(this.branchRequest)
     .subscribe({
       next: (branch) => {

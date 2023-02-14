@@ -1,1 +1,51 @@
-<p>edit-branch works!</p>
+
+    <div class="row ">
+        <div class="col-8">
+        <div class="card m-3">
+            <div class="card-header">
+               <h2> Edit Company</h2>
+            </div>
+
+        <div class="card-body mb-3">
+            <form #form="ngForm" (ngSubmit)="updateBranch()" >
+                <div class="mb-3">
+                  <label for="id" class="form-label">Id</label>
+                  <input type="text" class="form-control" id="id" name="id" readonly
+                  [(ngModel)]="branchEditRequest.id" >
+                    </div>
+
+                <div class="mb-3">
+                <label for="branchName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="branchName" name="branchName"
+                [(ngModel)]="branchEditRequest.branchName" >
+                </div>
+
+                <div class="mb-3">
+                    <label for="Supervisor" class="form-label">Supervisor</label>
+                    <input type="text" class="form-control" id="Supervisor" name="Supervisor"
+                    [(ngModel)]="branchEditRequest.supervisor" >
+                    </div>
+
+                <div class="mb-3">
+                    <label for="contactNumber" class="form-label">contactNumber</label>
+                    <input type="text" class="form-control" id="contactNumber" name="contactNumber"
+                    [(ngModel)]="branchEditRequest.contactNumber" >
+                    </div>
+                
+                 <div class="form-group">
+                        <label>Company</label>
+                        <select class="form-control" name="companyId" #companyId="ngModel" [(ngModel)]="branchEditRequest.companyId">
+                       
+                        <option *ngFor="let com of companies" [value]="com.id">{{com.name}}</option>
+                        
+                        </select>
+                    </div>
+               
+                <button type="submit" class="btn btn-primary">Edit Branch</button>
+                <button type="button" class="btn btn-danger m-3" (click)="deleteBranch(branchEditRequest.id)" >Delete Branch</button>
+              </form>
+        </div>
+       
+    </div>
+</div>
+    </div>

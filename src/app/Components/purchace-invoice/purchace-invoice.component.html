@@ -1,0 +1,194 @@
+<form class="container" [formGroup]="invoiceForm" (ngSubmit)="saveInvoice()">
+    <div class="m-3">
+        <div class="row">
+            <div class="card col">
+                <div class="card-header">
+                    <h1>Purchase Invoice</h1>
+                </div>
+                <div class="card-body">
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label>Code</label>
+                            <span class="text-danger">*</span>
+                            <input formControlName="code" type="text" 
+                            
+                            class="form-control" [readOnly]="true"
+                                value="PI202302">
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Supplier</label>
+                            <span class="text-danger">*</span>
+                            <select class="form-control" (change)="findSupplier()" formControlName="supplierId">
+                                <option>Select</option>
+                                <option *ngFor="let item of supplierList" [value]="item.id">{{item.supplierName}}</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Date</label>
+                            <input type="datetime" formControlName="date" class="form-control"
+                              >
+                        </div>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label class="form-label">Address</label>
+                            <input formControlName="address" type="text" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Contact</label>
+                            <input formControlName="contact" type="text" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Balance</label>
+                            <input type="text" formControlName="balance" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <table class="table table-bordered" formArrayName="detail">
+                                <thead class="bg-primary text-white">
+                                    <tr>
+                                        <th>Sr#</th>
+                                        <th style="width: 30%;">Product</th>
+                                        <th>Qnty</th>
+                                        <th>Price</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let item of invProducts().controls ; index as i" [formGroupName]="i">
+                                        <td>{{i+1}}</td>
+                                        <td>
+                                            <select class="form-control" formControlName="productId"
+                                                (change)="prodSelect(i)">
+                                                <option *ngFor="let pro of productList" [value]="pro.id">
+                                                    {{pro.productName}}</option>
+                                            </select>
+                                        </td>
+
+                                        <td><input type="text" class="form-control" formControlName="quantity"
+                                                (change)="totalCalculation(i)"></td>
+                                        <td><input type="text" class="form-control" formControlName="purchasePrice"
+                                                (change)="totalCalculation(i)"></td>
+                                        <td><input type="text" class="form-control" formControlName="total"
+                                                [readOnly]="true"></td>
+                                        <td><a class="btn btn-danger" (click)="removeRow(i)">Remove</a></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <a (click)="addProduct()" class="btn btn-success">[+]</a>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+                            <label for="account">Account</label>
+                            <select formControlName="accountId" class="form-control">
+                                <option *ngFor="let item of cashAccountList" [value]="item.id">{{item.accountTitle}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Paid</label>
+                            <input type="select" formControlName="paid" class="form-control" value="0">
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Freight</label>
+                            <input formControlName="freight" type="text" class="form-control"
+                                (change)="summaryCalculation()">
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Summary</label>
+                            <input formControlName="summary" type="text" class="form-control">
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Grand-Total</label>
+                            <input formControlName="payable" type="text" [readOnly]="true" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <button type="submit" class="btn btn-primary mr-2" [disabled]="!isAddBtn">Save Invoice</button>
+                        <button type="button" class="btn btn-warning mr-2" (click)="editInvoice()" [disabled]="!isEditBtn">Edit</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteInvoice(purcInvoice.id)" [disabled]="!isDeletBtn">Delete</button>
+                    
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</form>
+
+<div class="container">
+    <div class="m-3">
+    <div class="row">
+        <div class="card col">
+            <div class="card-header">
+                <h2> Purchase Invoices </h2>
+            </div>
+            <div class="card-body">
+
+
+                <div class="form-row mb-3">
+                    <div class="col">
+                        <label>Enter Purchase Invoice code</label>
+                        
+                        <span class="text-danger">*</span>
+                        <input name="purchId" #purhcCode="ngModel" [(ngModel)]="purcCode" id="purchIdTxt"
+                            class="form-control">
+                    </div>
+                    <div class="col">
+                        <label>Enter Date</label>
+                        <span class="text-danger">*</span>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col">
+                        <label>Search Record</label>
+                        <br>
+                        <button type="button" class="btn btn-primary btn-block" (click)="findPurcInv()">Search</button>
+                    </div>
+                </div>
+
+                <div class="form-row mb-3">
+                    <table class="table" *ngIf="purcInvoice">
+                        <thead>
+                            <th>Sr#</th>
+                            <th>PI Code</th>
+                            <th>Payable</th>
+                            <th>Paid</th>
+                            <th>Supplier</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>{{purcInvoice.code}}</td>
+                                <td>{{purcInvoice.payable}}</td>
+                                <td>{{purcInvoice.paid}}</td>
+                                <td>{{purcInvoice.supplier.supplierName}}</td>
+                                <td>{{purcInvoice.datetime | date: "dd-MMM-yyyy-HH:mm:ss" }}</td>
+                                <td><button class="btn btn-primary" (click)="loadPInv()">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>

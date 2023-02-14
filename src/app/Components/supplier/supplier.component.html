@@ -1,0 +1,109 @@
+<div class="m-3">
+    <h1 class="mb-2">Supplier</h1>
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                <h4>Add Supplier</h4>
+            </div>
+            <div class="card-body">
+                <form #supplierForm="ngForm" name="supplierForm" (ngSubmit)="addSupplier()">
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="supplierName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="supplierName" name="supplierName"
+                            [(ngModel)]="supplierRequest.supplierName">
+                        </div>
+                        <div class="col">
+                            <label for="supplierNumber" class="form-label">Number</label>
+                            <input type="text" class="form-control" id="supplierNumber" name="supplierNumber"
+                            [(ngModel)]="supplierRequest.supplierNumber">
+                        </div>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="supplierAddress" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="supplierAddress" name="supplierAddress"
+                            [(ngModel)]="supplierRequest.supplierAddress">
+                        </div>
+                    </div>
+
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+                            <label for="supplierOpenBal" class="form-label">Open Balance</label>
+                            <input type="text" class="form-control" id="supplierOpenBal" name="supplierOpenBal"
+                            [(ngModel)]="supplierRequest.supplierOpeningbalance">
+                        </div>
+
+                        <div class="col">
+                            <label for="supplierBalance" class="form-label">Balance</label>
+                            <input type="text" class="form-control" id="supplierBalance" name="supplierBalance"
+                            [(ngModel)]="supplierRequest.supplierCurrentbalance">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="supplierBranch" class="form-label">Branch</label>
+                            <select class="form-control" name="supplierBranch"
+                            [(ngModel)]="supplierRequest.supplierBranchId">
+                                <option *ngFor="let branch of branches" [value]="branch.id">{{branch.branchName}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label for="action" class="form-label">Action</label>
+                            <br>
+                            <button type="submit" class="btn btn-primary mr-2" [disabled]="!isAddBtn">Add Supplier</button>
+                            <button type="button" class="btn btn-warning mr-2" (click)="editSupplier()"[disabled]="!isEditBtn">Edit</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteSupplier(supplierRequest.id)" [disabled]="!isDeletBtn">Delete</button>
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                <h3>Supplier List</h3>
+            </div>
+
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <th>Sr#</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Number</th>
+                        <th>Address</th>
+                        <th>O-Balance</th>
+                        <th>Balance</th>
+                        <th>Branch</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let sup of suppliers$ ; index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{sup.supplierCode}}</td>
+                            <td>{{sup.supplierName}}</td>
+                            <td>{{sup.supplierNumber}}</td>
+                            <td>{{sup.supplierAddress}}</td>
+                            <td>{{sup.supplierOpeningbalance}}</td>
+                            <td>{{sup.supplierCurrentbalance}}</td>
+                            <td>{{sup.supplierBranch.branchName}}</td>
+                            <td><button type="button" class="btn btn-primary" (click)="getSupplierById(sup.id)">Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

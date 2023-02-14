@@ -26,8 +26,8 @@ export class CompanyComponent implements OnInit {
 this.comapanyService.deleteCompany(id).subscribe({
   next: (Response) => {
     this.router.navigate(['Company']);
-  }
-})
-  }
+    }
+  })
+}
 
 }
