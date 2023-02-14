@@ -1,0 +1,26 @@
+<div class="container m-4">
+    <h1 class="mb-5">Edit Company</h1>
+    <div class="row">
+        <div class="col-6">
+            <form #form="ngForm" (ngSubmit)="updateCompany()" >
+                <div class="mb-3">
+                  <label for="id" class="form-label">Id</label>
+                  <input type="text" class="form-control" id="id" name="id" readonly
+                  [(ngModel)]="companyEditRequest.id" >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="companyName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="companyName" name="companyName"
+                        [(ngModel)]="companyEditRequest.name" >
+                          </div>
+               
+               
+                <button type="submit" class="btn btn-primary">edit Company</button>
+                <button type="button" class="btn btn-danger m-3" (click)="deleteComp(companyEditRequest.id)">Delete Company</button>
+              </form>
+        </div>
+       
+    </div>
+   
+</div>

@@ -1,0 +1,31 @@
+<div class="container">
+    <h2>Branches</h2>
+    <button type="button" [routerLink]="['/branch','add']" class="btn btn-primary" >Add Branch</button>
+    <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Supervisor</th>
+            <th scope="col">Contact #</th>
+            <th scope="col">Company</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let brch of branch; index as i">
+            <td>{{i+1}}</td>
+            <td>{{brch.id}}</td>
+            <td>{{brch.branchName}}</td>
+            <td>{{brch.supervisor}}</td>
+            <td>{{brch.contactNumber}}</td>
+            <td>{{brch.company.name}}</td>
+            
+            <td>
+                <a [routerLink]="['/branch','edit', brch.id]">Edit</a>
+            </td>  
+        </tr>
+    </tbody>
+    </table>
+</div>

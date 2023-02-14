@@ -1,0 +1,47 @@
+
+<div class="m-3">
+    <h2>Add Branch</h2>
+<div class="row">
+    <div class="col-6">
+        <form #form="ngForm" (ngSubmit)="addBranch()">
+            <div class="mb-3">
+                <label for="BranchName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="BranchName" name="BranchName"
+                [(ngModel)]="branchRequest.branchName" >
+
+                <label for="BranchSupervisor" class="form-label">Supervisor</label>
+                <input type="text" class="form-control" id="BranchSupervisor" name="BranchSupervisor"
+                [(ngModel)]="branchRequest.supervisor" >
+
+                <label for="BranchContact" class="form-label">Contact</label>
+                <input type="text" class="form-control" id="BranchContact" name="BranchContact"
+                [(ngModel)]="branchRequest.contactNumber" >
+
+                <div class="form-group">
+                    <label>Company</label>
+                    <select class="form-control" name="companyId" #companyId="ngModel" [(ngModel)]="branchRequest.companyId">
+                   
+                    <option *ngFor="let com of companies" [value]="com.id">{{com.name}}</option>
+                    
+                    </select>
+                </div>
+                
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Company</button>
+        </form>
+    </div>
+</div>
+</div>
+
+<script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+  
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+    })
+ </script>

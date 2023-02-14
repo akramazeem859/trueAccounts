@@ -1,0 +1,19 @@
+<div class="container m-4">
+    <h1 class="mb-5">Add Company</h1>
+    <div class="row">
+        <div class="col-6">
+            <form #form="ngForm" (ngSubmit)="addCompany()">
+                <div class="mb-3">
+                  <label for="companyName" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="companyName" name="companyName"
+                  [(ngModel)]="companyRequest.name" >
+                    </div>
+               
+               
+                <button type="submit" class="btn btn-primary">Add Company</button>
+              </form>
+        </div>
+       
+    </div>
+   
+</div>
