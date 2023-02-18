@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrueAccounts.Data;
 
@@ -11,9 +12,11 @@ using TrueAccounts.Data;
 namespace TrueAccounts.Migrations
 {
     [DbContext(typeof(trueAccountsDbcontext))]
-    partial class trueAccountsDbcontextModelSnapshot : ModelSnapshot
+    [Migration("20230214044508_7sinv")]
+    partial class _7sinv
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,32 +151,6 @@ namespace TrueAccounts.Migrations
                     b.HasIndex("customerBranchId");
 
                     b.ToTable("Customer");
-                });
-
-            modelBuilder.Entity("TrueAccounts.Models.CustomerRate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("customerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("productId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("rate")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("customerId");
-
-                    b.HasIndex("productId");
-
-                    b.ToTable("CustomerRate");
                 });
 
             modelBuilder.Entity("TrueAccounts.Models.Inventory", b =>
@@ -318,13 +295,13 @@ namespace TrueAccounts.Migrations
                     b.Property<int>("productId")
                         .HasColumnType("int");
 
+                    b.Property<int>("purchasePrice")
+                        .HasColumnType("int");
+
                     b.Property<int>("quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("sInvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("salePrice")
                         .HasColumnType("int");
 
                     b.HasKey("id");
@@ -448,25 +425,6 @@ namespace TrueAccounts.Migrations
                     b.Navigation("customerBranch");
                 });
 
-            modelBuilder.Entity("TrueAccounts.Models.CustomerRate", b =>
-                {
-                    b.HasOne("TrueAccounts.Models.Customer", "customer")
-                        .WithMany()
-                        .HasForeignKey("customerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrueAccounts.Models.Product", "product")
-                        .WithMany()
-                        .HasForeignKey("productId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("customer");
-
-                    b.Navigation("product");
-                });
-
             modelBuilder.Entity("TrueAccounts.Models.Inventory", b =>
                 {
                     b.HasOne("TrueAccounts.Models.Branch", "branch")
@@ -548,7 +506,7 @@ namespace TrueAccounts.Migrations
                         .IsRequired();
 
                     b.HasOne("TrueAccounts.Models.SInvoice", "sInvoice")
-                        .WithMany("sInvDetail")
+                        .WithMany("sInvDetails")
                         .HasForeignKey("sInvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -625,7 +583,7 @@ namespace TrueAccounts.Migrations
 
             modelBuilder.Entity("TrueAccounts.Models.SInvoice", b =>
                 {
-                    b.Navigation("sInvDetail");
+                    b.Navigation("sInvDetails");
                 });
 
             modelBuilder.Entity("TrueAccounts.Models.Supplier", b =>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrueAccounts.Data;
+using TrueAccounts.Dto;
 using TrueAccounts.Models;
 
 namespace TrueAccounts.Controllers
@@ -84,8 +85,19 @@ namespace TrueAccounts.Controllers
         // POST: api/Customer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<ActionResult<Customer>> PostCustomer(customerDto customerReq)
         {
+            Customer customer = new Customer();
+            customer.customerCode = customerReq.customerCode;
+            customer.customerName = customerReq.customerName;   
+            customer.customerNumber = customerReq.customerNumber;
+            customer.customerAddress= customerReq.customerAddress;
+            customer.customerCurrentbalance = customerReq.customerOpeningbalance;
+            customer.customerOpeningbalance= customerReq.customerOpeningbalance;
+            customer.customerBranchId = customerReq.customerBranchId;
+
+
+            customer.customerCode = "cus-" + GetCustomerCount()+1.ToString("00000");
             _context.Customer.Add(customer);
             await _context.SaveChangesAsync();
 

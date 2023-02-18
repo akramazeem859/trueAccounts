@@ -126,7 +126,7 @@ namespace TrueAccounts.Controllers
             
             catch(Exception ex)
             {
-                
+                throw ex.InnerException;
             }
             return Ok(results);
         }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrueAccounts.Data;
 
@@ -11,9 +12,11 @@ using TrueAccounts.Data;
 namespace TrueAccounts.Migrations
 {
     [DbContext(typeof(trueAccountsDbcontext))]
-    partial class trueAccountsDbcontextModelSnapshot : ModelSnapshot
+    [Migration("20230217115207_8customerRate")]
+    partial class _8customerRate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,11 +155,11 @@ namespace TrueAccounts.Migrations
 
             modelBuilder.Entity("TrueAccounts.Models.CustomerRate", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<int>("customerId")
                         .HasColumnType("int");
@@ -167,11 +170,7 @@ namespace TrueAccounts.Migrations
                     b.Property<int>("rate")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("customerId");
-
-                    b.HasIndex("productId");
+                    b.HasKey("id");
 
                     b.ToTable("CustomerRate");
                 });
@@ -446,25 +445,6 @@ namespace TrueAccounts.Migrations
                         .IsRequired();
 
                     b.Navigation("customerBranch");
-                });
-
-            modelBuilder.Entity("TrueAccounts.Models.CustomerRate", b =>
-                {
-                    b.HasOne("TrueAccounts.Models.Customer", "customer")
-                        .WithMany()
-                        .HasForeignKey("customerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrueAccounts.Models.Product", "product")
-                        .WithMany()
-                        .HasForeignKey("productId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("customer");
-
-                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("TrueAccounts.Models.Inventory", b =>

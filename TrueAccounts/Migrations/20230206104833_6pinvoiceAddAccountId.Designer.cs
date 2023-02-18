@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrueAccounts.Data;
 
@@ -11,9 +12,11 @@ using TrueAccounts.Data;
 namespace TrueAccounts.Migrations
 {
     [DbContext(typeof(trueAccountsDbcontext))]
-    partial class trueAccountsDbcontextModelSnapshot : ModelSnapshot
+    [Migration("20230206104833_6pinvoiceAddAccountId")]
+    partial class _6pinvoiceAddAccountId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,32 +153,6 @@ namespace TrueAccounts.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("TrueAccounts.Models.CustomerRate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("customerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("productId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("rate")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("customerId");
-
-                    b.HasIndex("productId");
-
-                    b.ToTable("CustomerRate");
-                });
-
             modelBuilder.Entity("TrueAccounts.Models.Inventory", b =>
                 {
                     b.Property<int>("id")
@@ -307,78 +284,6 @@ namespace TrueAccounts.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("TrueAccounts.Models.SInvDetail", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("productId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("sInvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("salePrice")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("productId");
-
-                    b.HasIndex("sInvoiceId");
-
-                    b.ToTable("sInvDetails");
-                });
-
-            modelBuilder.Entity("TrueAccounts.Models.SInvoice", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int?>("accountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("branchId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("customerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("datetime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("freight")
-                        .HasColumnType("int");
-
-                    b.Property<int>("paid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("payable")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("accountId");
-
-                    b.HasIndex("branchId");
-
-                    b.HasIndex("customerId");
-
-                    b.ToTable("SInvoice");
-                });
-
             modelBuilder.Entity("TrueAccounts.Models.Supplier", b =>
                 {
                     b.Property<int>("Id")
@@ -446,25 +351,6 @@ namespace TrueAccounts.Migrations
                         .IsRequired();
 
                     b.Navigation("customerBranch");
-                });
-
-            modelBuilder.Entity("TrueAccounts.Models.CustomerRate", b =>
-                {
-                    b.HasOne("TrueAccounts.Models.Customer", "customer")
-                        .WithMany()
-                        .HasForeignKey("customerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrueAccounts.Models.Product", "product")
-                        .WithMany()
-                        .HasForeignKey("productId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("customer");
-
-                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("TrueAccounts.Models.Inventory", b =>
@@ -539,48 +425,6 @@ namespace TrueAccounts.Migrations
                     b.Navigation("brand");
                 });
 
-            modelBuilder.Entity("TrueAccounts.Models.SInvDetail", b =>
-                {
-                    b.HasOne("TrueAccounts.Models.Product", "product")
-                        .WithMany()
-                        .HasForeignKey("productId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrueAccounts.Models.SInvoice", "sInvoice")
-                        .WithMany("sInvDetail")
-                        .HasForeignKey("sInvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("product");
-
-                    b.Navigation("sInvoice");
-                });
-
-            modelBuilder.Entity("TrueAccounts.Models.SInvoice", b =>
-                {
-                    b.HasOne("TrueAccounts.Models.CashAccount", "account")
-                        .WithMany()
-                        .HasForeignKey("accountId");
-
-                    b.HasOne("TrueAccounts.Models.Branch", "branch")
-                        .WithMany()
-                        .HasForeignKey("branchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TrueAccounts.Models.Customer", "customer")
-                        .WithMany()
-                        .HasForeignKey("customerId");
-
-                    b.Navigation("account");
-
-                    b.Navigation("branch");
-
-                    b.Navigation("customer");
-                });
-
             modelBuilder.Entity("TrueAccounts.Models.Supplier", b =>
                 {
                     b.HasOne("TrueAccounts.Models.Branch", "supplierBranch")
@@ -621,11 +465,6 @@ namespace TrueAccounts.Migrations
             modelBuilder.Entity("TrueAccounts.Models.Product", b =>
                 {
                     b.Navigation("inventory");
-                });
-
-            modelBuilder.Entity("TrueAccounts.Models.SInvoice", b =>
-                {
-                    b.Navigation("sInvDetail");
                 });
 
             modelBuilder.Entity("TrueAccounts.Models.Supplier", b =>

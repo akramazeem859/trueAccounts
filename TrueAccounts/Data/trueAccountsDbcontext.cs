@@ -20,5 +20,8 @@ namespace TrueAccounts.Data
         public DbSet<TrueAccounts.Models.Inventory> Inventory { get; set; }
         public DbSet<TrueAccounts.Models.PInvoice> PInvoices { get; set; }
         public DbSet<TrueAccounts.Models.PInvDetail> pInvDetails { get; set; }
+        public DbSet<TrueAccounts.Models.SInvoice> SInvoice { get; set; }
+        public DbSet<TrueAccounts.Models.SInvDetail> sInvDetails { get; set; }
+        public DbSet<TrueAccounts.Models.CustomerRate> CustomerRate { get; set; }
     }
 }

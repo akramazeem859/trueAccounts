@@ -48,6 +48,22 @@ namespace TrueAccounts.Controllers
             return inventory;
         }
 
+        [HttpGet("getProdInvt")]
+        public async Task<int> GetProdctStock(int pid , int bid)
+        {
+            var pInvnt = await _context.Inventory
+                .Where(i => i.productId == pid)
+                .Where(i => i.branchId == bid)
+                .Include(i => i.product)
+                .SingleOrDefaultAsync();
+            if(pInvnt != null)
+            {
+                return pInvnt.quantity;
+            }
+            return 0;
+        }
+
+
         [HttpGet("branchId/{id}")]
         public async Task<ActionResult<Inventory[]>> GetInventorybyBranch(int id)
         {
