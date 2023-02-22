@@ -1,3 +1,5 @@
+
+
 <form class="container" [formGroup]="saleInvoiceForm" (ngSubmit)="saveInvoice()">
     <div class="m-3">
         <div class="row">
@@ -14,9 +16,9 @@
                         <div class="col">
                             <label>Customer</label>
                             <span class="text-danger">*</span>
-                            <select class="form-control" formControlName="customerId" (change)="findCustomer()">
+                            <select2  class="form-control" data-live-search="true" formControlName="customerId" (change)="findCustomer()">
                                 <option *ngFor="let c of customerList" [value]="c.id">{{c.customerName}}</option>
-                            </select>
+                            </select2>
                         </div>
                         <div class="col">
                             <label>Date</label>
@@ -53,9 +55,13 @@
                                     <tr *ngFor="let item of invProducts().controls ; index as i" [formGroupName]="i">
                                         <td>{{i+1}}</td>
                                         <td>
+                                            
+                                           
+                                              
                                             <select class="form-control" formControlName="productId"
                                                 (change)="prodSelect(i)">
                                                
+                                                  
                                                 <option *ngFor="let pro of productList" [value]="pro.id">
                                                     {{pro.productName}}</option>
                                             </select>

@@ -11,6 +11,11 @@ import { CompanyService } from 'src/app/Services/company.service';
 import { ToastrService } from 'ngx-toastr';
 import { sInvDetailDTO } from 'src/app/DTO/sInvDetailDTO.model';
 import { customerRates } from 'src/app/Models/customerRate.model';
+import {FormControl} from '@angular/forms';
+
+import * as $ from 'node_modules/jQuery';
+import * as jQuery from 'node_modules/bootstrap-select';
+
 
 @Component({
   selector: 'app-sale-invoice',
@@ -30,8 +35,9 @@ export class SaleInvoiceComponent implements OnInit {
     private alert: ToastrService) {
 
   }
+  myControl = new FormControl('');
 
-  customerList: Customer[] = [];
+  customerList !: Customer[];
   cashAccountList: cashAccount[] = [];
   saleInvDetailList: sInvDetail[] = [];
   invoiceDetail: FormArray<any>;
@@ -44,6 +50,7 @@ export class SaleInvoiceComponent implements OnInit {
   isProdAdded: boolean = false;
   tempCusRat: customerRates;
   tempSalePrice: number = 0;
+  
 
   detail: sInvDetailDTO = {
     productId: 0,
@@ -77,9 +84,12 @@ export class SaleInvoiceComponent implements OnInit {
 
 
   ngOnInit(): void {
+    
+    
     this.getAllCustomer();
     this.getAllAccounts();
     this.getAllProducts();
+ 
   }
 
   findSaleInv() {

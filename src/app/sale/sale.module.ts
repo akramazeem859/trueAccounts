@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SaleRoutingModule } from './sale-routing.module';
 import { SaleComponent } from './sale.component';
 import { ToastrModule } from 'ngx-toastr';
+import { MaterialModule } from 'src/Material-Module';
+
 
 
 
@@ -20,7 +22,9 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     SaleRoutingModule,
-    ToastrModule
+    ToastrModule,
+    MaterialModule,
+ 
   ],
   exports:[
     SaleInvoiceComponent,

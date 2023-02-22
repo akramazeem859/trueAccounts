@@ -1,4 +1,4 @@
-import { SaleComponent } from './sale/sale.component';
+
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,6 +31,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { CustomerRatesComponent } from './components/CustomerRates/customer-rates/customer-rates.component';
 
 
+import { NgSelectModule } from '@ng-select/ng-select';
+
+
+
+
 const routes: Routes = [];
 
 @NgModule({
@@ -55,6 +60,7 @@ const routes: Routes = [];
     PurchaceInvoiceComponent,
     CustomerRatesComponent,
     
+    
   ],
   imports: [
     BrowserModule,
@@ -64,7 +70,9 @@ const routes: Routes = [];
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-    SaleModule
+    SaleModule,
+  
+    NgSelectModule
     
   ],
   exports:[

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { pInvoice } from 'src/app/Models/pInvoice.model';
@@ -15,6 +15,8 @@ import { pInvDetail } from 'src/app/Models/pInvDetail.model';
 import { cashAccount } from 'src/app/Models/cashAccount.model';
 import { count } from 'rxjs';
 
+declare var $ :any;
+
 
 @Component({
   selector: 'app-purchace-invoice',
@@ -27,11 +29,13 @@ export class PurchaceInvoiceComponent implements OnInit {
    *
    */
 
+
   constructor(private builder: FormBuilder,
     private service: CompanyService,
     private router: Router,
     private alert: ToastrService,
     private notifyService: NotificationService) { }
+
 
   invoiceDetail !: FormArray<any>;
   invProduct: FormGroup<any>;
@@ -89,11 +93,20 @@ export class PurchaceInvoiceComponent implements OnInit {
   isAddBtn: boolean = true;
 
   ngOnInit(): void {
+    $('input[name="dates"]').daterangepicker({
+      singleDatePicker: true,
+      showDropdowns: true,
+      timePicker: true,
+      minYear: 1901,
+      maxYear: 2023
+    });
     this.getSuppliers();
     this.getProducts();
     //this.getPurchInv();
     //this.getProductStock()
     this.getAccounts();
+    
+   
   }
 
   getAccounts() {
