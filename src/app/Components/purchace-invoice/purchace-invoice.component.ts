@@ -336,8 +336,7 @@ export class PurchaceInvoiceComponent implements OnInit {
   }
 
   loadPInv() {
-    this.invoiceForm.reset();
-    this.tempProdCount = 0;
+    this.formCustomRest();
     this.invoiceForm.get("code").setValue(this.purcInvoice.code);
     this.invoiceForm.get("supplierId").setValue(this.purcInvoice.supplierId);
     this.invoiceForm.get("address").setValue(this.purcInvoice.supplier.supplierAddress);

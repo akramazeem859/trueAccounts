@@ -1,3 +1,5 @@
+import { sInvDetailDTO } from "./sInvDetailDTO.model";
+
 export interface sInvoiceDTO {
 
     id?:number;
@@ -8,5 +10,5 @@ export interface sInvoiceDTO {
     branchId? : number;
     freight? : number;
     accountId?: number;
-    sInvDet? : sInvoiceDTO[];
+    sInvDet? : sInvDetailDTO[];
 }

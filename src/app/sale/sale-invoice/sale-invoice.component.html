@@ -123,4 +123,59 @@
         </div>
     </div>
 
-</form>
+</form><div class="container">
+    <div class="m-3">
+    <div class="row">
+        <div class="card col">
+            <div class="card-header">
+                <h2> Sale Invoice </h2>
+            </div>
+            <div class="card-body">
+
+
+                <div class="form-row mb-3">
+                    <div class="col">
+                        <label>Enter Sale Invoice code</label>
+                        
+                        <span class="text-danger">*</span>
+                        <input name="saleCode" #purhcCode="ngModel" [(ngModel)]="saleCode" id="purchIdTxt"
+                            class="form-control">
+                    </div>
+                    
+                    <div class="col">
+                        <label>Search Record</label>
+                        <br>
+                        <button type="button" class="btn btn-primary btn-block" (click)="findSaleInv()">Search</button>
+                    </div>
+                </div>
+
+                <div class="form-row mb-3">
+                    <table class="table" *ngIf="saleInvoice">
+                        <thead>
+                            <th>Sr#</th>
+                            <th>PI Code</th>
+                            <th>Payable</th>
+                            <th>Paid</th>
+                            <th>Supplier</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>{{saleInvoice.code}}</td>
+                                <td>{{saleInvoice.payable}}</td>
+                                <td>{{saleInvoice.paid}}</td>
+                                <td>{{saleInvoice.customer.customerName}}</td>
+                                <td>{{saleInvoice.datetime | date: "dd-MMM-yyyy-HH:mm:ss" }}</td>
+                                <td><button class="btn btn-primary" (click)="loadPInv()">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>

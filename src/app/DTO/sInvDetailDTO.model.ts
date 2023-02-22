@@ -1,6 +1,6 @@
 export interface sInvDetailDTO {
     productId: number;
-    purchasePrice: number;
+    salePrice: number;
     quantity: number;
     sInvoiceId: number;
 }

@@ -1,0 +1,7 @@
+
+export interface innerRateDTO {
+
+    id: number;
+    productId: number;
+    rate:number; 
+}

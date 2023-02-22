@@ -1,0 +1,45 @@
+<div class="m-3">
+    <div class="card" [formGroup]="customerform">
+        <div class="card-header">
+            <h2>Customer Rates</h2>
+
+            <select class="form-control" (change)="selectCustomer()" formControlName="customerId">
+                <option *ngFor="let cus of customerList"  [value]="cus.id">{{cus.customerName}}</option>
+            </select>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered" formArrayName="entry">
+                <thead class="bg-primary text-white">
+                    <th>Sr#</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Action</th>
+
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of setRateEntry().controls; index as i" [formGroupName]="i">
+                        
+                        <td style="width: 10%;">{{i+1}}</td>
+
+                       
+
+                        <td><select class="form-control" (click)="selectProduct(i)" formControlName="productId">
+                            <option *ngFor="let prod of productList" [value]="prod.id">{{prod.productName}}</option>
+                        </select></td>
+
+                        <td style="width: 20%;"><input type="text" class="form-control" formControlName="rate"></td>
+
+                        <td style="width: 10%;"><a class="btn btn-danger" (click)="removeRate(i)">Remove</a></td>
+
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <a class="btn btn-primary" (click)="addRates()">[+]</a>
+                    <a class="btn btn-success" (click)="AddRecord()">Save</a>
+                </tfoot>
+            </table>
+
+            
+        </div>
+    </div>
+</div>

@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "^15.0.4",
     "@angular/router": "^15.0.4",
     "admin-lte": "3.2",
-    "component": "^1.1.0",
+    "component": "^0.19.9",
     "ng": "^0.0.0",
     "ngx-toastr": "^16.0.2",
     "rxjs": "~7.5.0",

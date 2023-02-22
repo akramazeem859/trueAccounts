@@ -1,3 +1,6 @@
+
+import { cusRateDTO } from './../DTO/cusRateDTO.model';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -17,6 +20,8 @@ import { pInvDetail } from '../Models/pInvDetail.model';
 import { PInvDetailDTO } from '../DTO/p-inv-detail-dto';
 import { sInvoiceDTO } from '../DTO/sInvoiceDTO.model';
 import { sInvoice } from '../Models/sInvoice.model';
+import { sInvDetail } from '../Models/sInvDetail.model';
+import { customerRates } from '../Models/customerRate.model';
 
 
 @Injectable({
@@ -68,6 +73,9 @@ export class CompanyService {
   }
   getAllPurcInvDetail(code:any):Observable<pInvDetail[]>{
     return this.http.get<pInvDetail[]>(this.baseApiUrl + '/api/PInvoice/Detail/'+ code);
+  }
+  getAllSaleInvDetail(code:any):Observable<sInvDetail[]>{
+    return this.http.get<sInvDetail[]>(this.baseApiUrl + '/api/SInvoice/Detail/'+ code);
   }
 
 
@@ -122,6 +130,17 @@ export class CompanyService {
     return this.http.get<number>(this.baseApiUrl+'/api/Inventory/getProdInvt?pid='+pid+'&bid='+bid);
   }
 
+  getSaleInvByCode(id:any){
+    return this.http.get<sInvoice>(this.baseApiUrl+'/api/SInvoice/code/' + id);
+  }
+
+  getCustRatebyCus(id:any){
+    return this.http.get<customerRates[]>(this.baseApiUrl+'/api/CustomerRate/byCust/'+ id);
+  }
+  getCustRatebyProd(cusId:any, prodId:any){
+    return this.http.get<customerRates>(this.baseApiUrl+'/api/CustomerRate/byProd/'+cusId+'/'+prodId);
+  }
+
 
 
 
@@ -167,6 +186,9 @@ export class CompanyService {
   addSInvoice(sInvoiceRequest : sInvoiceDTO):Observable<sInvoice>{
     return this.http.post<sInvoice>(this.baseApiUrl+'/api/sInvoice', sInvoiceRequest);
   }
+  addCustomerRate(cusRateDTO : cusRateDTO[]):Observable<customerRates>{
+    return this.http.post<customerRates>(this.baseApiUrl+'/api/customerRate', cusRateDTO);
+  }
  
 
 
@@ -210,6 +232,10 @@ export class CompanyService {
   editPurchInv(id:number, pInvoiceRequest : pInvoice):Observable<pInvoice>{
     return this.http.put<pInvoice>(this.baseApiUrl + '/api/pInvoice/'+id,pInvoiceRequest);
   }
+  editSaleInv(id:number, sInvoiceRequest : sInvoice):Observable<sInvoice>{
+    return this.http.put<sInvoice>(this.baseApiUrl + '/api/sInvoice/'+id,sInvoiceRequest);
+  }
+
 
 
 
@@ -245,6 +271,9 @@ export class CompanyService {
   }
   deletePInv(id:number):Observable<pInvoice>{
     return this.http.delete<pInvoice>(this.baseApiUrl+'/api/pInvoice/' + id);
+  }
+  deleteCusRec(cusId:any,prodId:any):Observable<customerRates>{
+    return this.http.delete<customerRates>(this.baseApiUrl+'/api/customerRate/'+ cusId +'/'+prodId);
   }
 
 

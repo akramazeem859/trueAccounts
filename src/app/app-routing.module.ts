@@ -1,6 +1,7 @@
+import { customerRates } from './Models/customerRate.model';
 
 import { SaleComponent } from './sale/sale.component';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/Home.component';
 import { MainComponent } from './components/main/main.component';
@@ -20,6 +21,7 @@ import { SupplierComponent } from './components/supplier/supplier.component';
 import { CashAccountComponent } from './components/cash-account/cash-account.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { PurchaceInvoiceComponent } from './components/purchace-invoice/purchace-invoice.component';
+import { CustomerRatesComponent } from './components/CustomerRates/customer-rates/customer-rates.component';
 
 
 
@@ -45,7 +47,8 @@ const routes: Routes = [
     path: 'sale',
     component: SaleComponent,
     loadChildren: () => import('./sale/sale.module').then((x) => x.SaleModule),
-  }
+  },
+  { path: 'customerRate', component:CustomerRatesComponent}
 
 ];
 

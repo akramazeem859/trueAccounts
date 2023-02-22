@@ -1,3 +1,4 @@
+import { sInvDetail } from './sInvDetail.model';
 import { Branch } from "./branch.model";
 import { Customer } from "./customer.model";
 import { cashAccount } from "./cashAccount.model";
@@ -15,5 +16,5 @@ export interface sInvoice{
     datetime: Date;
     accountId: number;
     account : cashAccount
-   
+    sInvDetail: sInvDetail[];
 }

@@ -28,6 +28,7 @@ import { PurchaceInvoiceComponent } from './components/purchace-invoice/purchace
 import { SaleModule } from 'src/app/sale/sale.module';
 
 import { ToastrModule } from 'ngx-toastr';
+import { CustomerRatesComponent } from './components/CustomerRates/customer-rates/customer-rates.component';
 
 
 const routes: Routes = [];
@@ -52,6 +53,7 @@ const routes: Routes = [];
     CashAccountComponent,
     InventoryComponent,
     PurchaceInvoiceComponent,
+    CustomerRatesComponent,
     
   ],
   imports: [

@@ -1,3 +1,5 @@
+import { sInvDetail } from './../../Models/sInvDetail.model';
+import { sInvoice } from './../../Models/sInvoice.model';
 import { Inventory } from 'src/app/Models/inventory.model';
 import { Product } from 'src/app/Models/product.model';
 import { cashAccount } from 'src/app/Models/cashAccount.model';
@@ -7,6 +9,8 @@ import { Router } from '@angular/router';
 import { Customer } from 'src/app/Models/customer.model';
 import { CompanyService } from 'src/app/Services/company.service';
 import { ToastrService } from 'ngx-toastr';
+import { sInvDetailDTO } from 'src/app/DTO/sInvDetailDTO.model';
+import { customerRates } from 'src/app/Models/customerRate.model';
 
 @Component({
   selector: 'app-sale-invoice',
@@ -29,15 +33,28 @@ export class SaleInvoiceComponent implements OnInit {
 
   customerList: Customer[] = [];
   cashAccountList: cashAccount[] = [];
+  saleInvDetailList: sInvDetail[] = [];
   invoiceDetail: FormArray<any>;
   productList: Product[] = [];
   invProduct: FormGroup<any>;
   tempinvProduct: FormGroup<any>;
   tempProdCount: number = 0;
+  saleCode: any;
+  saleInvoice: sInvoice;
+  isProdAdded: boolean = false;
+  tempCusRat: customerRates;
+  tempSalePrice: number = 0;
+
+  detail: sInvDetailDTO = {
+    productId: 0,
+    salePrice: 0,
+    quantity: 0,
+    sInvoiceId: 0
+  }
 
 
   public saleInvoiceForm = new FormGroup({
-    code: this.builder.control("PI202302"),
+    code: this.builder.control("SI202302"),
     customerId: this.builder.control(null),
     date: this.builder.control(null),
     address: this.builder.control({ value: "", disabled: true }),
@@ -64,31 +81,57 @@ export class SaleInvoiceComponent implements OnInit {
     this.getAllAccounts();
     this.getAllProducts();
   }
-  saveInvoice() {
-      console.log(this.saleInvoiceForm.value);
-      //this.invoiceForm.reset();
-      let sId = 0;
-      this.service.addSInvoice(this.saleInvoiceForm.value).subscribe(inv => {
-        sId = inv.id;
-        console.log("saleInvoice Id :"+sId);
-        this.formCustomRest();
-        this.alert.success("Record saved successfully...", "Successful")
-        
-      })
+
+  findSaleInv() {
+    if (this.saleCode != '' || this.saleCode != undefined) {
+      this.service.getSaleInvByCode(this.saleCode)
+        .subscribe(inv => {
+          this.saleInvoice = inv;
+          //this.purcInvDetailList = inv.detail;
+          //this.purcInvList.push(inv);
+          console.log("Sale invoice id = " + this.saleInvoice.id);
+
+          this.service.getAllSaleInvDetail(this.saleInvoice.id)
+            .subscribe(d => {
+              this.saleInvDetailList = d;
+              console.log("Sale detail : " + this.saleInvDetailList.length);
+            })
+        });
+    }
+    else {
+      this.alert.error("Enter Valid Sale Invoice Code", "Invalid Code");
+    }
+
   }
 
-  formCustomRest():void{
-    this.saleInvoiceForm.reset(); 
-    this.saleInvoiceForm.get('code').setValue('PI202302');
+  saveInvoice() {
+    console.log(this.saleInvoiceForm.value);
+    //this.invoiceForm.reset();
+    let sId = 0;
+    this.service.addSInvoice(this.saleInvoiceForm.value).subscribe(inv => {
+      sId = inv.id;
+      console.log("saleInvoice Id :" + sId);
+      this.formCustomRest();
+      this.alert.success("Record saved successfully...", "Successful")
+
+    })
+  }
+
+  formCustomRest(): void {
+    this.saleInvoiceForm.reset();
+    this.saleInvoiceForm.get('code').setValue('SI202302');
     this.saleInvoiceForm.get('freight').setValue(0);
-    
-    while (this.invoiceDetail.length !== 0) {
-      this.invoiceDetail.removeAt(0)
+
+    if (this.invoiceDetail != undefined) {
+      while (this.invoiceDetail.length !== 0) {
+        this.invoiceDetail.removeAt(0)
+      }
     }
+
     this.tempProdCount = 0;
-     
-     //this.tempProdCount = 0;
-     //this.pInvoiceDTO = null;
+
+    //this.tempProdCount = 0;
+    //this.pInvoiceDTO = null;
   }
 
   getAllCustomer() {
@@ -121,8 +164,8 @@ export class SaleInvoiceComponent implements OnInit {
       console.log("Product List" + this.productList);
     })
   }
-  
-  
+
+
   addProduct() {
 
     this.invoiceDetail = this.saleInvoiceForm.get('detail') as FormArray;
@@ -163,25 +206,41 @@ export class SaleInvoiceComponent implements OnInit {
         this.invoiceDetail.removeAt(index);
         break;
       }
-      else{
+      else {
         this.tempProdCount = index;
       }
     }
-    this.service.getProduct(prodId)
-      .subscribe(prod => {
-        this.invProduct.get("salePrice").setValue(prod.salePrice);
+    let custId = this.saleInvoiceForm.get("customerId").value;
+
+    this.service.getCustRatebyProd(custId, prodId)
+      .subscribe((item) => {
+        this.tempSalePrice = item.rate;
+        console.log("custome sale price :" + this.tempSalePrice)
+
+        this.invProduct.get("salePrice").setValue(this.tempSalePrice);
         this.totalCalculation(index);
+
+      }, (err) => {
+        console.log('error msg :' + err.message)
+        this.service.getProduct(prodId)
+          .subscribe(prod => {
+            this.invProduct.get("salePrice").setValue(prod.salePrice);
+            this.totalCalculation(index);
+          })
       })
-    this.service.getProdInvt(prodId,1)
-    .subscribe(avail =>{
-      console.log(avail);
-      this.invProduct.get("available").setValue(avail);
-      if(avail == 0){
-        this.alert.warning("Product not available at this time.",'Stock not Available',)
-      }
-    })
-      
-    
+
+
+
+    this.service.getProdInvt(prodId, 1)
+      .subscribe(avail => {
+        console.log(avail);
+        this.invProduct.get("available").setValue(avail);
+        if (avail == 0) {
+          this.alert.warning("Product not available at this time.", 'Stock not Available',)
+        }
+      })
+
+
   }
 
   totalCalculation(index: any) {
@@ -222,10 +281,97 @@ export class SaleInvoiceComponent implements OnInit {
   }
 
   editInvoice() {
+    let pID = this.saleInvoice.id;
+    console.log("tempCount : " + this.tempProdCount)
+    //this.invProduct = this.purcInvoice.at(0) as FormGroup;
+    //this.purcInvoice.id = this.invoiceForm.get("id").value;
+    this.saleInvoice.accountId = this.saleInvoiceForm.get("accountId").value;
+    this.saleInvoice.payable = this.saleInvoiceForm.get("payable").value;
+    this.saleInvoice.paid = this.saleInvoiceForm.get("paid").value;
+    this.saleInvoice.customerId = this.saleInvoiceForm.get("customerId").value;
+    this.saleInvoice.datetime = this.saleInvoiceForm.get("date").value;
+    this.saleInvoice.freight = this.saleInvoiceForm.get("freight").value;
+    this.saleInvoice.code = this.saleInvoiceForm.get("code").value;
+
+
+    for (let i = 0; i <= this.tempProdCount; i++) {
+      this.isProdAdded = false;
+
+      this.saleInvDetailList.forEach((element, index) => {
+        this.tempinvProduct = this.invoiceDetail.at(i) as FormGroup;
+        let tempprodId = this.tempinvProduct.get("productId").value;
+
+        console.log("index count : " + i + " qunty :" + this.tempinvProduct.get("quantity").value);
+
+        if (element.productId == tempprodId) {
+          element.quantity = this.tempinvProduct.get("quantity").value;
+          element.salePrice = this.tempinvProduct.get("salePrice").value;
+          this.isProdAdded = true;
+        }
+
+      });
+
+      if (this.isProdAdded == false) {
+        console.log("isProdAdded == false called");
+        this.detail.sInvoiceId = this.saleInvoice.id;
+        this.detail.productId = this.tempinvProduct.get("productId").value;
+        this.detail.salePrice = this.tempinvProduct.get("salePrice").value;
+        this.detail.quantity = this.tempinvProduct.get("quantity").value;
+        this.saleInvDetailList.push(this.detail);
+        this.isProdAdded = false;
+      }
+    }
+    this.saleInvoice.sInvDetail = this.saleInvDetailList;
+    console.log(this.saleInvoice);
+    this.service.editSaleInv(pID, this.saleInvoice)
+      .subscribe(pi => {
+        console.log("purchase Invoice Edit called.")
+      })
+    this.formCustomRest();
+    this.alert.success("Record updated successfully...", "Successful")
 
   }
 
   deleteInvoice(id: number) {
 
+  }
+
+  loadPInv() {
+    this.formCustomRest();
+    this.saleInvoiceForm.get("code").setValue(this.saleInvoice.code);
+    this.saleInvoiceForm.get("customerId").setValue(this.saleInvoice.customerId);
+    this.saleInvoiceForm.get("address").setValue(this.saleInvoice.customer.customerAddress);
+    this.saleInvoiceForm.get("balance").setValue(this.saleInvoice.customer.customerCurrentbalance);
+    this.saleInvoiceForm.get("contact").setValue(this.saleInvoice.customer.customerNumber);
+
+    this.saleInvoiceForm.get("paid").setValue(this.saleInvoice.paid);
+    this.saleInvoiceForm.get("freight").setValue(this.saleInvoice.freight);
+    let summary = this.saleInvoice.payable - this.saleInvoice.freight;
+    this.saleInvoiceForm.get("summary").setValue(summary);
+    this.saleInvoiceForm.get("payable").setValue(this.saleInvoice.payable);
+    this.saleInvoiceForm.get("date").setValue(this.saleInvoice.datetime);
+    this.saleInvoiceForm.get("accountId").setValue(this.saleInvoice.accountId);
+
+    this.invoiceDetail = this.saleInvoiceForm.get('detail') as FormArray;
+    this.invoiceDetail.clear();
+
+    this.saleInvDetailList.forEach((Element, index) => {
+      console.log("TempCount : " + this.tempProdCount)
+      this.tempProdCount += 1;
+      this.invoiceDetail.push(this.generateRow());
+      this.invProduct = this.invoiceDetail.at(index) as FormGroup;
+      this.invProduct.get("productId").setValue(Element.productId);
+      this.invProduct.get("quantity").setValue(Element.quantity);
+      this.invProduct.get("salePrice").setValue(Element.salePrice);
+      this.invProduct.get("total").setValue(Element.salePrice * Element.quantity);
+      //Element.pInvoiceId = this.purcInvoice.id;
+      //console.log(Element.pInvoiceId)
+    });
+
+    this.tempProdCount -= 1;
+
+    this.isAddBtn = false;
+    this.isEditBtn = true;
+    this.isDeletBtn = true;
   }
 }
