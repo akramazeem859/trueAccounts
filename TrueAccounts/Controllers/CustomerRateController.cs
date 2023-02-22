@@ -58,6 +58,21 @@ namespace TrueAccounts.Controllers
             return customerRate;
         }
 
+        [HttpGet("byProd/{cusId}/{prodId}")]
+        public async Task<ActionResult<CustomerRate>> GetCusRateByProd(int cusId, int prodId)
+        {
+            var customerRate = await _context.CustomerRate
+                               .Where(c => c.customerId == cusId & c.productId == prodId)
+                               .SingleOrDefaultAsync();
+
+            if (customerRate == null)
+            {
+                return NotFound();
+            }
+
+            return customerRate;
+        }
+
         // PUT: api/CustomerRate/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -141,6 +156,23 @@ namespace TrueAccounts.Controllers
         public async Task<IActionResult> DeleteCustomerRate(int id)
         {
             var customerRate = await _context.CustomerRate.FindAsync(id);
+            if (customerRate == null)
+            {
+                return NotFound();
+            }
+
+            _context.CustomerRate.Remove(customerRate);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{cusId}/{prodId}")]
+        public async Task<IActionResult> DeleteCusRate(int cusId, int prodId)
+        {
+            var customerRate = await _context.CustomerRate
+                                .Where(cr => cr.customerId == cusId & cr.productId == prodId)
+                                .FirstOrDefaultAsync();
             if (customerRate == null)
             {
                 return NotFound();
