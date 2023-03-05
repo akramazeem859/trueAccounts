@@ -4,7 +4,7 @@ import { Inventory } from 'src/app/Models/inventory.model';
 import { Product } from 'src/app/Models/product.model';
 import { cashAccount } from 'src/app/Models/cashAccount.model';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, RequiredValidator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/Models/customer.model';
 import { CompanyService } from 'src/app/Services/company.service';
@@ -12,9 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 import { sInvDetailDTO } from 'src/app/DTO/sInvDetailDTO.model';
 import { customerRates } from 'src/app/Models/customerRate.model';
 import {FormControl} from '@angular/forms';
+import { Time, DatePipe } from '@angular/common';
 
-import * as $ from 'node_modules/jQuery';
-import * as jQuery from 'node_modules/bootstrap-select';
+declare var $ :any;
 
 
 @Component({
@@ -32,7 +32,8 @@ export class SaleInvoiceComponent implements OnInit {
   constructor(private builder: FormBuilder,
     private router: Router,
     private service: CompanyService,
-    private alert: ToastrService) {
+    private alert: ToastrService,
+    private datePipe : DatePipe) {
 
   }
   myControl = new FormControl('');
@@ -46,6 +47,8 @@ export class SaleInvoiceComponent implements OnInit {
   tempinvProduct: FormGroup<any>;
   tempProdCount: number = 0;
   saleCode: any;
+  newTime : any;
+  currentDate: any;
   saleInvoice: sInvoice;
   isProdAdded: boolean = false;
   tempCusRat: customerRates;
@@ -63,7 +66,7 @@ export class SaleInvoiceComponent implements OnInit {
   public saleInvoiceForm = new FormGroup({
     code: this.builder.control("SI202302"),
     customerId: this.builder.control(null),
-    date: this.builder.control(null),
+    datetime: new FormControl(new Date()),
     address: this.builder.control({ value: "", disabled: true }),
     contact: this.builder.control({ value: "", disabled: true }),
     balance: this.builder.control({ value: 0, disabled: true }),
@@ -84,13 +87,32 @@ export class SaleInvoiceComponent implements OnInit {
 
 
   ngOnInit(): void {
+    var today = new Date();
+    var date = today.getDate()+'-'+ (today.getMonth()+1)+'-'+ today.getFullYear();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
     
+    $(document).ready( function() {
+      $('#dt').val(new Date());
+    });
+
+    this.newTime = time;
     
+    this.currentDate = this.datePipe.transform((new Date), 'YYYY-MM-dd');
+    var currentDateTxt = this.currentDate+" ";
+
+    console.log("current Date :" + this.currentDate);
+    this.saleInvoiceForm.get('datetime').setValue(this.currentDate);
+   
     this.getAllCustomer();
     this.getAllAccounts();
     this.getAllProducts();
+
+
  
   }
+
+ 
 
   findSaleInv() {
     if (this.saleCode != '' || this.saleCode != undefined) {
@@ -115,8 +137,13 @@ export class SaleInvoiceComponent implements OnInit {
   }
 
   saveInvoice() {
+    
+    //var mydate = this.saleInvoiceForm.get("datetime").value;
+    //mydate = mydate +" "+ this.newTime;
+    //this.saleInvoiceForm.get("datetime").setValue(mydate);
     console.log(this.saleInvoiceForm.value);
     //this.invoiceForm.reset();
+    /*
     let sId = 0;
     this.service.addSInvoice(this.saleInvoiceForm.value).subscribe(inv => {
       sId = inv.id;
@@ -125,6 +152,7 @@ export class SaleInvoiceComponent implements OnInit {
       this.alert.success("Record saved successfully...", "Successful")
 
     })
+    */
   }
 
   formCustomRest(): void {
@@ -299,7 +327,7 @@ export class SaleInvoiceComponent implements OnInit {
     this.saleInvoice.payable = this.saleInvoiceForm.get("payable").value;
     this.saleInvoice.paid = this.saleInvoiceForm.get("paid").value;
     this.saleInvoice.customerId = this.saleInvoiceForm.get("customerId").value;
-    this.saleInvoice.datetime = this.saleInvoiceForm.get("date").value;
+    this.saleInvoice.datetime = this.saleInvoiceForm.get("datetime").value;
     this.saleInvoice.freight = this.saleInvoiceForm.get("freight").value;
     this.saleInvoice.code = this.saleInvoiceForm.get("code").value;
 
@@ -359,7 +387,7 @@ export class SaleInvoiceComponent implements OnInit {
     let summary = this.saleInvoice.payable - this.saleInvoice.freight;
     this.saleInvoiceForm.get("summary").setValue(summary);
     this.saleInvoiceForm.get("payable").setValue(this.saleInvoice.payable);
-    this.saleInvoiceForm.get("date").setValue(this.saleInvoice.datetime);
+    this.saleInvoiceForm.get("datetime").setValue(this.saleInvoice.datetime);
     this.saleInvoiceForm.get("accountId").setValue(this.saleInvoice.accountId);
 
     this.invoiceDetail = this.saleInvoiceForm.get('detail') as FormArray;

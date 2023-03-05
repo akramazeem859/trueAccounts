@@ -5,7 +5,7 @@
         <div class="row">
             <div class="card col">
                 <div class="card-header">
-                    <h2>Sale Invoice</h2>
+                    <h4>Generate Sale Invoice</h4>
                 </div>
                 <div class="card-body">
                     <div class="form-row mb-3">
@@ -16,14 +16,30 @@
                         <div class="col">
                             <label>Customer</label>
                             <span class="text-danger">*</span>
-                            <select2  class="form-control" data-live-search="true" formControlName="customerId" (change)="findCustomer()">
-                                <option *ngFor="let c of customerList" [value]="c.id">{{c.customerName}}</option>
-                            </select2>
+                            
+                            <ng-select 
+                            placeholder="Select Customer"
+                            [searchable]="true"
+                            [items]="customerList" 
+                            bindLabel="customerName"
+                            bindValue="id"
+                            formControlName="customerId" 
+                            (change)="findCustomer()">
+                               
+                            </ng-select>
+
+                           
                         </div>
                         <div class="col">
                             <label>Date</label>
-                            <input type="datetime" formControlName="date" class="form-control">
+                            <input type="date"
+                            value="{{ currentDate | date:'yyyy-MM-dd' }}"
+                            id="dt"
+                            formControlName="datetime" 
+                            class="form-control"
+                            >
                         </div>
+                       
                     </div>
                     <div class="form-row mb-3">
                         <div class="col">
@@ -55,12 +71,8 @@
                                     <tr *ngFor="let item of invProducts().controls ; index as i" [formGroupName]="i">
                                         <td>{{i+1}}</td>
                                         <td>
-                                            
-                                           
-                                              
                                             <select class="form-control" formControlName="productId"
                                                 (change)="prodSelect(i)">
-                                               
                                                   
                                                 <option *ngFor="let pro of productList" [value]="pro.id">
                                                     {{pro.productName}}</option>
@@ -115,7 +127,7 @@
 
                     </div>
                     <div class="form-row">
-                        <button type="submit" class="btn btn-primary mr-2" [disabled]="!isAddBtn">Save Invoice</button>
+                        <button type="button" class="btn btn-primary mr-2" (click)="saveInvoice()" [disabled]="!isAddBtn">Save Invoice</button>
                         <button type="button" class="btn btn-warning mr-2" (click)="editInvoice()"
                             [disabled]="!isEditBtn">Edit</button>
                         <button type="button" class="btn btn-danger" (click)="deleteInvoice(1)"
@@ -134,7 +146,7 @@
     <div class="row">
         <div class="card col">
             <div class="card-header">
-                <h2> Sale Invoice </h2>
+                <h4> Search Sale Invoice </h4>
             </div>
             <div class="card-body">
 
@@ -144,7 +156,7 @@
                         <label>Enter Sale Invoice code</label>
                         
                         <span class="text-danger">*</span>
-                        <input name="saleCode" #purhcCode="ngModel" [(ngModel)]="saleCode" id="purchIdTxt"
+                        <input name="saleCode" #purhCode="ngModel" [(ngModel)]="saleCode" id="purchIdTxt"
                             class="form-control">
                     </div>
                     

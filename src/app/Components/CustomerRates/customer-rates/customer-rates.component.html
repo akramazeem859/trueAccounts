@@ -1,7 +1,7 @@
 <div class="m-3">
     <div class="card" [formGroup]="customerform">
         <div class="card-header">
-            <h2>Customer Rates</h2>
+            <h4>Select Customer</h4>
 
             <select class="form-control" (change)="selectCustomer()" formControlName="customerId">
                 <option *ngFor="let cus of customerList"  [value]="cus.id">{{cus.customerName}}</option>

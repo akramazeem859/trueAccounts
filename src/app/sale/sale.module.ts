@@ -8,7 +8,7 @@ import { SaleRoutingModule } from './sale-routing.module';
 import { SaleComponent } from './sale.component';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule } from 'src/Material-Module';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -24,6 +24,7 @@ import { MaterialModule } from 'src/Material-Module';
     SaleRoutingModule,
     ToastrModule,
     MaterialModule,
+    NgSelectModule
  
   ],
   exports:[

@@ -8,4 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'TrueAccounts.UI';
   
+  setTitle(title:string){
+    this.title = title;
+  }
 }

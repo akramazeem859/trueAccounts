@@ -76,7 +76,7 @@ export class PurchaceInvoiceComponent implements OnInit {
     code: this.builder.control("PI202302"),
     supplierId: this.builder.control(null),
     date: this.builder.control(null),
-    address: this.builder.control({ value: "", disabled: true }),
+    address: this.builder.control({ value:"", disabled:true}),
     contact: this.builder.control({ value: "", disabled: true }),
     balance: this.builder.control({ value: 0, disabled: true }),
 
@@ -93,13 +93,22 @@ export class PurchaceInvoiceComponent implements OnInit {
   isAddBtn: boolean = true;
 
   ngOnInit(): void {
+    var today = new Date();
+    var date = today.getDate()+'/'+ (today.getMonth()+1)+'/'+ today.getFullYear();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    console.log(today);
+
     $('input[name="dates"]').daterangepicker({
       singleDatePicker: true,
       showDropdowns: true,
       timePicker: true,
-      minYear: 1901,
-      maxYear: 2023
+      minYear: 2022,
+      maxYear: today.getFullYear()
     });
+    
+
+    this.invoiceForm.get('date').setValue(dateTime);
     this.getSuppliers();
     this.getProducts();
     //this.getPurchInv();

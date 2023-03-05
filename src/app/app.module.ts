@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 
 
 import { NgModule } from '@angular/core';
@@ -80,7 +81,9 @@ const routes: Routes = [];
     BrowserAnimationsModule,
     RouterModule
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
