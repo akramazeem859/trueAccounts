@@ -1,0 +1,226 @@
+
+
+<form class="container" [formGroup]="saleInvoiceForm" (ngSubmit)="saveInvoice()">
+    <div class="m-3">
+        <div class="row">
+            <div class="card col">
+                <div class="card-header">
+                    <h4>Generate Sale Invoice</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Code</mat-label>
+                                <input matInput formControlName="code" width=100>
+                              </mat-form-field>
+
+                          
+                        </div>
+
+                        <div class="col">
+                            
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                  <mat-label>Customer</mat-label>
+                                  <input type="text"
+                                         placeholder="Pick one"
+                                         aria-label="Number"
+                                         matInput
+                                         formControlName="customerId"
+                                        
+                                         [matAutocomplete]="auto">
+                                  <mat-autocomplete #auto="matAutocomplete"  (optionSelected)="findCustomer($event)">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
+                                      {{option.customerName}}
+                                    </mat-option>
+                                  </mat-autocomplete>
+                                </mat-form-field>
+                             
+
+
+                           
+                        </div>
+
+                        <div class="col">
+                            
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Date</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="datetime">
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                        </div>
+                       
+                    </div>
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+                            <label>Adress</label>
+                            <input type="text" formControlName="address" class="form-control">
+                        </div>
+
+                        <div class="col">
+                            <label>Contact</label>
+                            <input type="text" formControlName="contact" class="form-control">
+                        </div>
+
+                        <div class="col">
+                            <label>Balance</label>
+                            <input type="text" formControlName="balance" class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+                            <table class="table table-bordered" formArrayName="detail">
+                                <thead class="bg-primary text-white">
+                                    <th>Sr#</th>
+                                    <th style="width: 30%;">Product</th>
+                                    <th>Avail</th>
+                                    <th>Qnty</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let item of invProducts().controls ; index as i" [formGroupName]="i">
+
+                                        <td>{{i+1}}</td>
+
+                                        <td>
+                                            <select class="form-control" formControlName="productId"
+                                                (change)="prodSelect(i)">
+                                                  
+                                                <option *ngFor="let pro of productList" [value]="pro.id">
+                                                    {{pro.productName}}</option>
+                                            </select>
+                                        </td>
+
+                                        <td><input type="text" class="form-control" formControlName="available"></td>
+                                        <td><input type="text" class="form-control" formControlName="quantity"(change)="totalCalculation(i)"></td>
+                                        <td><input type="text" class="form-control" formControlName="salePrice"(change)="totalCalculation(i)"></td>
+                                        <td><input type="text" class="form-control" formControlName="total"[readOnly]="true"></td>
+                                        <td><a class="btn btn-danger" (click)="removeRow(i)">Remove</a></td>
+
+                                    </tr>
+
+                                </tbody>
+                                <tfoot>
+                                    <a (click)="addProduct()" class="btn btn-success">[+]</a>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="account">Account</label>
+                            <select formControlName="accountId" class="form-control" >
+                                <option *ngFor="let item of cashAccountList" [value]="item.id">{{item.accountTitle}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Paid</label>
+                            <input type="select" formControlName="paid" class="form-control" value="0">
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Discount</label>
+                            <input type="select" formControlName="discount" class="form-control"
+                            (change)="summaryCalculation()" value="0">
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Freight</label>
+                            <input formControlName="freight" type="text" class="form-control"
+                                (change)="summaryCalculation()">
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Summary</label>
+                            <input formControlName="summary" type="text" class="form-control">
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Total</label>
+                            <input formControlName="payable" type="text" [readOnly]="true" class="form-control">
+                        </div>
+
+
+                    </div>
+                    <div class="form-row">
+                        <button type="button" class="btn btn-primary mr-2" (click)="saveInvoice()" [disabled]="!isAddBtn">Save Invoice</button>
+                        <button type="button" class="btn btn-warning mr-2" (click)="editInvoice()"
+                            [disabled]="!isEditBtn">Edit</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteInvoice(1)"
+                            [disabled]="!isDeletBtn">Delete</button>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form><div class="container">
+    <div class="m-3">
+    <div class="row">
+        <div class="card col">
+            <div class="card-header">
+                <h4> Search Sale Invoice </h4>
+            </div>
+            <div class="card-body">
+
+
+                <div class="form-row mb-3">
+                    <div class="col">
+                        <label>Enter Sale Invoice code</label>
+                        
+                        <span class="text-danger">*</span>
+                        <input name="saleCode" #purhCode="ngModel" [(ngModel)]="saleCode" id="purchIdTxt"
+                            class="form-control">
+                    </div>
+                    
+                    <div class="col">
+                        <label>Search Record</label>
+                        <br>
+                        <button type="button" class="btn btn-primary btn-block" (click)="findSaleInv()">Search</button>
+                    </div>
+                </div>
+
+                <div class="form-row mb-3">
+                    <table class="table" *ngIf="saleInvoice">
+                        <thead>
+                            <th>Sr#</th>
+                            <th>PI Code</th>
+                            <th>Payable</th>
+                            <th>Paid</th>
+                            <th>Supplier</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>{{saleInvoice.code}}</td>
+                                <td>{{saleInvoice.payable}}</td>
+                                <td>{{saleInvoice.paid}}</td>
+                                <td>{{saleInvoice.customer.customerName}}</td>
+                                <td>{{saleInvoice.datetime | date: "dd-MMM-yyyy-HH:mm:ss" }}</td>
+                                <td><button class="btn btn-primary" (click)="loadPInv()">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>

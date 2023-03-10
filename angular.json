@@ -23,6 +23,7 @@
                 "src/assets"
               ],
               "styles": [
+                "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
                 "node_modules/@ng-select/ng-select/themes/default.theme.css",
                 "src/assets/plugins/select2/css/select2.min.css",
                 "node_modules/ngx-toastr/toastr.css",

@@ -1,0 +1,79 @@
+<div class="container">
+   
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                <h4>Add Account</h4>
+            </div>
+            <div class="card-body">
+                <form #cashAccountForm="ngForm" name="cashAccountForm" (ngSubmit)="addCashAccount()">
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="supplierName" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="supplierName" name="supplierName"
+                            [(ngModel)]="cashAccountRequest.accountTitle">
+                        </div>
+                    </div>
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+                            <label for="cashAccountBranch" class="form-label">Branch</label>
+                            <select class="form-control" name="cashAccountBranch"
+                            [(ngModel)]="cashAccountRequest.accountBranchId">
+                                <option *ngFor="let branch of branches" [value]="branch.id">{{branch.branchName}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label for="cashAccountType" class="form-label">Type</label>
+                            <select class="form-control" name="cashAccountBranch"
+                            [(ngModel)]="cashAccountRequest.accountType">
+                                <option selected>Select option</option>
+                                <option value="Cash Account">Cash Account</option>
+                                <option value="Bank Account">Bank Account</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary mr-2" [disabled]="!isAddBtn">Add Account</button>
+                        <button type="button" class="btn btn-warning mr-2" (click)="editAccount()"[disabled]="!isEditBtn">Edit</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteAccount(cashAccountRequest.id)" [disabled]="!isDeletBtn">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                <h4>Account List</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <th>Sr#</th>
+                        <th>Code</th>
+                        <th>Title</th>
+                        <th>Branch</th>
+                        <th>Type</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let acc of cashAccount$; index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{acc.accountCode}}</td>
+                            <td>{{acc.accountTitle}}</td>
+                            <td>{{acc.accountBranch.branchName}}</td>
+                            <td>{{acc.accountType}}</td>
+                            <td><button type="button" class="btn btn-primary" (click)="selectAccount(acc.id)">Edit</button></td>
+
+                        </tr>
+                     </tbody>
+                </table>
+            </div>
+         </div>
+            
+        </div>
+    </div>
+
