@@ -1,0 +1,64 @@
+<div class="containter">
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                Chart of Account               
+            </div>
+            <div class="card-body">
+                <div class="form-row mb-3">
+
+                    <form #level1form="ngForm" name="level1form" class="col-12">
+                        <div class="col">
+                            <label for="level1txt">Main Head</label>
+                            <input type="text" id="level1txt" class="form-control col-12" name="name" ngModel >
+                            <br>
+                            <button type="button" class="btn btn-primary" (click)="addLevel1(level1form)">Add Record</button>
+                        </div>
+                    </form>
+
+                    <form #level2form="ngForm" name="level2form" class="col-12">
+                        <div class="col">
+                            <label for="level1txt">Main Head</label>
+
+                            <select class="form-control" name="level1" ngModel>
+                                <option *ngFor="let item of level1list" [value]="item.code">{{item.name}}</option>
+                            </select>
+                            
+                            <label for="level1txt">Name Level2 Head</label>
+                            <input type="text" id="level2txt" class="form-control col-12" name="name" ngModel >
+
+                            <br>
+                            <button type="button" class="btn btn-primary" (click)="addLevel2(level2form)">Add Record</button>
+                        </div>
+                    </form>
+
+                    <form #level3form="ngForm" name="level3form" class="col-12">
+                        <div class="col">
+                            <label for="level1txt">Main Head</label>
+
+                            <select class="form-control" name="level1-3" (change)="getlevel2($event)"  ngModel>
+                                <option *ngFor="let item of level1list" [value]="item.code">{{item.name}}</option>
+                            </select>
+                            
+                            <label for="level1txt">Name Level2 Head</label>
+                            <select class="form-control" name="level2" ngModel >
+                                <option >Select option</option>
+                                <option *ngFor="let item of level2list" [selected]="-1" [value]="item.code">{{item.name}}</option>
+                            </select>
+
+                            <label for="level3txt">Name Level3 Head</label>
+                            <input type="text" id="level3txt" class="form-control col-12" name="name" ngModel >
+                            
+                            <br>
+                            <button type="button" class="btn btn-primary" (click)="addLevel3(level3form)">Add Record</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+            <div class="card-footer">
+               
+            </div>
+        </div>
+    </div>
+</div>

@@ -22,6 +22,9 @@ import { sInvoiceDTO } from '../DTO/sInvoiceDTO.model';
 import { sInvoice } from '../Models/sInvoice.model';
 import { sInvDetail } from '../Models/sInvDetail.model';
 import { customerRates } from '../Models/customerRate.model';
+import { level1 } from '../Models/COA/level1.model';
+import { level2 } from '../Models/COA/level2.model';
+import { level3 } from '../Models/COA/level3.model';
 
 
 @Injectable({
@@ -76,6 +79,9 @@ export class CompanyService {
   }
   getAllSaleInvDetail(code:any):Observable<sInvDetail[]>{
     return this.http.get<sInvDetail[]>(this.baseApiUrl + '/api/SInvoice/Detail/'+ code);
+  }
+  getAllLevel1():Observable<level1[]>{
+    return this.http.get<level1[]>(this.baseApiUrl+'/api/ChartAccount/coa/level1');
   }
 
 
@@ -141,6 +147,10 @@ export class CompanyService {
     return this.http.get<customerRates>(this.baseApiUrl+'/api/CustomerRate/byProd/'+cusId+'/'+prodId);
   }
 
+  getlevel2bylevel1(level1:any){
+    return this.http.get<level2[]>(this.baseApiUrl+'/api/ChartAccount/coa/level2/'+level1);
+  }
+
 
 
 
@@ -188,6 +198,16 @@ export class CompanyService {
   }
   addCustomerRate(cusRateDTO : cusRateDTO[]):Observable<customerRates>{
     return this.http.post<customerRates>(this.baseApiUrl+'/api/customerRate', cusRateDTO);
+  }
+
+  addLevel1(level1txt:level1):Observable<any>{
+    return this.http.post<level1>(this.baseApiUrl+'/api/ChartAccount/level1', level1txt);
+  }
+  addLevel2(level2req:level2):Observable<any>{
+    return this.http.post<level2>(this.baseApiUrl+'/api/ChartAccount/level2', level2req);
+  }
+  addLevel3(level3req:level3):Observable<any>{
+    return this.http.post<level3>(this.baseApiUrl+'/api/ChartAccount/level3', level3req);
   }
  
 

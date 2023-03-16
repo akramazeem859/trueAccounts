@@ -11,6 +11,7 @@ import { BranchesComponent } from './Branches/branches/branches.component';
 import { AddBranchComponent } from './Branches/add-branch/add-branch.component';
 import { EditBranchComponent } from './Branches/edit-branch/edit-branch.component';
 import { CashAccountComponent } from './cash-account/cash-account.component';
+import { ChartAccountComponent } from './chart-account/chart-account.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { CashAccountComponent } from './cash-account/cash-account.component';
     AddBranchComponent,
     EditBranchComponent,
     CashAccountComponent,
-    AdminComponent
+    AdminComponent,
+    ChartAccountComponent
   ],
   imports: [
     CommonModule,

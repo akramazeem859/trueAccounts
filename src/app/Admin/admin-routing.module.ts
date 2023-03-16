@@ -5,6 +5,7 @@ import { AddBranchComponent } from './Branches/add-branch/add-branch.component';
 import { BranchesComponent } from './Branches/branches/branches.component';
 import { EditBranchComponent } from './Branches/edit-branch/edit-branch.component';
 import { CashAccountComponent } from './cash-account/cash-account.component';
+import { ChartAccountComponent } from './chart-account/chart-account.component';
 import { AddCompanyComponent } from './company/add-company/add-company.component';
 import { CompanyComponent } from './company/company.component';
 import { EditCompanyComponent } from './company/edit-company/edit-company.component';
@@ -18,7 +19,7 @@ const routes: Routes = [
     { path:'branches/add-branch', component:AddBranchComponent},
     { path:'branches/edit-branch/:id', component:EditBranchComponent},
     { path:'cashAccount', component:CashAccountComponent},
-
+    { path:'ChartAccount', component:ChartAccountComponent},
 
 
   ] }
