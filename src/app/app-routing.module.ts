@@ -9,7 +9,8 @@ import { SaleComponent } from './sale/sale.component';
 import { ProductionComponent } from './production/production.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { PurchaseComponent } from './purchase/purchase.component';
-import { MainComponent } from './components/main/main.component';
+import { MainComponent } from './Components/main/main.component';
+
 
 
 

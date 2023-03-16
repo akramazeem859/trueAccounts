@@ -12,8 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { MainComponent } from './components/main/main.component';
-
 
 import { AdminModule } from 'src/app/Admin/admin.module'
 import { SaleModule } from 'src/app/sale/sale.module';
@@ -25,8 +23,8 @@ const routes: Routes = [];
 
 @NgModule({
   declarations: [
-    AppComponent,
-    MainComponent,
+    AppComponent
+
  
   ],
   imports: [
@@ -49,7 +47,7 @@ const routes: Routes = [];
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
-    MainComponent
+   
   ],
   providers: [
     DatePipe
