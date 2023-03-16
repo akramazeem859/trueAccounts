@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrueAccounts.Models;
+using TrueAccounts.Models.ChartAccount;
 
 namespace TrueAccounts.Data
 {
@@ -23,5 +24,8 @@ namespace TrueAccounts.Data
         public DbSet<TrueAccounts.Models.SInvoice> SInvoice { get; set; }
         public DbSet<TrueAccounts.Models.SInvDetail> sInvDetails { get; set; }
         public DbSet<TrueAccounts.Models.CustomerRate> CustomerRate { get; set; }
+        public DbSet<TrueAccounts.Models.ChartAccount.level1> level1 { get; set; }
+        public DbSet<TrueAccounts.Models.ChartAccount.level2> level2 { get; set; }
+        public DbSet<TrueAccounts.Models.ChartAccount.level3> level3 { get; set; }
     }
 }

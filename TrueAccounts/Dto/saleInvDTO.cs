@@ -6,7 +6,7 @@
         public int payable { get; set; }
         public int paid { get; set; }
         public int? customerId { get; set; }
-
+        public int discount { get; set; }
         public int freight { get; set; }
         public DateTime datetime { get; set; }
         public int branchId { get; set; }

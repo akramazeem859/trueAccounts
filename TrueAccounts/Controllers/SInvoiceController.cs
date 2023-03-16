@@ -194,6 +194,17 @@ namespace TrueAccounts.Controllers
         [HttpPost]
         public async Task<ActionResult<SInvoice>> PostSInvoice(saleInvDTO sInvRequest)
         {
+            string timezoneValue = "5:00";
+
+            TimeSpan offset = new TimeSpan();
+            offset = TimeSpan.Parse(timezoneValue);
+
+            var newtime = new DateTime(); 
+            //newtime = System.DateTime.Now;
+            
+            newtime = sInvRequest.datetime + offset;
+            
+
             int sInvCount = (from s in _context.SInvoice where s.datetime.Month == System.DateTime.Now.Month select s).Count() + 1;
             var newsInvoice = new SInvoice();
             newsInvoice.code = "SI" + System.DateTime.Now.Year + System.DateTime.Now.Month.ToString("00") + sInvCount.ToString("00000");
@@ -201,7 +212,8 @@ namespace TrueAccounts.Controllers
             newsInvoice.paid = sInvRequest.paid;
             newsInvoice.customerId = sInvRequest.customerId;
             newsInvoice.freight = sInvRequest.freight;
-            newsInvoice.datetime = System.DateTime.Now;
+            newsInvoice.discount = sInvRequest.discount;
+            newsInvoice.datetime = newtime;
             newsInvoice.branchId = 1;
             newsInvoice.accountId = sInvRequest.accountId;
 

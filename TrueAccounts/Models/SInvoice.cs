@@ -9,6 +9,7 @@
         public int? customerId { get; set; }
         public Customer customer { get; set; }
         public int freight { get; set; }
+        public int discount { get; set; }
         public DateTime datetime { get; set; }
         public int branchId { get; set; }
         public Branch branch { get; set; }
