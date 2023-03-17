@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  baseApiUrl:'https://trueaccounts.azurewebsites.net'
+  baseApiUrl:'https://localhost:7283'
 };
 
 /*

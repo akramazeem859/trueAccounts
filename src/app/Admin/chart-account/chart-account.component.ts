@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+
 import { ToastrService } from 'ngx-toastr';
 import { level1 } from 'src/app/Models/COA/level1.model';
 import { level2 } from 'src/app/Models/COA/level2.model';
@@ -21,6 +21,7 @@ level3Req : level3 = {};
 
 level1list:level1[];
 level2list:level2[];
+level3list:level3[];
 /**
  *
  */
@@ -32,6 +33,19 @@ constructor(private service:CompanyService, private alert: ToastrService) {}
     this.level1list = item;
     console.log(this.level1list);
   })
+
+  this.service.getAllLevel2()
+  .subscribe(item=>{
+    this.level2list = item;
+    
+  })
+  this.service.getAllLevel3()
+  .subscribe(item=>{
+    console.log("level3 detail lvl2"+ item[0])
+    this.level3list = item;
+    
+  })
+
 
 
  }

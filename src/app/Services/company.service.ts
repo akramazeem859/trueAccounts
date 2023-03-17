@@ -31,6 +31,7 @@ import { level3 } from '../Models/COA/level3.model';
   providedIn: 'root'
 })
 export class CompanyService {
+  
 
   baseApiUrl:string = environment.baseApiUrl;
   private _refreshRequired = new Subject<void>();
@@ -82,6 +83,12 @@ export class CompanyService {
   }
   getAllLevel1():Observable<level1[]>{
     return this.http.get<level1[]>(this.baseApiUrl+'/api/ChartAccount/coa/level1');
+  }
+  getAllLevel2():Observable<level2[]> {
+    return this.http.get<level2[]>(this.baseApiUrl+'/api/ChartAccount/coa/level2');
+  }
+  getAllLevel3():Observable<level3[]> {
+    return this.http.get<level3[]>(this.baseApiUrl+'/api/ChartAccount/coa/level3');
   }
 
 

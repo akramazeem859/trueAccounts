@@ -61,4 +61,18 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                <h2>Chart Of Accounts</h2>
+            </div>
+            <div class="card-body">
+                <ul class="list-group" *ngFor="let l1 of level1list"><h2>{{l1.name}}</h2>
+                    <ul class="list-group-item" *ngFor="let l2 of level2list|coaFilter:l1.code:'level1'"><th>{{l2.name}}</th>
+                        <li class="list-group-item" *ngFor="let l3 of level3list|coaFilter:l2.code:'level2'">{{l3.name}}</li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
