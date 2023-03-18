@@ -25,6 +25,7 @@ import { customerRates } from '../Models/customerRate.model';
 import { level1 } from '../Models/COA/level1.model';
 import { level2 } from '../Models/COA/level2.model';
 import { level3 } from '../Models/COA/level3.model';
+import { level4 } from '../Models/COA/level4.model';
 
 
 @Injectable({
@@ -90,6 +91,10 @@ export class CompanyService {
   getAllLevel3():Observable<level3[]> {
     return this.http.get<level3[]>(this.baseApiUrl+'/api/ChartAccount/coa/level3');
   }
+  getAllLevel4():Observable<level4[]> {
+    return this.http.get<level4[]>(this.baseApiUrl+'/api/ChartAccount/coa/level4');
+  }
+
 
 
   // Record counts calls
@@ -215,6 +220,9 @@ export class CompanyService {
   }
   addLevel3(level3req:level3):Observable<any>{
     return this.http.post<level3>(this.baseApiUrl+'/api/ChartAccount/level3', level3req);
+  }
+  addLevel4(level4req:level4):Observable<any>{
+    return this.http.post<level4>(this.baseApiUrl+'/api/ChartAccount/level4', level4req);
   }
  
 

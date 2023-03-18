@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseApiUrl:'https://trueaccounts.azurewebsites.net/api/Branches'
+  baseApiUrl:'https://trueaccounts.azurewebsites.net'
 };
