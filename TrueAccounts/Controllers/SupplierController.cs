@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TrueAccounts.Data;
 using TrueAccounts.Dto;
 using TrueAccounts.Models;
+using TrueAccounts.Models.ChartAccount;
 
 namespace TrueAccounts.Controllers
 {
@@ -83,11 +84,29 @@ namespace TrueAccounts.Controllers
             return NoContent();
         }
 
+        [NonAction]
+        private string generateCode(string code)
+        {
+            var coaCount = code + _context.level4
+                           .Where(l4 => l4.level3 == code)
+                           .Count() + 1.ToString("000");
+            return coaCount.ToString();
+        }
+
         // POST: api/Supplier
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Supplier>> PostSupplier(supplierDto supplierRequest)
         {
+            level4 lvl4 = new level4();
+
+            lvl4.code = generateCode("30201");
+            lvl4.name = supplierRequest.supplierName;
+            lvl4.level3 = "30201";
+            _context.level4.Add(lvl4);
+            _context.SaveChanges();
+
+
             var newSupplier = new Supplier();
             //_mapper.Map(supplierRequest, newSupplier);
             newSupplier.supplierCode = "sup-" + GetCustomerCount();

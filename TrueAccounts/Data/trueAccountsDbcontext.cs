@@ -6,6 +6,10 @@ namespace TrueAccounts.Data
 {
     public class trueAccountsDbcontext : DbContext
     {
+        public trueAccountsDbcontext()
+        {
+        }
+
         public trueAccountsDbcontext(DbContextOptions options) : base(options)
         {
 
@@ -27,5 +31,6 @@ namespace TrueAccounts.Data
         public DbSet<TrueAccounts.Models.ChartAccount.level1> level1 { get; set; }
         public DbSet<TrueAccounts.Models.ChartAccount.level2> level2 { get; set; }
         public DbSet<TrueAccounts.Models.ChartAccount.level3> level3 { get; set; }
+        public DbSet<TrueAccounts.Models.ChartAccount.level4> level4 { get; set; }
     }
 }

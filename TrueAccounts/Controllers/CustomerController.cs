@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using TrueAccounts.Data;
 using TrueAccounts.Dto;
 using TrueAccounts.Models;
+using TrueAccounts.Models.ChartAccount;
+using TrueAccounts.Utility;
 
 namespace TrueAccounts.Controllers
 {
@@ -82,22 +84,38 @@ namespace TrueAccounts.Controllers
             return NoContent();
         }
 
+        [NonAction]
+        private string generateCode(string code)
+        {
+            var coaCount = code + _context.level4
+                           .Where(l4 => l4.level3 == code)
+                           .Count() + 1.ToString("000");
+            return coaCount.ToString();
+        }
         // POST: api/Customer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(customerDto customerReq)
         {
+            level4 lvl4 = new level4();
+
+            lvl4.code = generateCode("50301");
+            lvl4.name = customerReq.customerName;
+            lvl4.level3 = "50301";
+            _context.level4.Add(lvl4);
+            _context.SaveChanges(); 
+
+
             Customer customer = new Customer();
-            customer.customerCode = customerReq.customerCode;
+            //customer.customerCode = customerReq.customerCode;
             customer.customerName = customerReq.customerName;   
             customer.customerNumber = customerReq.customerNumber;
             customer.customerAddress= customerReq.customerAddress;
             customer.customerCurrentbalance = customerReq.customerOpeningbalance;
             customer.customerOpeningbalance= customerReq.customerOpeningbalance;
             customer.customerBranchId = customerReq.customerBranchId;
+            customer.customerCode = lvl4.code;
 
-
-            customer.customerCode = "cus-" + GetCustomerCount()+1.ToString("00000");
             _context.Customer.Add(customer);
             await _context.SaveChangesAsync();
 

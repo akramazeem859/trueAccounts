@@ -27,6 +27,21 @@ namespace TrueAccounts.Controllers
         {
             return await _context.level1.ToListAsync();
         }
+        [HttpGet("coa/level2")]
+        public async Task<ActionResult<IEnumerable<level2>>> Getlevel2()
+        {
+            return await _context.level2.ToListAsync();
+        }
+        [HttpGet("coa/level3")]
+        public async Task<ActionResult<IEnumerable<level3>>> Getlevel3()
+        {
+            return await _context.level3.ToListAsync();
+        }
+        [HttpGet("coa/level4")]
+        public async Task<ActionResult<IEnumerable<level4>>> Getlevel4()
+        {
+            return await _context.level4.ToListAsync();
+        }
 
 
 
@@ -138,6 +153,24 @@ namespace TrueAccounts.Controllers
             await _context.SaveChangesAsync();
 
             return l3;
+        }
+
+        [HttpPost("level4")]
+        public async Task<ActionResult<level4>> Postlevel4(level4 l4Req)
+        {
+            level4 l4 = new level4();
+
+            l4.name = l4Req.name;
+            l4.level3 = l4Req.level3;
+            var count = (from c in _context.level4
+                         where c.level3 == l4.level3
+                         select c).ToList().Count;
+
+            l4.code = l4Req.level3 + (count + 1).ToString("000");
+            _context.level4.Add(l4);
+            await _context.SaveChangesAsync();
+
+            return l4;
         }
 
 
