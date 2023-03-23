@@ -6,6 +6,7 @@
         public string name { get; set; }
         public string code { get; set; }
         public string level3 { get; set; }
+        public string ledgerTbl { get; set; }
 
     }
 }

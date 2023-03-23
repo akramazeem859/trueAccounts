@@ -248,6 +248,13 @@ namespace TrueAccounts.Controllers
 
         }
 
+        private HttpResponse postLedger(string tblName, string particular, DateTime dt, int credit, int debit)
+        {
+            HttpResponse response = null;
+
+            return response; 
+        }
+
        
 
         // DELETE: api/SInvoice/5
