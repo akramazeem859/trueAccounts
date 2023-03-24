@@ -32,5 +32,10 @@ namespace TrueAccounts.Data
         public DbSet<TrueAccounts.Models.ChartAccount.level2> level2 { get; set; }
         public DbSet<TrueAccounts.Models.ChartAccount.level3> level3 { get; set; }
         public DbSet<TrueAccounts.Models.ChartAccount.level4> level4 { get; set; }
+        public DbSet<TrueAccounts.Models.Ledgers.SaleLedger> SaleLedger { get; set; }
+        public DbSet<TrueAccounts.Models.Ledgers.PurchaseLedger> PurchaseLedger { get; set; }
+        public DbSet<TrueAccounts.Models.Ledgers.CustomerLedger> CustomerLedger { get; set; }
+        public DbSet<TrueAccounts.Models.Ledgers.SupplierLedger> supplierLedger { get; set; }
+        public DbSet<TrueAccounts.Models.Ledgers.CashAccountLedger> CashAccountLedger { get; set; } 
     }
 }

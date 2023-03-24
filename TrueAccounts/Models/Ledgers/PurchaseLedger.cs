@@ -1,7 +1,8 @@
 ﻿namespace TrueAccounts.Models.Ledgers
 {
-    public class SaleLedger:Ledger
+    public class PurchaseLedger:Ledger
     {
-       
+      
+
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using TrueAccounts.Data;
 using TrueAccounts.Dto;
 using TrueAccounts.Models;
+using TrueAccounts.Models.Ledgers;
 
 namespace TrueAccounts.Controllers
 {
@@ -192,68 +193,136 @@ namespace TrueAccounts.Controllers
         // POST: api/SInvoice
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<SInvoice>> PostSInvoice(saleInvDTO sInvRequest)
+        public async Task<IActionResult> PostSInvoice(saleInvDTO sInvRequest)
         {
-            string timezoneValue = "5:00";
-
-            TimeSpan offset = new TimeSpan();
-            offset = TimeSpan.Parse(timezoneValue);
-
-            var newtime = new DateTime(); 
-            //newtime = System.DateTime.Now;
-            
-            newtime = sInvRequest.datetime + offset;
-            
-
-            int sInvCount = (from s in _context.SInvoice where s.datetime.Month == System.DateTime.Now.Month select s).Count() + 1;
-            var newsInvoice = new SInvoice();
-            newsInvoice.code = "SI" + System.DateTime.Now.Year + System.DateTime.Now.Month.ToString("00") + sInvCount.ToString("00000");
-            newsInvoice.payable = sInvRequest.payable;
-            newsInvoice.paid = sInvRequest.paid;
-            newsInvoice.customerId = sInvRequest.customerId;
-            newsInvoice.freight = sInvRequest.freight;
-            newsInvoice.discount = sInvRequest.discount;
-            newsInvoice.datetime = newtime;
-            newsInvoice.branchId = 1;
-            newsInvoice.accountId = sInvRequest.accountId;
-
-           _context.SInvoice.Add(newsInvoice);
-           await _context.SaveChangesAsync();
-
-
-            var newsInvDetail = new SInvDetail();
-
-            var newsInvDetailList = new List<SInvDetail> { };
-
-            foreach (var item in sInvRequest.detail)
+            int tempBranchId = 1; 
+            try
             {
-                newsInvDetail.id = 0;
-                newsInvDetail.productId = item.productId;
-                newsInvDetail.salePrice = item.salePrice;
-                newsInvDetail.quantity = item.quantity;
-                newsInvDetail.sInvoiceId = newsInvoice.id;
+                string timezoneValue = "5:00";
 
-                _context.sInvDetails.Add(newsInvDetail);
+                TimeSpan offset = new TimeSpan();
+                offset = TimeSpan.Parse(timezoneValue);
+
+                var newtime = new DateTime();
+                //newtime = System.DateTime.Now;
+
+                newtime = sInvRequest.datetime + offset;
+
+                int sInvCount = (from s in _context.SInvoice where s.datetime.Month == System.DateTime.Now.Month select s).Count() + 1;
+                var newsInvoice = new SInvoice();
+                newsInvoice.code = "SI" + System.DateTime.Now.Year + System.DateTime.Now.Month.ToString("00") + sInvCount.ToString("00000");
+                newsInvoice.payable = sInvRequest.payable;
+                newsInvoice.paid = sInvRequest.paid;
+                newsInvoice.customerId = sInvRequest.customerId;
+                newsInvoice.freight = sInvRequest.freight;
+                newsInvoice.discount = sInvRequest.discount;
+                newsInvoice.datetime = newtime;
+                newsInvoice.branchId = tempBranchId;
+                newsInvoice.accountId = sInvRequest.accountId;
+
+                _context.SInvoice.Add(newsInvoice);
+                await _context.SaveChangesAsync();
+
+
+                var newsInvDetail = new SInvDetail();
+
+                var newsInvDetailList = new List<SInvDetail> { };
+
+                foreach (var item in sInvRequest.detail)
+                {
+                    newsInvDetail.id = 0;
+                    newsInvDetail.productId = item.productId;
+                    newsInvDetail.salePrice = item.salePrice;
+                    newsInvDetail.quantity = item.quantity;
+                    newsInvDetail.sInvoiceId = newsInvoice.id;
+
+                    _context.sInvDetails.Add(newsInvDetail);
+                    _context.SaveChanges();
+
+                    newsInvDetailList.Add(newsInvDetail);
+
+                }
+                updateInvtory(newsInvoice.branchId, newsInvDetailList);
+
+                Ledger ldgr = new Ledger(); 
+                ldgr.particular = "Sale Invoice " + newsInvoice.code;
+                ldgr.dateTime = newsInvoice.datetime;
+                ldgr.branchId = tempBranchId;
+                ldgr.invCode = newsInvoice.code; 
+
+
+
+                SaleLedger sldgr = new SaleLedger();
+                sldgr.particular = ldgr.particular;
+                sldgr.credit = newsInvoice.payable - newsInvoice.discount;
+                sldgr.debit = 0;
+                sldgr.dateTime = ldgr.dateTime; 
+                sldgr.invCode = ldgr.invCode;
+                sldgr.branchId = ldgr.branchId;
+                var sale_tempCoaCode = _context.level4.Where(l => l.name == "Local Sales" & l.branchId == tempBranchId).FirstOrDefault();
+                if (sale_tempCoaCode != null)
+                {
+                    sldgr.coaCode = sale_tempCoaCode.code;
+                }
+                else
+                {
+                    sldgr.coaCode = "";
+                }
+
+                _context.SaleLedger.Add(sldgr);
                 _context.SaveChanges();
 
-                newsInvDetailList.Add(newsInvDetail);
+                CustomerLedger cldgr = new CustomerLedger();
+                cldgr.particular = ldgr.particular;
+                cldgr.dateTime = ldgr.dateTime;
+                cldgr.credit = ldgr.credit;
+                cldgr.debit = 0; 
+                cldgr.branchId= ldgr.branchId;
+                var cust_tempCoaCode = _context.level4.Where(l => l.code == newsInvoice.customer.customerCode & l.branchId == tempBranchId).FirstOrDefault();
+                 if(cust_tempCoaCode != null)               
+                {
+                    cldgr.coaCode = cust_tempCoaCode.code;
+                }
+                else
+                {
+                    cldgr.coaCode = "";
+                }
+                cldgr.invCode = newsInvoice.customer.customerCode;
 
+                _context.CustomerLedger.Add(cldgr);
+                _context.SaveChanges();
+
+                CashAccountLedger caldgr = new CashAccountLedger(); 
+                caldgr.particular = ldgr.particular;
+                caldgr.dateTime = ldgr.dateTime;
+                caldgr.credit = 0;
+                caldgr.debit = 0;
+                caldgr.invCode = newsInvoice.account.accountCode;
+                caldgr.branchId = ldgr.branchId; 
+                var ca_tempCaoCode = _context.level4.Where(l=> l.code == newsInvoice.account.accountCode & l.branchId == tempBranchId).FirstOrDefault();
+                if (ca_tempCaoCode != null)
+                {
+                    caldgr.coaCode = ca_tempCaoCode.code;
+                }
+                else
+                {
+                    caldgr.coaCode = "";
+                }
+                _context.CashAccountLedger.Add(caldgr);
+                _context.SaveChanges(); 
+
+                //_context.pInvDetails.AddRange(newpInvDetailList);
+                //_context.SaveChanges();
+
+                return Ok();
             }
-            updateInvtory(newsInvoice.branchId, newsInvDetailList);
-
-            //_context.pInvDetails.AddRange(newpInvDetailList);
-            //_context.SaveChanges();
-
-            return (newsInvoice);
-
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        private HttpResponse postLedger(string tblName, string particular, DateTime dt, int credit, int debit)
-        {
-            HttpResponse response = null;
-
-            return response; 
-        }
+      
 
        
 

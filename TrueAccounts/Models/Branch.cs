@@ -15,6 +15,7 @@ namespace TrueAccounts.Models
         public List<Supplier> Supplier { get; set; }
         public List<CashAccount> CashAccount { get; set; }
         public List<PInvoice> pInvoices { get; set; }
+       
 
     }
 }

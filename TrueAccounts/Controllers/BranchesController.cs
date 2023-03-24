@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TrueAccounts.Data;
 using TrueAccounts.Dto;
 using TrueAccounts.Models;
+using TrueAccounts.Models.ChartAccount;
 
 namespace TrueAccounts.Controllers
 {
@@ -78,6 +79,15 @@ namespace TrueAccounts.Controllers
             return NoContent();
         }
 
+
+        [NonAction]
+        private string generateCode(string code, int brchId)
+        {
+            var coaCount = code + ((_context.level4
+                           .Where(l4 => l4.level3 == code )
+                           .Count() + 1).ToString("000"));
+            return coaCount.ToString();
+        }
         // POST: api/Branches
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -92,6 +102,24 @@ namespace TrueAccounts.Controllers
            
             _context.Branches.Add(newBranch);
             await _context.SaveChangesAsync();
+
+            level4 lvl4 = new level4();
+            lvl4.code = generateCode("50301", newBranch.id);
+            lvl4.name = branchRequest.branchName;
+            lvl4.level3 = "50301";
+            lvl4.branchId = newBranch.id;
+            _context.level4.Add(lvl4);
+            _context.SaveChanges();
+
+            Customer cust = new Customer();
+            cust.customerName = "Anomynous";
+            cust.customerNumber = "0000000";
+            cust.customerCurrentbalance = 0;
+            cust.customerAddress = "None";
+            cust.customerBranchId = newBranch.id;
+            cust.customerCode = lvl4.code;
+            _context.Customer.Add(cust);
+            _context.SaveChanges();
 
             return CreatedAtAction("GetBranch", new { id = newBranch.id }, newBranch);
         }

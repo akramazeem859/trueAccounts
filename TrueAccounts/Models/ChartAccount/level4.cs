@@ -7,6 +7,7 @@
         public string code { get; set; }
         public string level3 { get; set; }
         public string ledgerTbl { get; set; }
+        public int branchId { get; set; }
 
     }
 }

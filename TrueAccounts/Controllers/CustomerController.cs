@@ -87,9 +87,9 @@ namespace TrueAccounts.Controllers
         [NonAction]
         private string generateCode(string code)
         {
-            var coaCount = code + _context.level4
+            var coaCount = code + ((_context.level4
                            .Where(l4 => l4.level3 == code)
-                           .Count() + 1.ToString("000");
+                           .Count() + 1).ToString("000"));
             return coaCount.ToString();
         }
         // POST: api/Customer
@@ -102,6 +102,7 @@ namespace TrueAccounts.Controllers
             lvl4.code = generateCode("50301");
             lvl4.name = customerReq.customerName;
             lvl4.level3 = "50301";
+            lvl4.branchId = customerReq.customerBranchId;
             _context.level4.Add(lvl4);
             _context.SaveChanges(); 
 

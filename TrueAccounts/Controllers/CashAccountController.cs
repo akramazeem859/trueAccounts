@@ -84,36 +84,16 @@ namespace TrueAccounts.Controllers
         [NonAction]
         private string generateCode(string code)
         {
-            var coaCount = code + _context.level4
+            var coaCount = code + ((_context.level4
                            .Where(l4 => l4.level3 == code)
-                           .Count() + 1.ToString("000");
+                           .Count() + 1).ToString("000"));
             return coaCount.ToString();
         }
-
         // POST: api/CashAccount
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<CashAccount>> PostCashAccount(accountDto cashAccountRequest)
         {
-            level4 lvl4 = new level4();
-            if(cashAccountRequest.accountType == "Cash Account")
-            {
-                lvl4.code = generateCode("50501");
-                lvl4.name = cashAccountRequest.accountTitle;
-                lvl4.level3 = "50501";
-                _context.level4.Add(lvl4);
-                _context.SaveChanges();
-            }
-            else
-            {
-                lvl4.code = generateCode("50502");
-                lvl4.name = cashAccountRequest.accountTitle;
-                lvl4.level3 = "50502";
-                _context.level4.Add(lvl4);
-                _context.SaveChanges();
-            }
-           
-
             var newCashAccount = new CashAccount();
 
             newCashAccount.accountCode = "Acc-" + accountCount().ToString();
@@ -124,6 +104,27 @@ namespace TrueAccounts.Controllers
 
             _context.CashAccount.Add(newCashAccount);
             await _context.SaveChangesAsync();
+
+            level4 lvl4 = new level4();
+            if (cashAccountRequest.accountType == "Cash Account")
+            {
+                lvl4.code = generateCode("50501");
+                lvl4.name = cashAccountRequest.accountTitle;
+                lvl4.level3 = "50501";
+                lvl4.branchId = newCashAccount.accountBranchId;
+                _context.level4.Add(lvl4);
+                _context.SaveChanges();
+            }
+            else
+            {
+                lvl4.code = generateCode("50502");
+                lvl4.name = cashAccountRequest.accountTitle;
+                lvl4.level3 = "50502";
+                lvl4.branchId = newCashAccount.accountBranchId;
+                _context.level4.Add(lvl4);
+                _context.SaveChanges();
+            }
+
 
             return CreatedAtAction("GetCashAccount", new { id = newCashAccount.id }, newCashAccount);
         }

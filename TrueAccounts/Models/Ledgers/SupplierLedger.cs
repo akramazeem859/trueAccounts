@@ -1,6 +1,6 @@
 ﻿namespace TrueAccounts.Models.Ledgers
 {
-    public class SaleLedger:Ledger
+    public class SupplierLedger : Ledger
     {
        
     }
