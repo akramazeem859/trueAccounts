@@ -10,6 +10,7 @@ import { ProductionComponent } from './production/production.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { MainComponent } from './Components/main/main.component';
+import { FinancialComponent } from './Financial/financial.component';
 
 
 
@@ -43,6 +44,11 @@ const routes: Routes = [
   { path: 'purchase', 
     component:PurchaseComponent,
    loadChildren: () => import('./purchase/purchase.module').then(m => m.PurchaseModule) 
+  },
+
+  { path: 'financial', 
+    component:FinancialComponent,
+   loadChildren: () => import('./Financial/financial.module').then(m => m.FinancialModule) 
   },
 
 

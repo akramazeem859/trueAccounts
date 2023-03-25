@@ -18,6 +18,7 @@ import { SaleModule } from 'src/app/sale/sale.module';
 import { ProductionModule } from './production/production.module';
 import { PurchaseModule } from './purchase/purchase.module';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from "ngx-ui-loader";
+import { FinancialModule } from './Financial/financial.module';
 
 const routes: Routes = [];
 
@@ -25,7 +26,7 @@ const routes: Routes = [];
   declarations: [
     AppComponent
 
- 
+    
   ],
   imports: [
     BrowserModule,
@@ -42,7 +43,8 @@ const routes: Routes = [];
     PurchaseModule,
     NgSelectModule,
     NgxUiLoaderModule,
-    NgxUiLoaderHttpModule.forRoot({ showForeground: true })
+    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
+    FinancialModule
 
     
   ],
