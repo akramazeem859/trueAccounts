@@ -23,18 +23,19 @@
                 "src/assets"
               ],
               "styles": [
-                "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-                "node_modules/@ng-select/ng-select/themes/default.theme.css",
+                "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+               
+                "./node_modules/@ng-select/ng-select/themes/default.theme.css",
                 "src/assets/plugins/select2/css/select2.min.css",
-                "node_modules/ngx-toastr/toastr.css",
-                "node_modules/daterangepicker/daterangepicker.css"
+                "./node_modules/ngx-toastr/toastr.css",
+                "./node_modules/daterangepicker/daterangepicker.css"
               ],
               "scripts": [
                 "src/assets/plugins/jquery/jquery.js",
                 "src/assets/dist/js/adminlte.js",
                 "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
                 "src/assets/plugins/select2/js/select2.full.min.js",
-                "node_modules/daterangepicker/daterangepicker.js"
+                "./node_modules/daterangepicker/daterangepicker.js"
                 
               ]
             },
@@ -104,6 +105,8 @@
                 "src/assets"
               ],
               "styles": [
+                "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+                
                 "src/styles.css"
               ],
               "scripts": []

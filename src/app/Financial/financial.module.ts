@@ -5,6 +5,9 @@ import { FinancialRoutingModule } from './financial-routing.module';
 
 import { JournalVoucherComponent } from './Voucher/JournalVoucher/journal-voucher.component';
 import { FinancialComponent } from './financial.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from 'src/Material-Module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -14,7 +17,11 @@ import { FinancialComponent } from './financial.component';
   ],
   imports: [
     CommonModule,
-    FinancialRoutingModule
+    FinancialRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    MatDatepickerModule,
   ],
   exports:[
     FinancialComponent,
