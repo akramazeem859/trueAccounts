@@ -5,7 +5,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { NgSelectModule } from '@ng-select/ng-select';
+
+
 import { MaterialModule } from 'src/Material-Module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +20,7 @@ import { ProductionModule } from './production/production.module';
 import { PurchaseModule } from './purchase/purchase.module';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from "ngx-ui-loader";
 import { FinancialModule } from './Financial/financial.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [];
 
@@ -41,10 +43,12 @@ const routes: Routes = [];
     AdminModule,
     ProductionModule,
     PurchaseModule,
-    NgSelectModule,
     NgxUiLoaderModule,
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
-    FinancialModule
+    FinancialModule,
+    FontAwesomeModule,
+
+
 
     
   ],
@@ -52,7 +56,7 @@ const routes: Routes = [];
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
-   
+    
   ],
   providers: [
     DatePipe

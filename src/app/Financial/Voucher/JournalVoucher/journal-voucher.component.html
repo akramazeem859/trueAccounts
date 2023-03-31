@@ -27,21 +27,22 @@
             </div>
           </div>
 
-          <div class="form-row mb-3">
-            <table class="table table-bordered" formArrayName="detail">
+          <div class="form-row mb-3 col-12">
+            <table class="table table-bordered fixed" table-layout="fixed" formArrayName="detail">
               <thead class="bg-primary text-white">
-                <th>Sr#</th>
+                <th style="width: 5%" >Sr#</th>
                 <th style="width: 30%">Party/Account</th>
-                <th>Description</th>
-                <th>Credit</th>
-                <th>Debit</th>
+                <th style="width: 30%">Description</th>
+                <th style="width: 10%">Credit</th>
+                <th style="width: 10%">Debit</th>
+                <th style="width: 5%">Action</th>
               </thead>
               <tbody>
                 <tr *ngFor="let item of invProducts().controls ; index as i" [formGroupName]="i">
-                  <td>{{i+1}}</td>
-                  <td>
+                  <td style="width: 5%" >{{i+1}}</td>
+                  <td style="width: 30%">
 
-                    <mat-form-field class="example-full-width" style="width: 100%">
+                    <mat-form-field class="autocom" >
                         <mat-label>Party/Account</mat-label>
                         <input
                           type="text"
@@ -56,7 +57,7 @@
                           (optionSelected)="findAccount($event)"
                         >
                           <mat-option
-                            *ngFor="let option of filteredOptions | async"
+                            *ngFor="let option of filteredOptions[i] | async "
                             [value]="option.code"
                           >
                             {{ option.name }}
@@ -66,29 +67,42 @@
                       
                   </td>
                   
-                  <td>
-                    <mat-form-field appearance="fill" style="width: 100%">
+                  <td style="width: 30%">
+                    <mat-form-field appearance="fill">
                     <mat-label>Description</mat-label>
-                    <input matInput formControlName="description" width="100" />
+                    <input matInput formControlName="description" />
                     </mat-form-field>
                   </td>
 
-                  <td> 
-                    <mat-form-field appearance="fill" style="width: 100%">
+                  <td style="width: 10%"> 
+                    <mat-form-field appearance="fill"  >
                         <mat-label>credit</mat-label>
-                        <input matInput formControlName="credit" width="100" />
+                        <input matInput formControlName="credit"/>
                         </mat-form-field>
                   </td>
 
-                  <td>
-                    <mat-form-field appearance="fill" style="width: 100%">
+                  <td style="width: 10%">
+                    <mat-form-field appearance="fill" >
                         <mat-label>debit</mat-label>
-                        <input matInput formControlName="debit" width="100" />
+                        <input matInput formControlName="debit" />
                         </mat-form-field>
+                  </td>
+                  <td tyle="width: 5%">
+                    <button class="btn btn-danger" (click)="removeItem(i)">
+                      <span><fa-icon [icon]="faTrash"></fa-icon></span>
+                    </button>
                   </td>
                 </tr>
               </tbody>
               <tfoot>
+                <tr>
+                  <td></td>
+                  <td>Total :</td>
+                  <td></td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td></td>
+                </tr>
                 <a (click)="addDetail()" class="btn btn-success">[+]</a>
               </tfoot>
             </table>

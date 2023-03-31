@@ -9,7 +9,7 @@ import { PurchasereturnComponent } from './voucher/purchasereturn/purchasereturn
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PurchaceInvoiceComponent } from './voucher/purchace-invoice/purchace-invoice.component';
-import { NgSelectModule } from '@ng-select/ng-select';
+
 import { SupplierlistingComponent } from './report/supplierReport/supplierlisting/supplierlisting.component';
 
 
@@ -27,7 +27,7 @@ import { SupplierlistingComponent } from './report/supplierReport/supplierlistin
     CommonModule,
     PurchaseRoutingModule,
     FormsModule,
-    NgSelectModule,
+ 
     ReactiveFormsModule
   ],
   exports:[

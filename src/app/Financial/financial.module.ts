@@ -8,6 +8,8 @@ import { FinancialComponent } from './financial.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/Material-Module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
@@ -22,9 +24,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     ReactiveFormsModule,
     MaterialModule,
     MatDatepickerModule,
+    FontAwesomeModule,
+    MatTableModule
+  
   ],
   exports:[
     FinancialComponent,
+    
   ]
 })
-export class FinancialModule { }
+export class FinancialModule { 
+  
+}

@@ -8,7 +8,7 @@ import { SaleRoutingModule } from './sale-routing.module';
 import { SaleComponent } from './sale.component';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule } from 'src/Material-Module';
-import { NgSelectModule } from '@ng-select/ng-select';
+
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { SaleInvoiceComponent } from './voucher/sale-invoice/sale-invoice.component';
@@ -29,7 +29,7 @@ import { CustomerRatesComponent } from './customer/CustomerRates/customer-rates.
     SaleRoutingModule,
     ToastrModule,
     MaterialModule,
-    NgSelectModule,
+
     MatDatepickerModule,
    
  
