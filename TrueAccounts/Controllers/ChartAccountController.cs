@@ -167,6 +167,9 @@ namespace TrueAccounts.Controllers
                          select c).ToList().Count;
 
             l4.code = l4Req.level3 + (count + 1).ToString("000");
+            l4.branchId = l4Req.branchId;
+            l4.ledgerTbl = l4Req.ledgerTbl;
+
             _context.level4.Add(l4);
             await _context.SaveChangesAsync();
 
