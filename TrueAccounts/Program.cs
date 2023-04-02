@@ -22,7 +22,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<trueAccountsDbcontext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("azureConnectioniString"))) ;
+    options.UseSqlServer(builder.Configuration.GetConnectionString("trueAccountsConnectionString"))) ;
 
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);

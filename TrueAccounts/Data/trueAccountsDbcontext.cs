@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrueAccounts.Models;
 using TrueAccounts.Models.ChartAccount;
+using TrueAccounts.Models.Ledgers;
 
 namespace TrueAccounts.Data
 {
@@ -36,6 +37,10 @@ namespace TrueAccounts.Data
         public DbSet<TrueAccounts.Models.Ledgers.PurchaseLedger> PurchaseLedger { get; set; }
         public DbSet<TrueAccounts.Models.Ledgers.CustomerLedger> CustomerLedger { get; set; }
         public DbSet<TrueAccounts.Models.Ledgers.SupplierLedger> supplierLedger { get; set; }
-        public DbSet<TrueAccounts.Models.Ledgers.CashAccountLedger> CashAccountLedger { get; set; } 
+        public DbSet<TrueAccounts.Models.Ledgers.CashAccountLedger> CashAccountLedger { get; set; }
+        public DbSet<TrueAccounts.Models.Ledgers.JournalLedger> JournalLedger { get; set; }
+        public DbSet<TrueAccounts.Models.Ledgers.Ledger> Ledger { get; set; }
+        public DbSet<TrueAccounts.Models.JVInvoice> JVInvoice { get; set; }
+        public DbSet<TrueAccounts.Models.JVInvDetail> JVInvDetails { get; set; }
     }
 }
