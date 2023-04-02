@@ -1,138 +1,294 @@
 <div class="containter">
-    <div class="row">
-        <div class="card col-12">
-            <div class="card-header">
-                Chart of Account               
-            </div>
-            <div class="card-body">
+    <div class="card col-12">
+        <div class="card-header">
+           <h3> Add Chart of Accounts</h3>
+        </div>
+        <div class="card-body">
+            <form #level1form="ngForm" name="level1form" class="col-12">
                 <div class="form-row mb-3">
-
-                    <form #level1form="ngForm" name="level1form" class="col-12">
-                        <div class="col">
-                            <label for="level1txt">Main Head</label>
-                            <input type="text" id="level1txt" class="form-control col-12" name="name" ngModel >
-                            <br>
-                            <button type="button" class="btn btn-primary" (click)="addLevel1(level1form)">Add Record</button>
-                        </div>
-                    </form>
-
-
-                    <br>
-                    <hr style="border:2px;">
-                   
-
-                    <form #level2form="ngForm" name="level2form" class="col-12">
-                        <div class="col">
-                            <label for="level1txt">Main Head</label>
-
-                            <select class="form-control" name="level1" ngModel>
-                                <option *ngFor="let item of level1list" [value]="item.code">{{item.name}}</option>
-                            </select>
-                            
-                            <label for="level1txt">Name Level2 Head</label>
-                            <input type="text" id="level2txt" class="form-control col-12" name="name" ngModel >
-
-                            <br>
-                            <button type="button" class="btn btn-primary" (click)="addLevel2(level2form)">Add Record</button>
-                        </div>
-                    </form>
-
-                    <form #level3form="ngForm" name="level3form" class="col-12">
-                        <div class="col">
-                            <label for="level1txt">Main Head</label>
-
-                            <select class="form-control" name="level1-3" (change)="getlevel2($event)"  ngModel>
-                                <option *ngFor="let item of level1list" [value]="item.code">{{item.name}}</option>
-                            </select>
-                            
-                            <label for="level1txt">Name Level2 Head</label>
-                            <select class="form-control" name="level2" ngModel >
-                                <option >Select option</option>
-                                <option *ngFor="let item of level2list|coaFilter:templvl2:'level1'" [selected]="-1" [value]="item.code">{{item.name}}</option>
-                            </select>
-
-                            <label for="level3txt">Name Level3 Head</label>
-                            <input type="text" id="level3txt" class="form-control col-12" name="name" ngModel >
-                            
-                            <br>
-                            <button type="button" class="btn btn-primary" (click)="addLevel3(level3form)">Add Record</button>
-                        </div>
-                    </form>
-                    
-                </div>
-            </div>
-            <div class="card-footer">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="card col-12">
-            <div class="card-header">
-                <h2>Add Level4 Account</h2>
-            </div>
-            <div class="card-body">
-                <form #level4form="ngForm" name="level4form" class="col-12">
                     <div class="col">
-
-                        <label for="level1txt">Main Head</label>
-                        <select class="form-control" name="level1-3" (change)="getlevel2($event)"  ngModel>
-                            <option *ngFor="let item of level1list" [value]="item.code">{{item.name}}</option>
-                        </select>
-
-                        <label for="level2txt">Name Level2 Head</label>
-                        <select class="form-control" name="level2" ngModel (change)="getlevel3($event)" >
-                            <option >Select option</option>
-                            <option *ngFor="let item of level2list|coaFilter:templvl2:'level1'"  [selected]="-1" [value]="item.code">{{item.name}}</option>
-                        </select>
-
-                        <label for="level3txt">Name Level3 Head</label>
-                        <select class="form-control" name="level3" ngModel >
-                            <option >Select option</option>
-                            <option *ngFor="let item of level3list|coaFilter:templvl3:'level2'" [selected]="-1" [value]="item.code">{{item.name}}</option>
-                        </select>
-
-                        <label for="level4txt">Name Level4 Head</label>
-                        <input type="text" id="level4txt" class="form-control col-12" name="name" ngModel >
-
-                            
-                        <br>
-                        <button type="button" class="btn btn-primary" (click)="addLevel4(level4form)">Add Record</button>
+                        <input type="text" id="level1txt" placeholder="Add Main Head" class="form-control col-12"
+                            name="name" ngModel />
                     </div>
-                </form>
-            </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" (click)="addLevel1(level1form)">
+                            Add Main Head
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <hr />
+
+            <form #level2form="ngForm" name="level2form" class="col-12">
+                <div class="form-row mb-3">
+                    <div class="col">
+                        <select class="form-control" name="level1" ngModel>
+                            <option selected="true">Select Main Head</option>
+                            <option *ngFor="let item of level1list" [value]="item.code">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <input type="text" id="level2txt" placeholder="Enter Level 2 Name" class="form-control col-12" name="name" ngModel />
+                    </div>
+
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" (click)="addLevel2(level2form)">
+                            Add Level 1
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <hr />
+
+            <form #level3form="ngForm" name="level3form" class="col-12">
+                <div class="form-row mb-3">
+                    <div class="col">
+                        <select class="form-control" name="level1-3" (change)="getlevel2($event)" ngModel>
+                            <option *ngFor="let item of level1list" [value]="item.code">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select class="form-control" name="level2" ngModel>
+                            <option (select)="true">Select option</option>
+                            <option *ngFor="let item of level2list | coaFilter : templvl2:'level1'" [selected]="-1" [value]="item.code">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input type="text" id="level3txt" placeholder="Enter Level3 Name" class="form-control col-12" name="name" ngModel />
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" (click)="addLevel3(level3form)">
+                            Add Level 3
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="card col-12">
+        <div class="card-header">
+            <h3>Add Level4 Account</h3>
+        </div>
+        <div class="card-body">
+            <form #level4form="ngForm" name="level4form" class="col-12">
+                <div class="col">
+                    <label for="level1txt">Main Head</label>
+                    <select class="form-control" name="level1-3" (change)="getlevel2($event)" ngModel>
+                        <option *ngFor="let item of level1list" [value]="item.code">
+                            {{ item.name }}
+                        </option>
+                    </select>
+
+                    <label for="level2txt">Name Level2 Head</label>
+                    <select class="form-control" name="level2" ngModel (change)="getlevel3($event)">
+                        <option>Select option</option>
+                        <option *ngFor="let item of level2list | coaFilter : templvl2 : 'level1'" [selected]="-1"
+                            [value]="item.code">
+                            {{ item.name }}
+                        </option>
+                    </select>
+
+                    <label for="level3txt">Name Level3 Head</label>
+                    <select class="form-control" name="level3" ngModel>
+                        <option>Select option</option>
+                        <option *ngFor="let item of level3list | coaFilter : templvl3 : 'level2'" [selected]="-1"
+                            [value]="item.code">
+                            {{ item.name }}
+                        </option>
+                    </select>
+
+                    <label for="level4txt">Name Level4 Head</label>
+                    <input type="text" id="level4txt" class="form-control col-12" name="name" ngModel />
+
+                    <br />
+                    <button type="button" class="btn btn-primary" (click)="addLevel4(level4form)">
+                        Add Record
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="row">
-        <div class="card col-12">
-            <div class="card-header">
-                <h2>Chart Of Accounts</h2>
-            </div>
+</div>
+
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne">
+                    1 - Capital & Reserve
+                </button>
+            </h5>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
-                <ul class="list-group" *ngFor="let l1 of level1list"><h2>{{l1.code}}-{{l1.name}}</h2>
-                    <ul class="list-group-item" *ngFor="let l2 of level2list|coaFilter:l1.code:'level1'"><th>{{l2.code}} - {{l2.name}}</th>
-                        <ul class="list-group-item" *ngFor="let l3 of level3list|coaFilter:l2.code:'level2'"><th>{{l3.code}} - {{l3.name}}</th>
-                            <li class="list-group-item" *ngFor="let l4 of level4list|coaFilter:l3.code:'level3'">{{l4.code}} - {{l4.name}}</li>
-                        </ul>
+                <ul class="list-group-item" *ngFor="let l2 of level2list | coaFilter : '1' : 'level1'">
+                    <th>{{ l2.code }} - {{ l2.name }}</th>
+                    <ul class="list-group-item" *ngFor="let l3 of level3list | coaFilter : l2.code : 'level2'">
+                        <th>{{ l3.code }} - {{ l3.name }}</th>
+                        <li class="list-group-item" *ngFor="let l4 of level4list | coaFilter : l3.code : 'level3'">
+                            {{ l4.code }} - {{ l4.name }}
+                        </li>
                     </ul>
                 </ul>
             </div>
-
-
         </div>
     </div>
-    <div class="row">
-        <div class="card col-12">
-            <div class="card-header">
-                <h2>Chart of Accounts</h2>
-            </div>
+
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    2 - Non Current Liabilities
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
             <div class="card-body">
-                <table class="table table-bordered">
-                <thead>
-                    <th *ngFor="let l1 of level1list">{{l1.name}}</th>
-                </thead>
-                </table>
+                <ul class="list-group-item" *ngFor="let l2 of level2list | coaFilter : '2' : 'level1'">
+                    <th>{{ l2.code }} - {{ l2.name }}</th>
+                    <ul class="list-group-item" *ngFor="let l3 of level3list | coaFilter : l2.code : 'level2'">
+                        <th>{{ l3.code }} - {{ l3.name }}</th>
+                        <li class="list-group-item" *ngFor="let l4 of level4list | coaFilter : l3.code : 'level3'">
+                            {{ l4.code }} - {{ l4.name }}
+                        </li>
+                    </ul>
+                </ul>
             </div>
-            
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="false" aria-controls="collapseThree">
+                    3 - Current Liabilities
+                </button>
+            </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group-item" *ngFor="let l2 of level2list | coaFilter : '3' : 'level1'">
+                    <th>{{ l2.code }} - {{ l2.name }}</th>
+                    <ul class="list-group-item" *ngFor="let l3 of level3list | coaFilter : l2.code : 'level2'">
+                        <th>{{ l3.code }} - {{ l3.name }}</th>
+                        <li class="list-group-item" *ngFor="let l4 of level4list | coaFilter : l3.code : 'level3'">
+                            {{ l4.code }} - {{ l4.name }}
+                        </li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingFour">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
+                    aria-expanded="false" aria-controls="collapseFour">
+                    4 - Non Current Assets
+                </button>
+            </h5>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group-item" *ngFor="let l2 of level2list | coaFilter : '4' : 'level1'">
+                    <th>{{ l2.code }} - {{ l2.name }}</th>
+                    <ul class="list-group-item" *ngFor="let l3 of level3list | coaFilter : l2.code : 'level2'">
+                        <th>{{ l3.code }} - {{ l3.name }}</th>
+                        <li class="list-group-item" *ngFor="let l4 of level4list | coaFilter : l3.code : 'level3'">
+                            {{ l4.code }} - {{ l4.name }}
+                        </li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingFive">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
+                    aria-expanded="false" aria-controls="collapseFive">
+                    5 - Current Assets
+                </button>
+            </h5>
+        </div>
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group-item" *ngFor="let l2 of level2list | coaFilter : '5' : 'level1'">
+                    <th>{{ l2.code }} - {{ l2.name }}</th>
+                    <ul class="list-group-item" *ngFor="let l3 of level3list | coaFilter : l2.code : 'level2'">
+                        <th>{{ l3.code }} - {{ l3.name }}</th>
+                        <li class="list-group-item" *ngFor="let l4 of level4list | coaFilter : l3.code : 'level3'">
+                            {{ l4.code }} - {{ l4.name }}
+                        </li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingSix">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix"
+                    aria-expanded="false" aria-controls="collapseFive">
+                    6 - Revenue
+                </button>
+            </h5>
+        </div>
+        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group-item" *ngFor="let l2 of level2list | coaFilter : '6' : 'level1'">
+                    <th>{{ l2.code }} - {{ l2.name }}</th>
+                    <ul class="list-group-item" *ngFor="let l3 of level3list | coaFilter : l2.code : 'level2'">
+                        <th>{{ l3.code }} - {{ l3.name }}</th>
+                        <li class="list-group-item" *ngFor="let l4 of level4list | coaFilter : l3.code : 'level3'">
+                            {{ l4.code }} - {{ l4.name }}
+                        </li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingSeven">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven"
+                    aria-expanded="false" aria-controls="collapseSeven">
+                    7 - Expense
+                </button>
+            </h5>
+        </div>
+        <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group-item" *ngFor="let l2 of level2list | coaFilter : '7' : 'level1'">
+                    <th>{{ l2.code }} - {{ l2.name }}</th>
+                    <ul class="list-group-item" *ngFor="let l3 of level3list | coaFilter : l2.code : 'level2'">
+                        <th>{{ l3.code }} - {{ l3.name }}</th>
+                        <li class="list-group-item" *ngFor="let l4 of level4list | coaFilter : l3.code : 'level3'">
+                            {{ l4.code }} - {{ l4.name }}
+                        </li>
+                    </ul>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

@@ -36,7 +36,9 @@ export class JournalVoucherComponent implements OnInit {
 
   detailArray !: FormArray; 
   public jvform = new FormGroup({
-    newDate : new FormControl(new Date()),
+    Particular: new FormControl(''),
+    Remarks: new FormControl(''),
+    DateTime : new FormControl(new Date()),
     detail: this.builder.array([]),
     
   })

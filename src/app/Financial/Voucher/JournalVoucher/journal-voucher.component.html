@@ -4,6 +4,7 @@
       <div class="card col">
         <div class="card-header"><h4>Journal Voucher</h4></div>
         <div class="card-body">
+
           <div class="form-row mb-3">
 
             <div class="col">
@@ -14,9 +15,16 @@
             </div>
 
             <div class="col">
+              <mat-form-field appearance="fill" style="width: 100%">
+                <mat-label>Particular</mat-label>
+                <input matInput formControlName="Particular" width="100" />
+              </mat-form-field>
+            </div>
+
+            <div class="col">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Date</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="newDate">
+                    <input matInput [matDatepicker]="picker" formControlName="DateTime">
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -97,8 +105,16 @@
               <tfoot>
                 <tr>
                   <td></td>
+                 
+                  <td>
+                    <div class="col">
+                      <mat-form-field appearance="fill" style="width: 100%">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput formControlName="Remarks" width="100" />
+                      </mat-form-field>
+                    </div>
+                  </td>
                   <td>Total :</td>
-                  <td></td>
                   <td>0</td>
                   <td>0</td>
                   <td></td>
