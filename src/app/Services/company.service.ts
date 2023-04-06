@@ -26,6 +26,7 @@ import { level1 } from '../Models/COA/level1.model';
 import { level2 } from '../Models/COA/level2.model';
 import { level3 } from '../Models/COA/level3.model';
 import { level4 } from '../Models/COA/level4.model';
+import { jvInvoice } from '../Models/jvInvoice.model';
 
 
 @Injectable({
@@ -208,6 +209,10 @@ export class CompanyService {
   addSInvoice(sInvoiceRequest : sInvoiceDTO):Observable<sInvoice>{
     return this.http.post<sInvoice>(this.baseApiUrl+'/api/sInvoice', sInvoiceRequest);
   }
+  addJVInvoice(jvinvoiceRequest : jvInvoice):Observable<jvInvoice>{
+    return this.http.post<jvInvoice>(this.baseApiUrl+"/api/JVInvoice",jvinvoiceRequest);
+  }
+
   addCustomerRate(cusRateDTO : cusRateDTO[]):Observable<customerRates>{
     return this.http.post<customerRates>(this.baseApiUrl+'/api/customerRate', cusRateDTO);
   }
