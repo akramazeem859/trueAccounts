@@ -81,9 +81,10 @@ namespace TrueAccounts.Controllers
         {
             try
             {
+                int sInvCount = (from j in _context.JVInvoice where j.DateTime.Month == System.DateTime.Now.Month select s).Count() + 1;
                 var jvInv = new JVInvoice();
-                jvInv.Id = jV.Id;
-                jvInv.Code = jV.Code;
+                //jvInv.Id = jV.Id;
+                jvInv.Code = "JV" + System.DateTime.Now.Year + System.DateTime.Now.Month.ToString("00") + sInvCount.ToString("00000");
                 jvInv.Particular = jV.Particular;
                 jvInv.DateTime = jV.DateTime;
                 jvInv.Remarks = jV.Remarks;
@@ -91,19 +92,20 @@ namespace TrueAccounts.Controllers
                 jvInv.UserId = jV.UserId;
                 jvInv.EnterDt = jV.EnterDt;
 
-                _context.JVInvoice.Add(jV);
+              //  _context.JVInvoice.Add(jV);
                 await _context.SaveChangesAsync();
 
                 foreach(JVInvDetail item in jV.Detail) { 
                 
                     var jvd = new JVInvDetail();
-                    jvd.Id = item.Id;
+                   // jvd.Id = item.Id;
                     jvd.Particular = item.Particular;
                     jvd.CoaCode= item.CoaCode;
                     jvd.Credit = item.Credit;
                     jvd.Debit  = item.Debit;
+                    jvd.JvInvId = jvInv.Id;
 
-                    _context.JVInvDetails.Add(jvd);
+                 //   _context.JVInvDetails.Add(jvd);
                     await _context.SaveChangesAsync();  
                 }
             }
