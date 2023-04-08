@@ -1,6 +1,6 @@
-﻿namespace TrueAccounts.Models.Repository
+﻿namespace TrueAccounts.Models
 {
-    public class InvoicRepository
+    public class Invoice
     {
         public int Id { get; set; }
         public string Code { get; set; }
@@ -8,9 +8,9 @@
         public DateTime DateTime { get; set; }
         public int BranchId { get; set; }
         public Branch Branch { get; set; }
-        public int UserId { get; set; } 
+        public int UserId { get; set; }
         public DateTime EnterDt { get; set; }
-        public string Remarks { get; set; } 
+        public string Remarks { get; set; }
 
 
     }

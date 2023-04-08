@@ -1,8 +1,7 @@
-﻿using TrueAccounts.Models.Repository;
-
+﻿
 namespace TrueAccounts.Models
 {
-    public class JVInvoice: InvoicRepository
+    public class JVInvoice : Invoice
     {
 
     }

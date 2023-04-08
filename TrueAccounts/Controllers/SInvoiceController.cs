@@ -210,7 +210,7 @@ namespace TrueAccounts.Controllers
 
                 int sInvCount = (from s in _context.SInvoice where s.datetime.Month == System.DateTime.Now.Month select s).Count() + 1;
                 var newsInvoice = new SInvoice();
-                newsInvoice.code = "SI" + System.DateTime.Now.Year + System.DateTime.Now.Month.ToString("00") + sInvCount.ToString("00000");
+                newsInvoice.code = "SI" + System.DateTime.Now.Year + System.DateTime.Now.Month.ToString("00") + sInvCount.ToString("0000");
                 newsInvoice.payable = sInvRequest.payable;
                 newsInvoice.paid = sInvRequest.paid;
                 newsInvoice.customerId = sInvRequest.customerId;

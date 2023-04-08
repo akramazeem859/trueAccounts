@@ -81,31 +81,31 @@ namespace TrueAccounts.Controllers
         {
             try
             {
-                int sInvCount = (from j in _context.JVInvoice where j.DateTime.Month == System.DateTime.Now.Month select s).Count() + 1;
+                int jInvCount = (from j in _context.JVInvoice where j.DateTime.Month == System.DateTime.Now.Month select j).Count() + 1;
                 var jvInv = new JVInvoice();
                 //jvInv.Id = jV.Id;
-                jvInv.Code = "JV" + System.DateTime.Now.Year + System.DateTime.Now.Month.ToString("00") + sInvCount.ToString("00000");
-                jvInv.Particular = jV.Particular;
+                jvInv.Code = "JV" + System.DateTime.Now.Year + System.DateTime.Now.Month.ToString("00") + jInvCount.ToString("0000");
+                jvInv.Particular = jvInv.Code +" - " +jV.Particular;
                 jvInv.DateTime = jV.DateTime;
                 jvInv.Remarks = jV.Remarks;
-                jvInv.BranchId = jV.BranchId;
-                jvInv.UserId = jV.UserId;
-                jvInv.EnterDt = jV.EnterDt;
+                jvInv.BranchId = 1;
+                jvInv.UserId = 1;
+                jvInv.EnterDt = System.DateTime.UtcNow;
 
-              //  _context.JVInvoice.Add(jV);
-                await _context.SaveChangesAsync();
+                _context.JVInvoice.Add(jvInv);
+                _context.SaveChanges();
 
-                foreach(JVInvDetail item in jV.Detail) { 
+                foreach(JVDetailDTO item in jV.Detail) { 
                 
                     var jvd = new JVInvDetail();
-                   // jvd.Id = item.Id;
-                    jvd.Particular = item.Particular;
+                    //jvd.Id = 0 ;
+                    jvd.Description = item.Description;
                     jvd.CoaCode= item.CoaCode;
                     jvd.Credit = item.Credit;
                     jvd.Debit  = item.Debit;
                     jvd.JvInvId = jvInv.Id;
 
-                 //   _context.JVInvDetails.Add(jvd);
+                   // _context.JVInvDetails.Add(jvd);
                     await _context.SaveChangesAsync();  
                 }
             }
@@ -116,7 +116,7 @@ namespace TrueAccounts.Controllers
             }
            
 
-            return CreatedAtAction("GetJVInvoice", new { id = jV.Id }, jV);
+            return CreatedAtAction("GetJVInvoice", new { id = jV.Code }, jV);
         }
 
         // DELETE: api/JVInvoice/5
