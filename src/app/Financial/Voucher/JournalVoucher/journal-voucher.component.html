@@ -36,7 +36,7 @@
           </div>
 
           <div class="form-row mb-3 col-12">
-            <table class="table table-bordered fixed" table-layout="fixed" formArrayName="detail">
+            <table class="table table-bordered fixed" table-layout="fixed" formArrayName="Detail">
               <thead class="bg-primary text-white">
                 <th style="width: 5%" >Sr#</th>
                 <th style="width: 30%">Party/Account</th>
@@ -57,7 +57,7 @@
                           placeholder="Pick one"
                           aria-label="Number"
                           matInput
-                          formControlName="newlevel"
+                          formControlName="CoaCode"
                           [matAutocomplete]="auto"
                         />
                         <mat-autocomplete
@@ -78,21 +78,21 @@
                   <td style="width: 30%">
                     <mat-form-field appearance="fill">
                     <mat-label>Description</mat-label>
-                    <input matInput formControlName="description" />
+                    <input matInput formControlName="Description" />
                     </mat-form-field>
                   </td>
 
                   <td style="width: 10%"> 
                     <mat-form-field appearance="fill"  >
                         <mat-label>credit</mat-label>
-                        <input matInput formControlName="credit"/>
+                        <input type="number" matInput formControlName="Credit" (change)="totalCredit()" />
                         </mat-form-field>
                   </td>
 
                   <td style="width: 10%">
                     <mat-form-field appearance="fill" >
                         <mat-label>debit</mat-label>
-                        <input matInput formControlName="debit" />
+                        <input type="number" matInput formControlName="Debit" (change)="totalDebit()" />
                         </mat-form-field>
                   </td>
                   <td tyle="width: 5%">
@@ -102,39 +102,40 @@
                   </td>
                 </tr>
               </tbody>
+
               <tfoot>
                 <tr>
                   <td></td>
-                 
                   <td>
-                    <div class="col">
-                      <mat-form-field appearance="fill" style="width: 100%">
-                        <mat-label>Remarks</mat-label>
-                        <input matInput formControlName="Remarks" width="100" />
-                      </mat-form-field>
-                    </div>
+                    
                   </td>
                   <td>Total :</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td>{{tCr}}</td>
+                  <td>{{tDr}}</td>
                   <td></td>
                 </tr>
                 <a (click)="addDetail()" class="btn btn-success">[+]</a>
               </tfoot>
+
             </table>
           </div>
 
           <div class="form-row">
-            <button
-              type="button"
-              class="btn btn-primary mr-2"
-              (click)="SaveJv()"
-            >
-              Save Invoice
-            </button>
+            <div class="col">
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label>Remarks</mat-label>
+                  <input matInput formControlName="Remarks" width="100" />
+                </mat-form-field>
+              </div>
+           </div>
+
+          <div class="form-row">
+            <button type="button" class="btn btn-primary mr-2"
+              (click)="SaveJv()">Save Invoice</button>
             <button type="button" class="btn btn-warning mr-2">Edit</button>
             <button type="button" class="btn btn-danger">Delete</button>
           </div>
+
         </div>
       </div>
     </div>

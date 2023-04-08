@@ -24,6 +24,11 @@ export class JournalVoucherComponent implements OnInit {
 
 
   lvl4List !: level4[];
+  invoiceDetail : FormArray<any>;
+  tCr : number = 0; 
+  tDr : number = 0;
+  totalCr : string = '';
+  tempCount: number = 0;
 
   /**
    *
@@ -39,7 +44,7 @@ export class JournalVoucherComponent implements OnInit {
     Particular: new FormControl(''),
     Remarks: new FormControl(''),
     DateTime : new FormControl(new Date()),
-    detail: this.builder.array([]),
+    Detail: this.builder.array([]),
     
   })
    
@@ -52,8 +57,8 @@ export class JournalVoucherComponent implements OnInit {
   }
 
   ManageNameControl(index: number) {
-    var arrayControl = this.jvform.get('detail') as FormArray;
-    this.filteredOptions[index] = arrayControl.at(index).get('newlevel').valueChanges
+    var arrayControl = this.jvform.get('Detail') as FormArray;
+    this.filteredOptions[index] = arrayControl.at(index).get('CoaCode').valueChanges
       .pipe(
       startWith(''),
       map(value => this._filter(value || ''))
@@ -77,12 +82,55 @@ export class JournalVoucherComponent implements OnInit {
 
   SaveJv(){
 
-    console.log(this.jvform.value);
+    var detailArray = this.jvform.get('Detail')as FormArray; 
+
+    if(detailArray.length > 0){
+      console.log("detail length row :"+detailArray.length);
+      console.log(this.jvform.value);
+
+      if(this.tCr == this.tDr){
+        this.service.addJVInvoice(this.jvform.value).subscribe({
+          next: inv =>{
+            this.alert.success("Record Entered Successfully.","Successful!");
+          },
+          error: err =>{
+            this.alert.warning("Something went goes wrong from server", "Something Wrong!" )
+          }
+        })
+      }
+      else{
+        this.alert.warning("Total Credit and Debit doesn't match","Balance Mismatch!");
+      }
+    }
+    else{
+      this.alert.warning("No record found to be added.","Something Goes Wrong.")
+    }
+   
+  }
+  totalCredit(){
+    this.detailArray = this.jvform.get('Detail')as FormArray;
+    let totalCr = this.jvform.getRawValue().Detail; 
+    this.tCr = 0;
+    totalCr.forEach((item: any) => {
+      this.tCr += item.Credit;
+      //this.totalCr = this.tCr.toString();
+    });
+  }
+  totalDebit(){
+    
+    this.detailArray = this.jvform.get('Detail')as FormArray;
+    let totalDr = this.jvform.getRawValue().Detail; 
+    this.tDr = 0;
+    totalDr.forEach((item: any) => {
+      this.tDr += item.Debit;
+      //this.totalCr = this.tCr.toString();
+    });
   }
 
+
   addDetail(){
-    const controls = <FormArray>this.jvform.controls["detail"];
-    this.detailArray = this.jvform.get("detail") as FormArray;
+    const controls = <FormArray>this.jvform.controls["Detail"];
+    this.detailArray = this.jvform.get("Detail") as FormArray;
     this.detailArray.push(this.generateRow());
     console.log(this.detailArray.length);
     this.ManageNameControl(this.detailArray.length - 1);
@@ -90,29 +138,31 @@ export class JournalVoucherComponent implements OnInit {
 
   generateRow(){
     return this.builder.group({
-      newlevel: this.builder.control(''),
-      description: this.builder.control(''),
-      credit: this.builder.control(''),
-      debit: this.builder.control(''),
+      CoaCode: this.builder.control(''),
+      Description: this.builder.control(''),
+      Credit: this.builder.control(0),
+      Debit: this.builder.control(0),
 
     });
   }
 
   invProducts() {
-    return this.jvform.get('detail') as FormArray;
+    return this.jvform.get('Detail') as FormArray;
   }
   removeItem(i: number) {
-    const controls = <FormArray>this.jvform.controls['detail'];
+    const controls = <FormArray>this.jvform.controls['Detail'];
     controls.removeAt(i);
     // remove from filteredOptions too.
     this.filteredOptions.splice(i, 1);
 
+    this.totalCredit();
+    this.totalDebit();
   }
 
   findAccount(event){
-    console.log("Level4 code : "+ this.jvform.get("detail").value);
+    console.log("Level4 code : "+ this.jvform.get("Detail").value);
 
-    var  lvl4Id = this.jvform.get("detail")?.value;
+    var  lvl4Id = this.jvform.get("Detail")?.value;
     //var  cusId = event.option.value;
   }
 
