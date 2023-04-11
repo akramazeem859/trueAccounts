@@ -6,6 +6,8 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { map, Observable, startWith } from 'rxjs';
 import { level4 } from 'src/app/Models/COA/level4.model';
+import { jvInvDetail } from 'src/app/Models/jvInvDetail.model';
+import { jvInvoice } from 'src/app/Models/jvInvoice.model';
 import { CompanyService } from 'src/app/Services/company.service';
 
 
@@ -29,7 +31,9 @@ export class JournalVoucherComponent implements OnInit {
   tDr : number = 0;
   totalCr : string = '';
   tempCount: number = 0;
-  tempInvCode: any;
+  tempInvCode: string= "";
+  tempJvInvoice: jvInvoice;
+  tempJvDetail : jvInvDetail[];
 
 
   /**
@@ -43,6 +47,7 @@ export class JournalVoucherComponent implements OnInit {
 
   detailArray !: FormArray; 
   public jvform = new FormGroup({
+    code: new FormControl(''),
     Particular: new FormControl(''),
     Remarks: new FormControl(''),
     DateTime : new FormControl(new Date()),
@@ -118,7 +123,36 @@ export class JournalVoucherComponent implements OnInit {
   }
 
   findJv(){
-    console.log("tempInvCode :"+ this.tempInvCode);
+    if(this.tempInvCode != "" || this.tempInvCode != null)
+    {
+      console.log("tempInvCode :"+ this.tempInvCode);
+      this.service.getJvInvByCode(this.tempInvCode).subscribe(item =>{
+        this.tempJvInvoice = item;
+
+      this.service.getAllJvInvDetail(item.id).subscribe(d =>{
+        this.tempJvDetail = d;
+
+        console.log("temp jv detail.." + this.tempJvDetail)
+      })
+        
+        this.loadJv();
+        
+      })
+    }
+    else{
+      this.alert.warning("Please enter correct JV code.","Something Wrong!")
+    }
+    
+  }
+
+  loadJv(){
+    console.log("temp JV : "+ this.tempJvInvoice.particular);
+    this.jvform.get("code").setValue(this.tempJvInvoice.code);
+    this.jvform.get("Particular").setValue(this.tempJvInvoice.particular);
+    this.jvform.get("DateTime").setValue(this.tempJvInvoice.dateTime);
+    this.jvform.get("Remarks").setValue(this.tempJvInvoice.remarks);
+
+    this.detailArray = this.jvform.get('Detail') as FormArray;
   }
 
   totalCredit(){

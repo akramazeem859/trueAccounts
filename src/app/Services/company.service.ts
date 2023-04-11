@@ -27,6 +27,7 @@ import { level2 } from '../Models/COA/level2.model';
 import { level3 } from '../Models/COA/level3.model';
 import { level4 } from '../Models/COA/level4.model';
 import { jvInvoice } from '../Models/jvInvoice.model';
+import { jvInvDetail } from '../Models/jvInvDetail.model';
 
 
 @Injectable({
@@ -82,6 +83,9 @@ export class CompanyService {
   }
   getAllSaleInvDetail(code:any):Observable<sInvDetail[]>{
     return this.http.get<sInvDetail[]>(this.baseApiUrl + '/api/SInvoice/Detail/'+ code);
+  }
+  getAllJvInvDetail(code:any):Observable<jvInvDetail[]>{
+    return this.http.get<jvInvDetail[]>(this.baseApiUrl+"/api/JVInvoice/detail/" + code);
   }
   getAllLevel1():Observable<level1[]>{
     return this.http.get<level1[]>(this.baseApiUrl+'/api/ChartAccount/coa/level1');
@@ -151,6 +155,10 @@ export class CompanyService {
 
   getSaleInvByCode(id:any){
     return this.http.get<sInvoice>(this.baseApiUrl+'/api/SInvoice/code/' + id);
+  }
+
+  getJvInvByCode(id:any):Observable<jvInvoice>{
+    return this.http.get<jvInvoice>(this.baseApiUrl+'/api/JVInvoice/code/'+id);
   }
 
   getCustRatebyCus(id:any){
