@@ -1,56 +1,64 @@
-<form class="container" [formGroup]="jvform" (ngsubmit)="SaveJv()">
-  <div class="m-3">
-    <div class="row">
-      <div class="card col">
-        <div class="card-header"><h4>Journal Voucher</h4></div>
-        <div class="card-body">
+<div class="container">
+  <form [formGroup]="jvform" (ngsubmit)="SaveJv()">
+    
+      <div class="row">
+        <div class="card col">
+          <div class="card-header"><h4>Journal Voucher</h4></div>
+          <div class="card-body">
+            <div class="form-row mb-3">
+              <div class="col">
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label>Code</mat-label>
+                  <input matInput formControlName="code" width="100" />
+                </mat-form-field>
+              </div>
 
-          <div class="form-row mb-3">
+              <div class="col">
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label>Particular</mat-label>
+                  <input matInput formControlName="Particular" width="100" />
+                </mat-form-field>
+              </div>
 
-            <div class="col">
-              <mat-form-field appearance="fill" style="width: 100%">
-                <mat-label>Code</mat-label>
-                <input matInput formControlName="code" width="100" />
-              </mat-form-field>
+              <div class="col">
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <mat-label>Date</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    formControlName="DateTime"
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
             </div>
 
-            <div class="col">
-              <mat-form-field appearance="fill" style="width: 100%">
-                <mat-label>Particular</mat-label>
-                <input matInput formControlName="Particular" width="100" />
-              </mat-form-field>
-            </div>
-
-            <div class="col">
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Date</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="DateTime">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-            </div>
-
-            <div>
-             
-            </div>
-          </div>
-
-          <div class="form-row mb-3 col-12">
-            <table class="table table-bordered fixed" table-layout="fixed" formArrayName="Detail">
-              <thead class="bg-primary text-white">
-                <th style="width: 5%" >Sr#</th>
-                <th style="width: 30%">Party/Account</th>
-                <th style="width: 30%">Description</th>
-                <th style="width: 10%">Credit</th>
-                <th style="width: 10%">Debit</th>
-                <th style="width: 5%">Action</th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of invProducts().controls ; index as i" [formGroupName]="i">
-                  <td style="width: 5%" >{{i+1}}</td>
-                  <td style="width: 30%">
-
-                    <mat-form-field class="autocom" >
+            <div class="form-row mb-3 col-12">
+              <table
+                class="table table-bordered fixed"
+                table-layout="fixed"
+                formArrayName="Detail"
+              >
+                <thead class="bg-primary text-white">
+                  <th style="width: 5%">Sr#</th>
+                  <th style="width: 30%">Party/Account</th>
+                  <th style="width: 30%">Description</th>
+                  <th style="width: 10%">Credit</th>
+                  <th style="width: 10%">Debit</th>
+                  <th style="width: 5%">Action</th>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let item of invProducts().controls; index as i"
+                    [formGroupName]="i"
+                  >
+                    <td style="width: 5%">{{ i + 1 }}</td>
+                    <td style="width: 30%">
+                      <mat-form-field class="autocom">
                         <mat-label>Party/Account</mat-label>
                         <input
                           type="text"
@@ -65,79 +73,111 @@
                           (optionSelected)="findAccount($event)"
                         >
                           <mat-option
-                            *ngFor="let option of filteredOptions[i] | async "
+                            *ngFor="let option of filteredOptions[i] | async"
                             [value]="option.code"
                           >
                             {{ option.name }}
                           </mat-option>
                         </mat-autocomplete>
                       </mat-form-field>
-                      
-                  </td>
-                  
-                  <td style="width: 30%">
-                    <mat-form-field appearance="fill">
-                    <mat-label>Description</mat-label>
-                    <input matInput formControlName="Description" />
-                    </mat-form-field>
-                  </td>
+                    </td>
 
-                  <td style="width: 10%"> 
-                    <mat-form-field appearance="fill"  >
+                    <td style="width: 30%">
+                      <mat-form-field appearance="fill">
+                        <mat-label>Description</mat-label>
+                        <input matInput formControlName="Description" />
+                      </mat-form-field>
+                    </td>
+
+                    <td style="width: 10%">
+                      <mat-form-field appearance="fill">
                         <mat-label>credit</mat-label>
-                        <input type="number" matInput formControlName="Credit" (change)="totalCredit()" />
-                        </mat-form-field>
-                  </td>
+                        <input
+                          type="number"
+                          matInput
+                          formControlName="Credit"
+                          (change)="totalCredit()"
+                        />
+                      </mat-form-field>
+                    </td>
 
-                  <td style="width: 10%">
-                    <mat-form-field appearance="fill" >
+                    <td style="width: 10%">
+                      <mat-form-field appearance="fill">
                         <mat-label>debit</mat-label>
-                        <input type="number" matInput formControlName="Debit" (change)="totalDebit()" />
-                        </mat-form-field>
-                  </td>
-                  <td tyle="width: 5%">
-                    <button class="btn btn-danger" (click)="removeItem(i)">
-                      <span><fa-icon [icon]="faTrash"></fa-icon></span>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+                        <input
+                          type="number"
+                          matInput
+                          formControlName="Debit"
+                          (change)="totalDebit()"
+                        />
+                      </mat-form-field>
+                    </td>
+                    <td tyle="width: 5%">
+                      <button class="btn btn-danger" (click)="removeItem(i)">
+                        <span><fa-icon [icon]="faTrash"></fa-icon></span>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
 
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <td>
-                    
-                  </td>
-                  <td>Total :</td>
-                  <td>{{tCr}}</td>
-                  <td>{{tDr}}</td>
-                  <td></td>
-                </tr>
-                <a (click)="addDetail()" class="btn btn-success">[+]</a>
-              </tfoot>
+                <tfoot>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Total :</td>
+                    <td>{{ tCr }}</td>
+                    <td>{{ tDr }}</td>
+                    <td></td>
+                  </tr>
+                  <a (click)="addDetail()" class="btn btn-success">[+]</a>
+                </tfoot>
+              </table>
+            </div>
 
-            </table>
-          </div>
-
-          <div class="form-row">
-            <div class="col">
+            <div class="form-row">
+              <div class="col">
                 <mat-form-field appearance="fill" style="width: 100%">
                   <mat-label>Remarks</mat-label>
                   <input matInput formControlName="Remarks" width="100" />
                 </mat-form-field>
               </div>
-           </div>
+            </div>
 
-          <div class="form-row">
-            <button type="button" class="btn btn-primary mr-2"
-              (click)="SaveJv()">Save Invoice</button>
-            <button type="button" class="btn btn-warning mr-2">Edit</button>
-            <button type="button" class="btn btn-danger">Delete</button>
+            <div class="form-row">
+              <button
+                type="button"
+                class="btn btn-primary mr-2"
+                (click)="SaveJv()"
+              >
+                Save Invoice
+              </button>
+              <button type="button" class="btn btn-warning mr-2">Edit</button>
+              <button type="button" class="btn btn-danger">Delete</button>
+            </div>
           </div>
+        </div>
+      </div>
+      <!--end row 1-->
+   
+  </form>
 
+  <div class="row">
+    <div class="card col">
+      <div class="card-header"><h4>Find Journal Voucher</h4></div>
+      <div class="card-body">
+        <div class="form-row mb-3">
+          <div class="col">
+            <mat-form-field appearance="fill" style="width: 100%">
+              <mat-label>Enter Code</mat-label>
+              <input matInput id="findJvTxt" [(ngModel)]="tempInvCode" />
+            </mat-form-field>
+
+            <button type="button" class="btn btn-primary" (click)="findJv()">
+              Search
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</form>
+</div>

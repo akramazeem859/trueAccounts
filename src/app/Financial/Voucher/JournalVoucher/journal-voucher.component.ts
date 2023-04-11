@@ -29,6 +29,8 @@ export class JournalVoucherComponent implements OnInit {
   tDr : number = 0;
   totalCr : string = '';
   tempCount: number = 0;
+  tempInvCode: any;
+
 
   /**
    *
@@ -92,6 +94,13 @@ export class JournalVoucherComponent implements OnInit {
         this.service.addJVInvoice(this.jvform.value).subscribe({
           next: inv =>{
             this.alert.success("Record Entered Successfully.","Successful!");
+            this.jvform.reset();
+
+            if (this.detailArray != undefined) {
+              while (this.detailArray.length !== 0) {
+                this.detailArray.removeAt(0)
+              }
+            }
           },
           error: err =>{
             this.alert.warning("Something went goes wrong from server", "Something Wrong!" )
@@ -107,6 +116,11 @@ export class JournalVoucherComponent implements OnInit {
     }
    
   }
+
+  findJv(){
+    console.log("tempInvCode :"+ this.tempInvCode);
+  }
+
   totalCredit(){
     this.detailArray = this.jvform.get('Detail')as FormArray;
     let totalCr = this.jvform.getRawValue().Detail; 
