@@ -43,6 +43,38 @@ namespace TrueAccounts.Controllers
             return jVInvoice;
         }
 
+        [HttpGet("code/{code}")]
+        public async Task<ActionResult<JVInvoice>> GetJvInvbyCode(string code)
+        {
+            var tempJv = await _context.JVInvoice
+                        .Where(j => j.Code ==  code)
+                        .FirstOrDefaultAsync();
+
+
+            if (tempJv == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return tempJv;
+            }
+        }
+
+        [HttpGet("detail/{id}")]
+        public async Task<ActionResult<IEnumerable<JVInvDetail>>> GetJvInvDetail(int id)
+        {
+           var jvd = await _context.JVInvDetails.Where(j => j.JvInvId == id).ToListAsync();
+            if(jvd != null)
+            {
+                return jvd;
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         // PUT: api/JVInvoice/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -105,7 +137,7 @@ namespace TrueAccounts.Controllers
                     jvd.Debit  = item.Debit;
                     jvd.JvInvId = jvInv.Id;
 
-                   // _context.JVInvDetails.Add(jvd);
+                     _context.JVInvDetails.Add(jvd);
                     await _context.SaveChangesAsync();  
                 }
             }
