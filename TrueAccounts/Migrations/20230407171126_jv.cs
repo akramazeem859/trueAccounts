@@ -72,20 +72,21 @@ namespace TrueAccounts.Migrations
                 name: "JVInvDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                     .Annotation("SqlServer:Identity", "1, 1"),
                     CoaCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Credit = table.Column<int>(type: "int", nullable: false),
                     Debit = table.Column<int>(type: "int", nullable: false),
-                    JvInvId = table.Column<int>(type: "int", nullable: false),
-                    JvInvoiceId = table.Column<int>(type: "int", nullable: true)
+                    JvInvId = table.Column<int>(type: "int", nullable: false)
+                    
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_JVInvDetails", x => x.Id);
                     table.ForeignKey(
                         name: "FK_JVInvDetails_JVInvoice_JvInvoiceId",
-                        column: x => x.JvInvoiceId,
+                        column: x => x.JvInvId,
                         principalTable: "JVInvoice",
                         principalColumn: "Id");
                 });

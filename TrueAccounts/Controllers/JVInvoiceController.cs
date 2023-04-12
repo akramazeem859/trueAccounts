@@ -127,10 +127,11 @@ namespace TrueAccounts.Controllers
                 _context.JVInvoice.Add(jvInv);
                 _context.SaveChanges();
 
-                foreach(JVDetailDTO item in jV.Detail) { 
-                
-                    var jvd = new JVInvDetail();
-                    //jvd.Id = 0 ;
+                var jvd = new JVInvDetail();
+
+                foreach (JVDetailDTO item in jV.Detail) { 
+                    
+                    jvd.Id = 0 ;
                     jvd.Description = item.Description;
                     jvd.CoaCode= item.CoaCode;
                     jvd.Credit = item.Credit;
