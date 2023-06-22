@@ -153,6 +153,10 @@ export class CompanyService {
     return this.http.get<sInvoice>(this.baseApiUrl+'/api/SInvoice/code/' + id);
   }
 
+  getJvInvByCode(code:any){
+    return this.http.get<jvInvoice>(this.baseApiUrl+'/api/JVInvoice/code/'+code);
+  }
+
   getCustRatebyCus(id:any){
     return this.http.get<customerRates[]>(this.baseApiUrl+'/api/CustomerRate/byCust/'+ id);
   }
