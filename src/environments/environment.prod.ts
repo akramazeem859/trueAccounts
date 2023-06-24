@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseApiUrl:'https://trueaccounts.azurewebsites.net'
+  baseApiUrl:'http://flavorfoods-001-site1.ctempurl.com'
 };
