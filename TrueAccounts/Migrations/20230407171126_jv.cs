@@ -78,7 +78,7 @@ namespace TrueAccounts.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Credit = table.Column<int>(type: "int", nullable: false),
                     Debit = table.Column<int>(type: "int", nullable: false),
-                    JvInvId = table.Column<int>(type: "int", nullable: false)
+                    JvInvoiceId = table.Column<int>(type: "int", nullable: false)
                     
                 },
                 constraints: table =>
@@ -86,7 +86,7 @@ namespace TrueAccounts.Migrations
                     table.PrimaryKey("PK_JVInvDetails", x => x.Id);
                     table.ForeignKey(
                         name: "FK_JVInvDetails_JVInvoice_JvInvoiceId",
-                        column: x => x.JvInvId,
+                        column: x => x.JvInvoiceId,
                         principalTable: "JVInvoice",
                         principalColumn: "Id");
                 });

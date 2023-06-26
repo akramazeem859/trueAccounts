@@ -244,21 +244,22 @@ namespace TrueAccounts.Controllers
                 }
                 updateInvtory(newsInvoice.branchId, newsInvDetailList);
 
-                Ledger ldgr = new Ledger(); 
-                ldgr.particular = "Sale Invoice " + newsInvoice.code;
-                ldgr.dateTime = newsInvoice.datetime;
-                ldgr.branchId = tempBranchId;
-                ldgr.invCode = newsInvoice.code; 
+                //Ledger ldgr = new Ledger(); 
+                //ldgr.particular = "Sale Invoice " + newsInvoice.code;
+                //ldgr.dateTime = newsInvoice.datetime;
+                //ldgr.branchId = tempBranchId;
+                //ldgr.invCode = newsInvoice.code; 
 
 
 
                 SaleLedger sldgr = new SaleLedger();
-                sldgr.particular = ldgr.particular;
+                sldgr.id = 0;
+                sldgr.particular = "Sale Invoice " + newsInvoice.code;
                 sldgr.credit = newsInvoice.payable - newsInvoice.discount;
                 sldgr.debit = 0;
-                sldgr.dateTime = ldgr.dateTime; 
-                sldgr.invCode = ldgr.invCode;
-                sldgr.branchId = ldgr.branchId;
+                sldgr.dateTime = newsInvoice.datetime;
+                sldgr.invCode = newsInvoice.code;
+                sldgr.branchId = tempBranchId;
                 var sale_tempCoaCode = _context.level4.Where(l => l.name == "Local Sales" & l.branchId == tempBranchId).FirstOrDefault();
                 if (sale_tempCoaCode != null)
                 {
@@ -273,11 +274,11 @@ namespace TrueAccounts.Controllers
                 _context.SaveChanges();
 
                 CustomerLedger cldgr = new CustomerLedger();
-                cldgr.particular = ldgr.particular;
-                cldgr.dateTime = ldgr.dateTime;
-                cldgr.credit = ldgr.credit;
+                cldgr.particular = "Sale Invoice " + newsInvoice.code;
+                cldgr.dateTime = newsInvoice.datetime;
+                cldgr.credit = newsInvoice.payable - newsInvoice.discount;
                 cldgr.debit = 0; 
-                cldgr.branchId= ldgr.branchId;
+                cldgr.branchId= tempBranchId;
                 var cust_tempCoaCode = _context.level4.Where(l => l.code == newsInvoice.customer.customerCode & l.branchId == tempBranchId).FirstOrDefault();
                  if(cust_tempCoaCode != null)               
                 {
@@ -293,12 +294,12 @@ namespace TrueAccounts.Controllers
                 _context.SaveChanges();
 
                 CashAccountLedger caldgr = new CashAccountLedger(); 
-                caldgr.particular = ldgr.particular;
-                caldgr.dateTime = ldgr.dateTime;
+                caldgr.particular = "Sale Invoice " + newsInvoice.code;
+                caldgr.dateTime = newsInvoice.datetime;
                 caldgr.credit = 0;
                 caldgr.debit = 0;
                 caldgr.invCode = newsInvoice.account.accountCode;
-                caldgr.branchId = ldgr.branchId; 
+                caldgr.branchId = tempBranchId;
                 var ca_tempCaoCode = _context.level4.Where(l=> l.code == newsInvoice.account.accountCode & l.branchId == tempBranchId).FirstOrDefault();
                 if (ca_tempCaoCode != null)
                 {
