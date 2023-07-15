@@ -99,7 +99,7 @@
                     <li class="dropdown-divider"></li> 
                     <li><a href="#" class="dropdown-item">Balance</a></li>
                     <li class="dropdown-divider"></li> 
-                    <li><a href="#" class="dropdown-item">Ledger</a></li>
+                    <li><a routerLink="sale/cledger" (click)="setTitle('Customer Ledger')" class="dropdown-item">Ledger</a></li>
                     <li class="dropdown-divider"></li> 
                     <li><a href="#" class="dropdown-item">Aging</a></li>
                   </ul>
@@ -195,9 +195,9 @@
                   <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                     <li><a routerLink="inventory/listing" (click)="setTitle('Inventory')" class="dropdown-item">Listing</a></li>
                     <li class="dropdown-divider"></li> 
-                    <li><a href="#" class="dropdown-item">Balance</a></li>
+                    <li><a routerLink="inventory/balance" (click)="setTitle('Balance')" class="dropdown-item">Balance</a></li>
                     <li class="dropdown-divider"></li> 
-                    <li><a href="#" class="dropdown-item">Ledger</a></li>
+                    <li><a routerLink="inventory/ledger" (click)="setTitle('Ledger')" class="dropdown-item">Ledger</a></li>
                   </ul>
                 </li>
   

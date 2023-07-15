@@ -23,8 +23,7 @@ import { LedgerComponent } from './report/ledger/ledger.component';
     InventoryRoutingModule
   ],
   exports: [
-    InventoryComponent,
-    InventorylistComponent
+    InventoryComponent
   ]
 })
 export class InventoryModule { }

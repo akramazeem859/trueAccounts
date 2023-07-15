@@ -28,6 +28,8 @@ import { level3 } from '../Models/COA/level3.model';
 import { level4 } from '../Models/COA/level4.model';
 import { jvInvoice } from '../Models/jvInvoice.model';
 import { jvInvDetail } from '../Models/jvInvDetail.model';
+import { customerLedger } from '../Models/customerLedger.model';
+import { customerLedgerReq } from '../Models/customerLedgerReq.model';
 
 
 @Injectable({
@@ -99,6 +101,10 @@ export class CompanyService {
   getAllLevel4():Observable<level4[]> {
     return this.http.get<level4[]>(this.baseApiUrl+'/api/ChartAccount/coa/level4');
   }
+  getAllCustomerLedger(): Observable<customerLedger[]>{
+    return this.http.get<customerLedger[]>(this.baseApiUrl + '/api/CustomerLedgers');
+  }
+  
 
 
 
@@ -171,7 +177,10 @@ export class CompanyService {
   getlevel2bylevel1(level1:any){
     return this.http.get<level2[]>(this.baseApiUrl+'/api/ChartAccount/coa/level2/'+level1);
   }
-
+  searchCustomerLedger(cusLReq : customerLedgerReq):Observable<customerLedger[]>{
+    return this.http.get<customerLedger[]>(this.baseApiUrl+'/api/CustomerLedgers/search?customerId='+cusLReq.customerId+'&branchId='+cusLReq.branchId +'&fromDate='+ cusLReq.fromDate +'&toDate='+ cusLReq.toDate);
+  }
+ 
 
 
 

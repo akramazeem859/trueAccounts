@@ -48,21 +48,22 @@ export class SaleInvoiceComponent implements OnInit {
   customerList !: Customer[];
   cashAccountList: cashAccount[] = [];
   saleInvDetailList: sInvDetail[] = [];
-  invoiceDetail: FormArray<any>;
   productList: Product[] = [];
+
+  invoiceDetail: FormArray<any>;
   invProduct: FormGroup<any>;
   tempinvProduct: FormGroup<any>;
+
   tempProdCount: number = 0;
   saleCode: any;
   newTime : any;
   currentDate: any;
-  selectedAccout:cashAccount;
-  
-  saleInvoice: sInvoice;
   isProdAdded: boolean = false;
-  tempCusRat: customerRates;
   tempSalePrice: number = 0;
   
+  selectedAccout:cashAccount;
+  saleInvoice: sInvoice;
+  tempCusRat: customerRates;
 
   detail: sInvDetailDTO = {
     productId: 0,
@@ -113,7 +114,7 @@ export class SaleInvoiceComponent implements OnInit {
     this.currentDate = this.datePipe.transform((new Date), 'YYYY-MM-dd hh:mm');
     var currentDateTxt = this.currentDate+" ";
 
-    console.log("current Date :" + this.currentDate);
+    //console.log("current Date :" + this.currentDate);
     this.saleInvoiceForm.get('datetime').setValue(this.currentDate);
    
     this.getAllCustomer();
@@ -175,23 +176,26 @@ export class SaleInvoiceComponent implements OnInit {
 
     var mydate = this.saleInvoiceForm.get("datetime").value;
    
-    
     this.currentDate = this.datePipe.transform((mydate), 'YYYY-MM-dd hh:mm');
     
     //mydate = mydate +" "+ this.newTime;
     //this.saleInvoiceForm.get("datetime").setValue(this.currentDate);
     console.log(this.saleInvoiceForm.value);
     //this.invoiceForm.reset();
-    
-    let sId = 0;
-    this.service.addSInvoice(this.saleInvoiceForm.value).subscribe(inv => {
-      sId = inv.id;
-      console.log("saleInvoice Id :" + sId);
-      this.formCustomRest();
-      this.alert.success("Record saved successfully...", "Successful")
+    if(mydate != null){
 
-    })
-    
+      let sId = 0;
+      this.service.addSInvoice(this.saleInvoiceForm.value).subscribe(inv => {
+        sId = inv.id;
+        console.log("saleInvoice Id :" + sId);
+        this.formCustomRest();
+        this.alert.success("Record saved successfully...", "Successful")
+        
+      })
+    }
+    else{
+      this.alert.warning("Please select date first");
+    }
   }
 
   formCustomRest(): void {
@@ -227,6 +231,11 @@ export class SaleInvoiceComponent implements OnInit {
     })
     
   }
+  
+  public getCusName(cusId : any){
+    return this.customerList.find(c => c.id === cusId).customerName;
+  }
+
   findCustomer(event) {
     console.log("customer ID : "+ this.saleInvoiceForm.get("customerId")?.value)
 
