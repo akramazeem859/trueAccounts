@@ -11,6 +11,7 @@
         public int customerOpeningbalance { get; set; }
         public int customerCurrentbalance { get; set; }
         public Branch customerBranch { get; set; }
+        
 
 
     }

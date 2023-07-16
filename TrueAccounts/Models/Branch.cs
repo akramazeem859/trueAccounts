@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using System.Transactions;
 
 namespace TrueAccounts.Models
@@ -15,7 +16,15 @@ namespace TrueAccounts.Models
         public List<Supplier> Supplier { get; set; }
         public List<CashAccount> CashAccount { get; set; }
         public List<PInvoice> pInvoices { get; set; }
-       
+        public List<SInvoice> sInvoices { get; set; }
+
+
+        [NotMapped]
+        public list<JVInvoice> JVInvoices { get; set; }
+
+        [NotMapped]
+        public list<User> Users { get; set; }
+
 
     }
 }

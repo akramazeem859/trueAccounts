@@ -140,6 +140,13 @@ namespace TrueAccounts.Controllers
 
                      _context.JVInvDetails.Add(jvd);
                     await _context.SaveChangesAsync();  
+
+                    var party = _context.level4.Where(x=> x.code == jvInv.Code).FirstOrDefault();
+                    if (party != null)
+                    {
+                        var partyLedger = party.ledgerTbl;
+                       // working on getting ledger table to insert record for relavent ledger....
+                    }
                 }
             }
 

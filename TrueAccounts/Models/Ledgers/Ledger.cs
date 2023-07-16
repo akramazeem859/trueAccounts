@@ -2,15 +2,16 @@
 {
     public class Ledger
     {
-        public int id { get; set; }
-        public string particular { get; set; }
-        public DateTime dateTime { get; set; }
-        public int credit { get; set; }
-        public int debit { get; set; }
-        public string remarks { get; set; }
-        public string invCode { get; set; }
-        public int branchId { get; set; }
-        public string coaCode { get; set; }
-
+        public int Id { get; set; }
+        public string Particular { get; set; }
+        public DateTime DateTime { get; set; }
+        public string Type { get; set; }
+        public int Credit { get; set; }
+        public int Debit { get; set; }
+        public string Remarks { get; set; }
+        public string InvCode { get; set; }
+        public int BranchId { get; set; }
+        public string CoaCode { get; set; }
+        public string SourceLedger { get; set; }
     }
 }
