@@ -1,1 +1,85 @@
-<p>login works!</p>
+<div class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo"><b>Orange</b>Foods</div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+
+        <form [formGroup]="loginform">
+          <div class="mb-3">
+            <div class="input-group">
+              <input
+                formControlName="username"
+                type="email"
+                class="form-control"
+                placeholder="Email"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+
+            <small
+              *ngIf="
+                loginform.controls['username'].dirty &&
+                loginform.hasError('required', 'username')"
+              class="text-danger">
+              *Username is required</small>
+          </div>
+
+          <div class="mb-3">
+            <div class="input-group">
+              <input
+                [type]="type"
+                formControlName="password"
+                class="form-control"
+                placeholder="Password"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span (click)="showPass()" class="fa {{ eyeIcon }}"></span>
+                </div>
+              </div>
+            </div>
+            <small
+              *ngIf="
+                loginform.controls['password'].dirty &&
+                loginform.hasError('required', 'password')"
+              class="text-danger">*Username is required</small
+            >
+          </div>
+
+          <div class="row">
+            <div class="col-8">
+              <div class="icheck-primary">
+                <input type="checkbox" id="remember" />
+                <label for="remember"> Remember Me </label>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-4">
+              <button (click)="onSubmit()" [disabled]="loginform.invalid" type="submit" class="btn btn-primary btn-block">
+                Sign In
+              </button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+
+        <p class="mb-1">
+          <a href="forgot-password.html">I forgot my password</a>
+        </p>
+        <p class="mb-0">
+          <a routerLink="../signup" class="text-center"
+            >Register a new membership</a
+          >
+          <!-- <a href="register.html" class="text-center">Register a new membership</a> -->
+        </p>
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+</div>
