@@ -94,9 +94,11 @@ namespace TrueAccounts.Controllers
         [HttpPost]
         public async Task<ActionResult<CashAccount>> PostCashAccount(accountDto cashAccountRequest)
         {
+           
+
             var newCashAccount = new CashAccount();
 
-            newCashAccount.accountCode = "Acc-" + accountCount().ToString();
+            newCashAccount.accountCode = accountCount().ToString();
             newCashAccount.accountTitle = cashAccountRequest.accountTitle;
             newCashAccount.accountBranchId = cashAccountRequest.accountBranchId;
             newCashAccount.accountType = cashAccountRequest.accountType;

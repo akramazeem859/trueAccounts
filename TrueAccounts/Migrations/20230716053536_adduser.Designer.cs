@@ -12,18 +12,17 @@ using TrueAccounts.Data;
 namespace TrueAccounts.Migrations
 {
     [DbContext(typeof(trueAccountsDbcontext))]
-    [Migration("20230407171126_jv")]
-    partial class jv
+    [Migration("20230716053536_adduser")]
+    partial class adduser
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "6.0.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("TrueAccounts.Models.Branch", b =>
                 {
@@ -31,7 +30,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("branchName")
                         .HasColumnType("nvarchar(max)");
@@ -58,7 +57,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("brandName")
                         .HasColumnType("nvarchar(max)");
@@ -77,7 +76,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<int>("accountBalance")
                         .HasColumnType("int");
@@ -107,7 +106,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("code")
                         .HasColumnType("nvarchar(max)");
@@ -126,7 +125,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("code")
                         .HasColumnType("nvarchar(max)");
@@ -148,7 +147,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("code")
                         .HasColumnType("nvarchar(max)");
@@ -170,7 +169,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<int>("branchId")
                         .HasColumnType("int");
@@ -198,7 +197,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -214,7 +213,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("customerAddress")
                         .HasColumnType("nvarchar(max)");
@@ -250,7 +249,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("customerId")
                         .HasColumnType("int");
@@ -276,7 +275,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<int>("branchId")
                         .HasColumnType("int");
@@ -298,8 +297,11 @@ namespace TrueAccounts.Migrations
 
             modelBuilder.Entity("TrueAccounts.Models.JVInvDetail", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CoaCode")
                         .HasColumnType("nvarchar(max)");
@@ -313,10 +315,7 @@ namespace TrueAccounts.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JvInvId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("JvInvoiceId")
+                    b.Property<int>("JvInvoiceId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -332,7 +331,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("BranchId")
                         .HasColumnType("int");
@@ -362,43 +361,287 @@ namespace TrueAccounts.Migrations
                     b.ToTable("JVInvoice");
                 });
 
-            modelBuilder.Entity("TrueAccounts.Models.Ledgers.Ledger", b =>
+            modelBuilder.Entity("TrueAccounts.Models.Ledgers.CashAccountLedger", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                   
-                    b.Property<int>("branchId")
+                    b.Property<int>("BranchId")
                         .HasColumnType("int");
 
-                    b.Property<string>("coaCode")
+                    b.Property<string>("CoaCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("credit")
+                    b.Property<int>("Credit")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("dateTime")
+                    b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("debit")
+                    b.Property<int>("Debit")
                         .HasColumnType("int");
 
-                    b.Property<string>("invCode")
+                    b.Property<string>("InvCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("particular")
+                    b.Property<string>("Particular")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("remarks")
+                    b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CashAccountLedger");
+                });
+
+            modelBuilder.Entity("TrueAccounts.Models.Ledgers.CustomerLedger", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CoaCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Credit")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Debit")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InvCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Particular")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerLedger");
+                });
+
+            modelBuilder.Entity("TrueAccounts.Models.Ledgers.JournalLedger", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CoaCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Credit")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Debit")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InvCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Particular")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JournalLedger");
+                });
+
+            modelBuilder.Entity("TrueAccounts.Models.Ledgers.Ledger", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CoaCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Credit")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Debit")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InvCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Particular")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SourceLedger")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Ledger");
+                });
 
+            modelBuilder.Entity("TrueAccounts.Models.Ledgers.PurchaseLedger", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CoaCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Credit")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Debit")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InvCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Particular")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PurchaseLedger");
+                });
+
+            modelBuilder.Entity("TrueAccounts.Models.Ledgers.SaleLedger", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CoaCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Credit")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Debit")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InvCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Particular")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SaleLedger");
+                });
+
+            modelBuilder.Entity("TrueAccounts.Models.Ledgers.SupplierLedger", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CoaCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Credit")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Debit")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InvCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Particular")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("supplierLedger");
                 });
 
             modelBuilder.Entity("TrueAccounts.Models.PInvDetail", b =>
@@ -407,7 +650,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<int>("pInvoiceId")
                         .HasColumnType("int");
@@ -436,7 +679,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<int?>("accountId")
                         .HasColumnType("int");
@@ -479,7 +722,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<int>("brandId")
                         .HasColumnType("int");
@@ -512,7 +755,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<int>("productId")
                         .HasColumnType("int");
@@ -541,7 +784,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<int?>("accountId")
                         .HasColumnType("int");
@@ -587,7 +830,7 @@ namespace TrueAccounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("supplierAddress")
                         .HasColumnType("nvarchar(max)");
@@ -617,46 +860,55 @@ namespace TrueAccounts.Migrations
                     b.ToTable("Supplier");
                 });
 
-            modelBuilder.Entity("TrueAccounts.Models.Ledgers.CashAccountLedger", b =>
+            modelBuilder.Entity("TrueAccounts.Models.User", b =>
                 {
-                    b.HasBaseType("TrueAccounts.Models.Ledgers.Ledger");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("CashAccountLedger");
-                });
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-            modelBuilder.Entity("TrueAccounts.Models.Ledgers.CustomerLedger", b =>
-                {
-                    b.HasBaseType("TrueAccounts.Models.Ledgers.Ledger");
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("CustomerLedger");
-                });
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
 
-            modelBuilder.Entity("TrueAccounts.Models.Ledgers.JournalLedger", b =>
-                {
-                    b.HasBaseType("TrueAccounts.Models.Ledgers.Ledger");
+                    b.Property<string>("Designation")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("JournalLedger");
-                });
+                    b.Property<DateTime?>("Dob")
+                        .HasColumnType("datetime2");
 
-            modelBuilder.Entity("TrueAccounts.Models.Ledgers.PurchaseLedger", b =>
-                {
-                    b.HasBaseType("TrueAccounts.Models.Ledgers.Ledger");
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("PurchaseLedger");
-                });
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("TrueAccounts.Models.Ledgers.SaleLedger", b =>
-                {
-                    b.HasBaseType("TrueAccounts.Models.Ledgers.Ledger");
+                    b.Property<DateTime?>("JoiningDate")
+                        .HasColumnType("datetime2");
 
-                    b.HasDiscriminator().HasValue("SaleLedger");
-                });
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("TrueAccounts.Models.Ledgers.SupplierLedger", b =>
-                {
-                    b.HasBaseType("TrueAccounts.Models.Ledgers.Ledger");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("SupplierLedger");
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TrueAccounts.Models.Branch", b =>
@@ -734,7 +986,9 @@ namespace TrueAccounts.Migrations
                 {
                     b.HasOne("TrueAccounts.Models.JVInvoice", "JvInvoice")
                         .WithMany()
-                        .HasForeignKey("JvInvoiceId");
+                        .HasForeignKey("JvInvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("JvInvoice");
                 });
@@ -829,7 +1083,7 @@ namespace TrueAccounts.Migrations
                         .HasForeignKey("accountId");
 
                     b.HasOne("TrueAccounts.Models.Branch", "branch")
-                        .WithMany()
+                        .WithMany("sInvoices")
                         .HasForeignKey("branchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -856,6 +1110,17 @@ namespace TrueAccounts.Migrations
                     b.Navigation("supplierBranch");
                 });
 
+            modelBuilder.Entity("TrueAccounts.Models.User", b =>
+                {
+                    b.HasOne("TrueAccounts.Models.Branch", "branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("branch");
+                });
+
             modelBuilder.Entity("TrueAccounts.Models.Branch", b =>
                 {
                     b.Navigation("CashAccount");
@@ -865,6 +1130,8 @@ namespace TrueAccounts.Migrations
                     b.Navigation("Supplier");
 
                     b.Navigation("pInvoices");
+
+                    b.Navigation("sInvoices");
                 });
 
             modelBuilder.Entity("TrueAccounts.Models.Brand", b =>

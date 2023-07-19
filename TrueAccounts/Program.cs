@@ -8,12 +8,9 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins("http://localhost:4200",
-                                              "https://localhost:4200");
-                      });
+    options.AddPolicy(name: MyAllowSpecificOrigins,policy =>{
+        policy.WithOrigins("http://localhost:4200","https://localhost:4200");
+    });
 });
 
 
@@ -22,7 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<trueAccountsDbcontext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("onlineConnectionString"))) ;
+    options.UseSqlServer(builder.Configuration.GetConnectionString("trueAccountsConnectionString"))) ;
 
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);

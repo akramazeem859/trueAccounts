@@ -102,6 +102,7 @@ namespace TrueAccounts.Controllers
             lvl4.code = generateCode("50301");
             lvl4.name = customerReq.customerName;
             lvl4.level3 = "50301";
+            lvl4.ledgerTbl = "CustomerLedger";
             lvl4.branchId = customerReq.customerBranchId;
             _context.level4.Add(lvl4);
             _context.SaveChanges(); 

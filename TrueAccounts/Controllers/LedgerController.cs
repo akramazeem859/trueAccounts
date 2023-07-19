@@ -47,7 +47,7 @@ namespace TrueAccounts.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLedger(int id, Ledger ledger)
         {
-            if (id != ledger.id)
+            if (id != ledger.Id)
             {
                 return BadRequest();
             }
@@ -81,7 +81,7 @@ namespace TrueAccounts.Controllers
             _context.Ledger.Add(ledger);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLedger", new { id = ledger.id }, ledger);
+            return CreatedAtAction("GetLedger", new { id = ledger.Id }, ledger);
         }
 
         // DELETE: api/Ledger/5
@@ -102,7 +102,7 @@ namespace TrueAccounts.Controllers
 
         private bool LedgerExists(int id)
         {
-            return _context.Ledger.Any(e => e.id == id);
+            return _context.Ledger.Any(e => e.Id == id);
         }
     }
 }

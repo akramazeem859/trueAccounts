@@ -1,6 +1,6 @@
-﻿namespace TrueAccounts.Models.Ledgers
+﻿namespace TrueAccounts.Dto
 {
-    public class CustomerLedger   
+    public class customerLedgerResult
     {
         public int Id { get; set; }
         public string Particular { get; set; }
@@ -12,6 +12,6 @@
         public string InvCode { get; set; }
         public int BranchId { get; set; }
         public string CoaCode { get; set; }
-
+        public int Balance { get; set; }
     }
 }

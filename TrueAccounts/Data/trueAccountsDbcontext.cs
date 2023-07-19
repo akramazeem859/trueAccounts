@@ -42,5 +42,7 @@ namespace TrueAccounts.Data
         public DbSet<TrueAccounts.Models.Ledgers.Ledger> Ledger { get; set; }
         public DbSet<TrueAccounts.Models.JVInvoice> JVInvoice { get; set; }
         public DbSet<TrueAccounts.Models.JVInvDetail> JVInvDetails { get; set; }
+        public DbSet<User> Users { get; set; }
+
     }
 }
