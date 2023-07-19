@@ -64,7 +64,7 @@ namespace TrueAccounts.Controllers
         [HttpGet("detail/{id}")]
         public async Task<ActionResult<IEnumerable<JVInvDetail>>> GetJvInvDetail(int id)
         {
-           var jvd = await _context.JVInvDetails.Where(j => j.JvInvId == id).ToListAsync();
+           var jvd = await _context.JVInvDetails.Where(j => j.JvInvoiceId == id).ToListAsync();
             if(jvd != null)
             {
                 return jvd;
@@ -136,7 +136,7 @@ namespace TrueAccounts.Controllers
                     jvd.CoaCode= item.CoaCode;
                     jvd.Credit = item.Credit;
                     jvd.Debit  = item.Debit;
-                    jvd.JvInvId = jvInv.Id;
+                    jvd.JvInvoiceId = jvInv.Id;
 
                      _context.JVInvDetails.Add(jvd);
                     await _context.SaveChangesAsync();  
