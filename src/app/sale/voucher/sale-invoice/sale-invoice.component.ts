@@ -31,7 +31,10 @@ export class SaleInvoiceComponent implements OnInit {
   myControl = new FormControl('');
   options !: Customer[];
   filteredOptions !: Observable<Customer[]>;
-
+  
+  // getName(Id: any) {
+  //   return this.options.find((customer) => customer.id === Id).customerName;
+  // }
 
   /**
    *
@@ -98,7 +101,7 @@ export class SaleInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+    //this.getName(0);
     var today = new Date();
     var date = today.getDate()+'-'+ (today.getMonth()+1)+'-'+ today.getFullYear();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();

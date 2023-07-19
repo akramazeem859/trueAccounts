@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  baseApiUrl:'https://localhost:7283'
+  baseApiUrl:'http://flavorfoods-001-site1.ctempurl.com'
 };
 
 /*
