@@ -24,17 +24,6 @@
                                 <mat-form-field class="example-full-width" appearance="fill">
                                   <mat-label>Customer</mat-label>
                                   <input type="text"
-<<<<<<< HEAD
-                                         id="customerTxt"
-                                         placeholder="Pick one"
-                                         aria-label="Number"
-                                         matInput
-                                         formControlName="customerId"
-                                         [matAutocomplete]="auto"
-                                         >
-                                  <mat-autocomplete #auto="matAutocomplete" 
-                                    (optionSelected)="findCustomer($event)">
-=======
                                          placeholder="Select Customer"
                                          aria-label="Number"
                                          matInput
@@ -44,7 +33,6 @@
                                   <mat-autocomplete #auto="matAutocomplete"  
                                   (optionSelected)="findCustomer($event)" 
                                   [displayWith]="getCusName.bind(this)">
->>>>>>> f89154279c0098f8e5fcf2b3e25f144b09f1597d
                                     <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
                                       {{option.customerName}}
                                     </mat-option>
