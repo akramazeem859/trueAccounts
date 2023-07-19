@@ -13,13 +13,14 @@ import { MainComponent } from './Components/main/main.component';
 import { FinancialComponent } from './Financial/financial.component';
 import { LoginComponent } from './User/login/login.component';
 import { SignupComponent } from './User/signup/signup.component';
+import { AuthGuard } from './Guards/auth.guard';
 
 
 
 
 const routes: Routes = [
   
-  { path: '', component: MainComponent },
+  { path: '', component: MainComponent , canActivate:[AuthGuard] },
   { path: 'login',component: LoginComponent},
   { path: 'signup',component:SignupComponent},
   {

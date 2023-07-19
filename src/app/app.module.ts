@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
 
@@ -25,6 +25,9 @@ import { FinancialModule } from './Financial/financial.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './User/login/login.component';
 import { SignupComponent } from './User/signup/signup.component';
+import { NavbarComponent } from './navbar/navbar/navbar.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './Interceptors/token.interceptor';
 
 
 const routes: Routes = [];
@@ -33,7 +36,8 @@ const routes: Routes = [];
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    NavbarComponent
     
   ],
   imports: [
@@ -64,7 +68,8 @@ const routes: Routes = [];
     
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    {provide : HTTP_INTERCEPTORS , useClass:TokenInterceptor, multi :true}
   ],
   bootstrap: [AppComponent]
 })
