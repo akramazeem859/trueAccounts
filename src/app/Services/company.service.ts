@@ -27,6 +27,9 @@ import { level2 } from '../Models/COA/level2.model';
 import { level3 } from '../Models/COA/level3.model';
 import { level4 } from '../Models/COA/level4.model';
 import { jvInvoice } from '../Models/jvInvoice.model';
+import { jvInvDetail } from '../Models/jvInvDetail.model';
+import { customerLedger } from '../Models/customerLedger.model';
+import { customerLedgerReq } from '../Models/customerLedgerReq.model';
 
 
 @Injectable({
@@ -83,6 +86,9 @@ export class CompanyService {
   getAllSaleInvDetail(code:any):Observable<sInvDetail[]>{
     return this.http.get<sInvDetail[]>(this.baseApiUrl + '/api/SInvoice/Detail/'+ code);
   }
+  getAllJvInvDetail(code:any):Observable<jvInvDetail[]>{
+    return this.http.get<jvInvDetail[]>(this.baseApiUrl+"/api/JVInvoice/detail/" + code);
+  }
   getAllLevel1():Observable<level1[]>{
     return this.http.get<level1[]>(this.baseApiUrl+'/api/ChartAccount/coa/level1');
   }
@@ -95,6 +101,10 @@ export class CompanyService {
   getAllLevel4():Observable<level4[]> {
     return this.http.get<level4[]>(this.baseApiUrl+'/api/ChartAccount/coa/level4');
   }
+  getAllCustomerLedger(): Observable<customerLedger[]>{
+    return this.http.get<customerLedger[]>(this.baseApiUrl + '/api/CustomerLedgers');
+  }
+  
 
 
 
@@ -153,8 +163,13 @@ export class CompanyService {
     return this.http.get<sInvoice>(this.baseApiUrl+'/api/SInvoice/code/' + id);
   }
 
+<<<<<<< HEAD
   getJvInvByCode(code:any){
     return this.http.get<jvInvoice>(this.baseApiUrl+'/api/JVInvoice/code/'+code);
+=======
+  getJvInvByCode(id:any):Observable<jvInvoice>{
+    return this.http.get<jvInvoice>(this.baseApiUrl+'/api/JVInvoice/code/'+id);
+>>>>>>> f89154279c0098f8e5fcf2b3e25f144b09f1597d
   }
 
   getCustRatebyCus(id:any){
@@ -167,7 +182,10 @@ export class CompanyService {
   getlevel2bylevel1(level1:any){
     return this.http.get<level2[]>(this.baseApiUrl+'/api/ChartAccount/coa/level2/'+level1);
   }
-
+  searchCustomerLedger(cusLReq : customerLedgerReq):Observable<customerLedger[]>{
+    return this.http.get<customerLedger[]>(this.baseApiUrl+'/api/CustomerLedgers/search?customerId='+cusLReq.customerId+'&branchId='+cusLReq.branchId +'&fromDate='+ cusLReq.fromDate +'&toDate='+ cusLReq.toDate);
+  }
+ 
 
 
 

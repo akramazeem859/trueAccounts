@@ -11,6 +11,8 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { MainComponent } from './Components/main/main.component';
 import { FinancialComponent } from './Financial/financial.component';
+import { LoginComponent } from './User/login/login.component';
+import { SignupComponent } from './User/signup/signup.component';
 
 
 
@@ -18,7 +20,8 @@ import { FinancialComponent } from './Financial/financial.component';
 const routes: Routes = [
   
   { path: '', component: MainComponent },
-    
+  { path: 'login',component: LoginComponent},
+  { path: 'signup',component:SignupComponent},
   {
     path: 'sale',
     component: SaleComponent,

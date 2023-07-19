@@ -36,13 +36,13 @@
                 <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Voucher</a>
                 <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                  
-                  <li><a href="#" class="dropdown-item">Cash Recipt</a></li>
+                  <li><a routerLink="financial/cashRecipt" class="dropdown-item">Cash Recipt</a></li>
                   <li class="dropdown-divider"></li> 
-                  <li><a href="#" class="dropdown-item">Cash Payment</a></li>
+                  <li><a routerLink="financial/cashPayment" class="dropdown-item">Cash Payment</a></li>
                   <li class="dropdown-divider"></li> 
-                  <li><a href="#" class="dropdown-item">Bank Recipt</a></li>
+                  <li><a routerLink="financial/bankRecipt" class="dropdown-item">Bank Recipt</a></li>
                   <li class="dropdown-divider"></li> 
-                  <li><a href="#" class="dropdown-item">Bank Payment</a></li>
+                  <li><a routerLink="financial/bankPayment" class="dropdown-item">Bank Payment</a></li>
                   <li class="dropdown-divider"></li> 
                   <li><a routerLink="financial/jv" class="dropdown-item">Journal Voucher</a></li>
                 </ul>
@@ -99,7 +99,7 @@
                     <li class="dropdown-divider"></li> 
                     <li><a href="#" class="dropdown-item">Balance</a></li>
                     <li class="dropdown-divider"></li> 
-                    <li><a href="#" class="dropdown-item">Ledger</a></li>
+                    <li><a routerLink="sale/cledger" (click)="setTitle('Customer Ledger')" class="dropdown-item">Ledger</a></li>
                     <li class="dropdown-divider"></li> 
                     <li><a href="#" class="dropdown-item">Aging</a></li>
                   </ul>
@@ -195,9 +195,9 @@
                   <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                     <li><a routerLink="inventory/listing" (click)="setTitle('Inventory')" class="dropdown-item">Listing</a></li>
                     <li class="dropdown-divider"></li> 
-                    <li><a href="#" class="dropdown-item">Balance</a></li>
+                    <li><a routerLink="inventory/balance" (click)="setTitle('Balance')" class="dropdown-item">Balance</a></li>
                     <li class="dropdown-divider"></li> 
-                    <li><a href="#" class="dropdown-item">Ledger</a></li>
+                    <li><a routerLink="inventory/ledger" (click)="setTitle('Ledger')" class="dropdown-item">Ledger</a></li>
                   </ul>
                 </li>
   

@@ -1,0 +1,26 @@
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  :host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  th{
+    background-color: black !important;
+    color: white;
+    border: 1px solid rgb(37, 37, 37);
+  }
+  td{
+    border: 1px solid rgb(37, 37, 37);
+  }
+  tr{
+    border: 1px solid rgb(37, 37, 37);
+  }
