@@ -13,6 +13,7 @@ export interface sInvoice{
     branchId : number;
     branch : Branch;
     freight : number;
+    discount : number;
     datetime: Date;
     accountId: number;
     account : cashAccount

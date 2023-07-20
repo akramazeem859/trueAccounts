@@ -8,8 +8,9 @@ export interface Customer{
     customerNumber: string;
     customerAddress: string;
     customerBranchId: number;
-    customerBranch : Branch;
+    customerBranch: Branch; 
     customerOpeningbalance: number;
+    customerPrevioubalance: number;
     customerCurrentbalance: number; 
 
 }

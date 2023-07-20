@@ -18,6 +18,7 @@ import { SaleOrderComponent } from './voucher/sale-order/sale-order.component';
 import { DispatchNoteComponent } from './voucher/dispatch-note/dispatch-note.component';
 import { SalereturnComponent } from './voucher/salereturn/salereturn.component';
 import { CustomerLedgerComponent } from './customer/customer-ledger/customer-ledger.component';
+import { SaleReciptComponent } from './Popups/sale-recipt/sale-recipt.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CustomerLedgerComponent } from './customer/customer-ledger/customer-led
     SaleOrderComponent,
     DispatchNoteComponent,
     SalereturnComponent,
-    CustomerLedgerComponent
+    CustomerLedgerComponent,
+    SaleReciptComponent
   ],
   imports: [
     CommonModule,
@@ -36,9 +38,8 @@ import { CustomerLedgerComponent } from './customer/customer-ledger/customer-led
     ReactiveFormsModule,
     SaleRoutingModule,
     ToastrModule,
-    MaterialModule,
+    MaterialModule
 
-    MatDatepickerModule,
    
  
   ],

@@ -19,8 +19,11 @@ export class AddBranchComponent implements OnInit {
     companyId: 0,
     company: {
       id: 0,
-      name:''
-    }
+      name: ''
+    },
+    uan: '',
+    address: '',
+    status: false
   }
 
   companies: Company[] = [];

@@ -29,7 +29,7 @@ export class NavbarComponent implements OnDestroy , OnInit  {
     private navbarservice: NavbarService,
      private service:CompanyService,
      private tokenservice:UserStoreService) {
-   this.subscription = this.navbarservice.showNavbar.subscribe((value) => {
+     this.subscription = this.navbarservice.showNavbar.subscribe((value) => {
      this.showNavbar = value;
      });
     

@@ -90,12 +90,35 @@
                                         <td>{{i+1}}</td>
 
                                         <td>
-                                            <select class="form-control" formControlName="productId"
+
+
+                                            <mat-form-field class="example-full-width" appearance="fill">
+                                                <mat-label>Product</mat-label>
+                                                <input type="text"
+                                                       placeholder="Select Product"
+                                                       aria-label="Number"
+                                                       matInput
+                                                       formControlName="productId"
+                                                      
+                                                       [matAutocomplete]="productauto">
+                                                <mat-autocomplete #productauto="matAutocomplete"  
+                                                (optionSelected)="prodSelect(i)" 
+                                                [displayWith]="getProcductName.bind(this)">
+                                                  <mat-option *ngFor="let option of filteredOptions2[i] | async" [value]="option.id">
+                                                    {{option.productName}}
+                                                  </mat-option>
+                                                </mat-autocomplete>
+                                              </mat-form-field>
+
+
+
+
+                                            <!-- <select class="form-control" formControlName="productId"
                                                 (change)="prodSelect(i)">
                                                   
                                                 <option *ngFor="let pro of productList" [value]="pro.id">
                                                     {{pro.productName}}</option>
-                                            </select>
+                                            </select> -->
                                         </td>
 
                                         <td><input type="text" class="form-control" formControlName="available"></td>
@@ -154,8 +177,10 @@
                         <button type="button" class="btn btn-primary mr-2" (click)="saveInvoice()" [disabled]="!isAddBtn">Save Invoice</button>
                         <button type="button" class="btn btn-warning mr-2" (click)="editInvoice()"
                             [disabled]="!isEditBtn">Edit</button>
-                        <button type="button" class="btn btn-danger" (click)="deleteInvoice(1)"
+                        <button type="button" class="btn btn-danger mr-2" (click)="deleteInvoice(1)"
                             [disabled]="!isDeletBtn">Delete</button>
+                        <button type="button" class="btn btn-success mr-2" (click)="PrintInvoice(saleCode)"
+                            [disabled]="!isPrint">Print</button>
 
                     </div>
 
@@ -195,7 +220,7 @@
                     <table class="table" *ngIf="saleInvoice">
                         <thead>
                             <th>Sr#</th>
-                            <th>PI Code</th>
+                            <th>SI Code</th>
                             <th>Payable</th>
                             <th>Paid</th>
                             <th>Supplier</th>
@@ -210,7 +235,7 @@
                                 <td>{{saleInvoice.paid}}</td>
                                 <td>{{saleInvoice.customer.customerName}}</td>
                                 <td>{{saleInvoice.datetime | date: "dd-MMM-yyyy-HH:mm:ss" }}</td>
-                                <td><button class="btn btn-primary" (click)="loadPInv()">Edit</button></td>
+                                <td><button class="btn btn-primary" (click)="loadSInv()">Edit</button></td>
                             </tr>
                         </tbody>
                     </table>
