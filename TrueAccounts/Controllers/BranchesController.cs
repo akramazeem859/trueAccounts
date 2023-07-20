@@ -101,6 +101,10 @@ namespace TrueAccounts.Controllers
             newBranch.companyId = branchRequest.companyId;
             newBranch.supervisor = branchRequest.supervisor;
             newBranch.contactNumber = branchRequest.contactNumber;
+            newBranch.UAN  = branchRequest.UAN; 
+            newBranch.address = branchRequest.address;
+            newBranch.Status  = branchRequest.status;
+
            
             _context.Branches.Add(newBranch);
             await _context.SaveChangesAsync();

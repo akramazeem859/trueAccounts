@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrueAccounts.Data;
 
@@ -11,9 +12,10 @@ using TrueAccounts.Data;
 namespace TrueAccounts.Migrations
 {
     [DbContext(typeof(trueAccountsDbcontext))]
-    partial class trueAccountsDbcontextModelSnapshot : ModelSnapshot
+    [Migration("20230720044926_updateBranchAddress")]
+    partial class updateBranchAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,9 +243,6 @@ namespace TrueAccounts.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("customerOpeningbalance")
-                        .HasColumnType("int");
-
-                    b.Property<int>("customerPrevioubalance")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

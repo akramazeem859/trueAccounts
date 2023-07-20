@@ -9,6 +9,7 @@
         public string customerAddress { get; set; }
         public int customerBranchId { get; set; }
         public int customerOpeningbalance { get; set; }
+        public int customerPrevioubalance { get; set; }
         public int customerCurrentbalance { get; set; }
         public Branch customerBranch { get; set; }
         

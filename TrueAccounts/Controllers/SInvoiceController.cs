@@ -54,6 +54,8 @@ namespace TrueAccounts.Controllers
             var sInvoice = await _context.SInvoice
                 .Where(s => s.code == code)
                 .Include(s => s.customer)
+                .Include(s=> s.branch)
+                .Include(s => s.sInvDetail)
                 .FirstOrDefaultAsync();
 
 
@@ -198,7 +200,7 @@ namespace TrueAccounts.Controllers
         public async Task<IActionResult> PostSInvoice(saleInvDTO sInvRequest)
         {
 
-            int tempBranchId = 1;
+            int tempBranchId = sInvRequest.branchId;
 
            // using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
            // {
@@ -222,7 +224,7 @@ namespace TrueAccounts.Controllers
                     newsInvoice.freight = sInvRequest.freight;
                     newsInvoice.discount = sInvRequest.discount;
                     newsInvoice.datetime = newtime;
-                    newsInvoice.branchId = tempBranchId;
+                    newsInvoice.branchId = sInvRequest.branchId;
                     newsInvoice.accountId = sInvRequest.accountId;
 
                     _context.SInvoice.Add(newsInvoice);
@@ -285,9 +287,13 @@ namespace TrueAccounts.Controllers
 
                     var tempCustomer = _context.Customer.Where(c => c.Id == newsInvoice.customerId).SingleOrDefault();
                     string tempCoaCode;
+                    int tempRecivable = (newsInvoice.payable - newsInvoice.discount + newsInvoice.freight)- newsInvoice.paid;
+                    
                     if (tempCustomer != null)
                     {
                         tempCoaCode = tempCustomer.customerCode;
+                    tempCustomer.customerPrevioubalance = tempCustomer.customerCurrentbalance;
+                    tempCustomer.customerCurrentbalance = tempCustomer.customerCurrentbalance + tempRecivable ; 
                     }
                     else
                     {

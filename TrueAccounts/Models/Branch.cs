@@ -10,6 +10,9 @@ namespace TrueAccounts.Models
         public string branchName { get; set; }
         public string supervisor { get; set; }
         public string contactNumber { get; set; }
+        public string UAN { get; set; }
+        public string address { get; set; }
+        public bool Status { get; set; }
         public int companyId { get; set; }
         public Company company { get; set; }
         public List<Customer> Customer { get; set; }
