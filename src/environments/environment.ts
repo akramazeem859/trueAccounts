@@ -4,16 +4,12 @@
 
 export const environment = {
   production: true,
-<<<<<<< HEAD
-  baseApiUrl:'http://flavorfoods-001-site1.ctempurl.com'
-=======
 
   //baseApiUrl:'http://flavorfoods-001-site1.ctempurl.com'
 
   //baseApiUrl:'http://flavorfoods-001-site1.ctempurl.com'
   baseApiUrl:'https://localhost:7283'
 
->>>>>>> 7d4b4ac3476cb3d968f4f58ca0d2b9f066be22c3
 };
 
 /*
