@@ -653,7 +653,13 @@
             aria-labelledby="dropdownSubMenu1"
             class="dropdown-menu border-0 shadow"
           >
-            <li><a href="#" class="dropdown-item">Users</a></li>
+            <li><a routerLink="admin/UsersDetail" 
+               (click)="setTitle('Users')"
+                class="dropdown-item">Users
+              </a>
+               
+              </li>
+
             <li class="dropdown-divider"></li>
             <li>
               <a

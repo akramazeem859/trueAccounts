@@ -9,5 +9,5 @@ export interface Branch{
     address:string;
     status:boolean;
     companyId :number;
-    company: Company;
+    company? : Company;
 }

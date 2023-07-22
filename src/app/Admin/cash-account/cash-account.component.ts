@@ -29,24 +29,17 @@ export class CashAccountComponent implements OnInit {
     accountBalance: 0,
     accountBranchId : 0,
     accountBranch:{
-      id: 0,
       branchName: "",
-      supervisor: "",
-      contactNumber: "",
-      companyId: 0,
-      company: {
-        id: 0,
-        name: ""
-      },
+      id: 0,
+      supervisor: '',
+      contactNumber: '',
       uan: '',
       address: '',
-      status: false
+      status: false,
+      companyId: 0
     }
-
   }
-  /**
-   *
-   */
+
   constructor(private services:CompanyService) {
     
   }

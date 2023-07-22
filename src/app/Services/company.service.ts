@@ -32,6 +32,7 @@ import { customerLedger } from '../Models/customerLedger.model';
 import { customerLedgerReq } from '../Models/customerLedgerReq.model';
 import { Router } from '@angular/router';
 import { JwtHelperService} from '@auth0/angular-jwt';
+import { users } from '../Models/users.model';
 
 
 @Injectable({
@@ -152,7 +153,10 @@ export class CompanyService {
   getAllCustomerLedger(): Observable<customerLedger[]>{
     return this.http.get<customerLedger[]>(this.baseApiUrl + '/api/CustomerLedgers');
   }
-  
+  getallusers(): Observable<users[]>{
+    return this.http.get<users[]>(this.baseApiUrl+'/api/User/getAllUser');
+  }
+
 
 
 
@@ -229,11 +233,12 @@ export class CompanyService {
     return this.http.get<customerLedger[]>(this.baseApiUrl+'/api/CustomerLedgers/search?customerId='+cusLReq.customerId+'&branchId='+cusLReq.branchId +'&fromDate='+ cusLReq.fromDate +'&toDate='+ cusLReq.toDate);
   }
 
+ 
 
 
 
-  addBranch(branchRequest: Branch):Observable<Branch>{
-    return this.http.post<Branch>(this.baseApiUrl + '/api/Branches', branchRequest);
+  addBranch(branchRequest: any){
+    return this.http.post<any>(this.baseApiUrl + '/api/Branches', branchRequest);
   }
 
   addCompany(companyRequest: Company): Observable<Company>{
@@ -293,6 +298,12 @@ export class CompanyService {
   }
   addLevel4(level4req:level4):Observable<any>{
     return this.http.post<level4>(this.baseApiUrl+'/api/ChartAccount/level4', level4req);
+  }
+  addUser(user:users):Observable<any>{
+    return this.http.post<users>(this.baseApiUrl+'/api/User/register', user);
+  }
+  updateUser(user:users):Observable<any>{
+    return this.http.post<users>(this.baseApiUrl+'/api/User/updateUser' , user);
   }
  
 

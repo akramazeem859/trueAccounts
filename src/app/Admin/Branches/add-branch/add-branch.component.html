@@ -1,67 +1,77 @@
-<div class="card">
-<div class="m-3">
-    <h2>Add Branch</h2>
-<div class="row">
-    <div class="col-6">
-        <form #form="ngForm" (ngSubmit)="addBranch()">
-            <div class="mb-3">
-                <div class="row">
+<div class="Container">
+  <div class="row">
+    <div class="card col-12">
+      <div class="card-header">
+          <h2>Add Branch</h2>
+      </div>
+      <div class="card-body">
+     
+          <form [formGroup]="branchform" (ngSubmit)="addBranch()">
 
-                    <label for="BranchName" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="BranchName" name="BranchName"
-                    [(ngModel)]="branchRequest.branchName" >
-    
-                    <label for="BranchSupervisor" class="form-label">Supervisor</label>
-                    <input type="text" class="form-control" id="BranchSupervisor" name="BranchSupervisor"
-                    [(ngModel)]="branchRequest.supervisor" >
-    
-                </div>
-               
-                <div class="row">
+            <div class="form-row mb-3">
 
-                    <label for="BranchContact" class="form-label">Contact</label>
-                    <input type="text" class="form-control" id="BranchContact" name="BranchContact"
-                    [(ngModel)]="branchRequest.contactNumber" >
+              <div class="col">
+                <label for="BranchName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="BranchName" formControlName="branchName">
+                </div>                    
+
+              <div class="col">
+                <label for="BranchSupervisor" class="form-label">Supervisor</label>
+                <input type="text" class="form-control" id="BranchSupervisor" formControlName="supervisor">
+              </div>
+
+              <div class="col">
+                <label for="BranchContact" class="form-label">Contact</label>
+                <input type="text" class="form-control" id="BranchContact" formControlName="contactNumber">
+              </div>  
+            </div>                  
+
+            <div class="form-row mb-3">
+
+              <div class="col">
+                  <label for="companyId" class="form-label">Company</label>
+                  <select class="form-control" formControlName="companyId">
+                    <option>Select Company</option>
+                    <option *ngFor="let com of companies" [value]="com.id">
+                      {{ com.name }}
+                    </option>
+                  </select>
+              </div>
+
+
+              <div class="col">
+                <label for="UAN" class="form-label">UAN</label>
+                <input type="text" class="form-control" id="UAN" formControlName="uan">
+              </div>
+              
+              <div class="col">
                 
-                   <div class="form-group">
-                    <label>Company</label>
-                    <select class="form-control" name="companyId" #companyId="ngModel" [(ngModel)]="branchRequest.companyId">
-                    <option *ngFor="let com of companies" [value]="com.id">{{com.name}}</option>
-                    </select>
-                   </div>
-                </div>
-
-                <div class="row">
-                    <label for="UAN" class="form-label">UAN</label>
-                    <input type="text" class="form-control" id="UAN" name="UAN"
-                    [(ngModel)]="branchRequest.uan" >
-                
-                   <div class="form-group">
-                    <label>Status</label>
-                    <select class="form-control" name="companyId" #companyId="ngModel" [(ngModel)]="branchRequest.address">
+                  <label>Status</label>
+                  <select class="form-control" name="companyId" formControlName="status">
                     <option></option>
-                    <option value="true">Active</option>
-                    <option value="false">Non Active</option>
-                    </select>
-                   </div>
-                </div>
+                    <option value=1>Active</option>
+                    <option value=0>Non Active</option>
+                  </select>
+                
+              </div>
 
             </div>
 
-            <button type="submit" class="btn btn-primary">Add Company</button>
-        </form>
+            <div class="form-row mb-3">
+
+              <div class="col">
+                <label for="Address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" formControlName="address">
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Branch</button>
+          </form>
+        </div>
+        </div>
+      </div>
     </div>
-</div>
-</div>
-</div>
-<script>
-    $(function () {
-      //Initialize Select2 Elements
-      $('.select2').select2()
-  
-      //Initialize Select2 Elements
-      $('.select2bs4').select2({
-        theme: 'bootstrap4'
-      })
-    })
- </script>
+
+
+

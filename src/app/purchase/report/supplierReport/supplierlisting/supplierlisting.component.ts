@@ -22,30 +22,7 @@ export class SupplierlistingComponent implements OnInit {
   isDeletBtn:boolean;
   supplierCount:number;
 
-  supplierRequest: Supplier = {
-    id:0,
-    supplierCode: "",
-    supplierName: "",
-    supplierNumber: "",
-    supplierAddress: "",
-    supplierOpeningbalance: 0,
-    supplierCurrentbalance: 0,
-    supplierBranchId: 0,
-    supplierBranch : {
-      id: 0,
-      branchName: "",
-      supervisor: "",
-      contactNumber: "",
-      companyId: 0,
-      company: {
-        id: 0,
-        name: ""
-      },
-      uan: '',
-      address: '',
-      status: false
-    }
-}
+  supplierRequest: Supplier ;
 
 /**
  *

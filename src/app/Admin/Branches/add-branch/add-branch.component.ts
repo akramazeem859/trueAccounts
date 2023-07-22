@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Router } from '@angular/router';
+import { Toast, ToastrService } from 'ngx-toastr';
 import { Branch } from 'src/app/Models/branch.model';
 import { Company } from 'src/app/Models/company.model';
 import { CompanyService } from 'src/app/Services/company.service';
@@ -11,26 +14,29 @@ import { CompanyService } from 'src/app/Services/company.service';
 })
 export class AddBranchComponent implements OnInit {
 
-  branchRequest: Branch ={
-    id: 0,
-    branchName: '',
-    supervisor: '',
-    contactNumber: '',
-    companyId: 0,
-    company: {
-      id: 0,
-      name: ''
-    },
-    uan: '',
-    address: '',
-    status: false
-  }
+  branchRequest: Branch ;
+  branchform: FormGroup;
 
   companies: Company[] = [];
   
-  constructor(public comapanyService: CompanyService, private router: Router) { }
+  constructor(
+    public comapanyService: CompanyService, 
+    private router: Router,
+    private fb:FormBuilder,
+    private alert:ToastrService) { }
 
   ngOnInit(): void {
+
+    this.branchform = this.fb.group({
+      branchName :['',Validators.required],
+      supervisor:['',Validators.required],
+      contactNumber:['',Validators.required],
+      companyId:['',Validators.required],
+      status:[''],
+      uan:['',Validators.required],
+      address:['',Validators.required],
+    })
+
     this.comapanyService.getAllCompanies()
     .subscribe(comp => {
         this.companies = comp;
@@ -41,11 +47,18 @@ export class AddBranchComponent implements OnInit {
   }
 
   addBranch(): void{
-   
-   this.comapanyService.addBranch(this.branchRequest)
+   console.log(this.branchform.value);
+   let statusValue = this.branchform.get
+   this.branchform.get('status').setValue(true);
+   this.comapanyService.addBranch(this.branchform.value)
     .subscribe({
       next: (branch) => {
-        this.router.navigate(['branches'])
+        this.router.navigate(['branches']);
+        this.alert.success('New Branch added successfully.','Successful');
+        this.branchform.reset(); 
+      },
+      error:(err) =>{
+        this.alert.warning("Something wrong",'Error')
       }
     })
     

@@ -1,0 +1,134 @@
+<div class="container">
+   
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                <h4>Add User</h4>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="userform" #userForm="ngForm" name="userForm" (ngSubmit)="addUser()">
+                
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="FirstName" class="form-label">First Name</label>
+                            <input type="text" formControlName="FirstName" class="form-control" id="FirstName">
+                        </div>
+                  
+                        <div class="col">
+                            <label for="LastName" class="form-label">Last Name</label>
+                            <input type="text" formControlName="LastName" class="form-control" id="LastName">
+                        </div>
+
+                        <div class="col">
+                            <label for="Email" class="form-label">Email</label>
+                            <input type="text" formControlName="Email" class="form-control" id="Email">
+                        </div>
+                        
+                        <div class="col">
+                            <label for="Phone" class="form-label">Phone</label>
+                            <input type="text" formControlName="PhoneNumber" class="form-control" id="Phone">
+                        </div> 
+                       
+                    </div>
+
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="UserName" class="form-label">User Name</label>
+                            <input type="text" formControlName="UserName" class="form-control" id="UserName">
+                        </div> 
+                        <div class="col">
+                            <label for="Status" class="form-label">Role</label>
+                            <select formControlName="Designation" class="form-control" name="userBranch">
+                                <option></option>
+                                <option>Admin</option>
+                                <option>User</option>
+                            </select>
+                        </div> 
+
+                        
+
+                        <div class="col">
+                            <label for="Address" class="form-label">Address</label>
+                            <input type="text" formControlName="Address" class="form-control" id="Address">
+                        </div> 
+
+                        <div class="col">
+                            <label for="Password" class="form-label">Password</label>
+                            <input type="text" formControlName="Password" class="form-control" id="Password">
+                        </div> 
+
+                    </div>
+
+
+                    <div class="form-row mb-3">
+                      
+                        <div class="col">
+                            <label for="Dob" class="form-label">Date of Birth</label>
+                            <input type="date" formControlName="Dob" class="form-control" id="Dob">
+                        </div> 
+
+                        <div class="col">
+                            <label for="JoiningDate" class="form-label">Date of Joining</label>
+                            <input type="date" formControlName="JoiningDate" class="form-control" id="JoiningDate">
+                        </div> 
+
+
+                        <div class="col">
+                            <label for="userBranch" class="form-label">Branch</label>
+                            <select formControlName="BranchId" class="form-control" name="userBranch">
+                                <option *ngFor="let branch of branchList" [value]="branch.id">{{branch.branchName}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label for="Status" class="form-label">Status</label>
+                            <br>
+                            <input type="checkbox" formControlName="Status" > <b> Active</b>
+                               
+                           
+                        </div> 
+                    </div>
+
+                    <div class="form-row">
+                        <button type="button" class="btn btn-primary mr-2" (click)="submitUser()" >{{btntitle}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                <h4>Account List</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <th>Sr#</th>
+                        <th>Name</th>
+                        <th>UserName</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Branch</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let u of usersList; index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{u.firstName}}{{u.lastName}}</td>
+                            <td>{{u.userName}}</td>
+                            <td>{{u.email}}</td>
+                            <td>{{u.phoneNumber}}</td>
+                            <td>{{u.branch.branchName}}</td>
+                            <td><button type="button" class="btn btn-primary" (click)="selectUser(u)">Edit</button></td>
+
+                        </tr>
+                     </tbody>
+                </table>
+            </div>
+         </div>
+            
+        </div>
+    </div>
+

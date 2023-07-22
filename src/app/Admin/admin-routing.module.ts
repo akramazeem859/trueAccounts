@@ -9,6 +9,7 @@ import { ChartAccountComponent } from './chart-account/chart-account.component';
 import { AddCompanyComponent } from './company/add-company/add-company.component';
 import { CompanyComponent } from './company/company.component';
 import { EditCompanyComponent } from './company/edit-company/edit-company.component';
+import { UsersComponent } from './UserDetail/users/users.component';
 
 const routes: Routes = [
   {path:'admin', component:AdminComponent, children:[
@@ -20,6 +21,7 @@ const routes: Routes = [
     { path:'branches/edit-branch/:id', component:EditBranchComponent},
     { path:'cashAccount', component:CashAccountComponent},
     { path:'ChartAccount', component:ChartAccountComponent},
+    { path:'UsersDetail',component:UsersComponent}
 
 
   ] }

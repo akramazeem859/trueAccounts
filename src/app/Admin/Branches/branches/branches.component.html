@@ -1,37 +1,99 @@
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            <button type="button" [routerLink]="['add-branch']" class="btn btn-primary" >Add Branch</button>        
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                Branch Form
+            </div>
+            <div class="card-body">
+                <form [formGroup]="branchform" (ngSubmit)="submit()">
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+                            <label for="branchName" class="form-label">Branch Name</label>
+                            <input type="text" formControlName="branchName" class="form-control" id="branchName">
+                        </div>
+
+                        <div class="col">
+                            <label for="supervisor" class="form-label">Supervisor</label>
+                            <input type="text" formControlName="supervisor" class="form-control" id="supervisor">
+                        </div>
+                        <div class="col">
+                            <label for="contactNumber" class="form-label">Contact Number</label>
+                            <input type="text" formControlName="contactNumber" class="form-control" id="contactNumber">
+                        </div>
+                        <div class="col">
+                            <label for="uan" class="form-label">UAN </label>
+                            <input type="text" formControlName="uan" class="form-control" id="uan">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row mb-3">
+
+
+                        <div class="col">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" formControlName="address" class="form-control" id="address">
+                        </div>
+
+                        <div class="col">
+                            <label for="companyId" class="form-label">Company</label>
+                            <select formControlName="companyId"  class="form-control" id="companyId">
+                                <option *ngFor="let com of companyList; index as i" [value]="com.id">
+                                    {{com.name}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label for="status" class="form-label">Status</label>
+                            <br>
+                            <input type="checkbox" formControlName="status"><b> Active/Non-Active</b>
+                        </div>
+
+                    </div>
+
+                    <button type="button" (click)="submit()" class="btn btn-primary">{{btnTitle}}</button>
+                </form>
+            </div>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Supervisor</th>
-                        <th scope="col">Contact #</th>
-                        <th scope="col">Company</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let brch of branch; index as i">
-                        <td>{{i+1}}</td>
-                        <td>{{brch.id}}</td>
-                        <td>{{brch.branchName}}</td>
-                        <td>{{brch.supervisor}}</td>
-                        <td>{{brch.contactNumber}}</td>
-                        <td>{{brch.company.name}}</td>
-                        
-                        <td>
-                            <a [routerLink]="['edit-branch', brch.id]">Edit</a>
-                        </td>  
-                    </tr>
-                </tbody>
+
+    </div>
+
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                           
+                            <th scope="col">Name</th>
+                            <th scope="col">Supervisor</th>
+                            <th scope="col">Contact #</th>
+                            <th scope="col">Company</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let brch of branch; index as i">
+                            <td>{{i+1}}</td>
+                           
+                            <td>{{brch.branchName}}</td>
+                            <td>{{brch.supervisor}}</td>
+                            <td>{{brch.contactNumber}}</td>
+                            <td>{{brch.company.name}}</td>
+
+                            <td>
+                                <button class="btn btn-primary" (click)="LoadBranch(brch)">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
+            </div>
         </div>
     </div>
-    
 </div>

@@ -21,33 +21,7 @@ export class CustomerComponent implements OnInit{
   customers$:Customer[] = [];
   branches:Branch[] = [];
 
-  customerRequest : Customer = {
-    id: 0,
-    customerCode: "",
-    customerName: "",
-    customerNumber: "",
-    customerAddress: "",
-    customerOpeningbalance: 0,
-    customerCurrentbalance: 0,
-    customerBranchId: 0,
-
-    customerBranch: {
-      id: 0,
-      branchName: "",
-      supervisor: "",
-      contactNumber: "",
-      companyId: 0,
-      company: {
-        id: 0,
-        name: ""
-      },
-      uan: '',
-      address: '',
-      status: false
-    },
-    customerPrevioubalance: 0
-  };
-
+  customerRequest : Customer ;
   /**
    *
    */

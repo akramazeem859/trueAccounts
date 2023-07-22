@@ -1,4 +1,5 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -13,7 +14,8 @@ import { EditBranchComponent } from './Branches/edit-branch/edit-branch.componen
 import { CashAccountComponent } from './cash-account/cash-account.component';
 import { ChartAccountComponent } from './chart-account/chart-account.component';
 import { CoaFilterPipe } from './AdminPipes/coa-filter.pipe';
-import { Coal3filterPipe } from './adminpipes/coal3filter.pipe';
+import { Coal3filterPipe } from './AdminPipes/coal3filter.pipe';
+import { UsersComponent } from './UserDetail/users/users.component';
 
 
 @NgModule({
@@ -28,12 +30,14 @@ import { Coal3filterPipe } from './adminpipes/coal3filter.pipe';
     AdminComponent,
     ChartAccountComponent,
     CoaFilterPipe,
-    Coal3filterPipe
+    Coal3filterPipe,
+    UsersComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
    
   ],
   exports: [

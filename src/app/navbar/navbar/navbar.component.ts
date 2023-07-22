@@ -56,7 +56,7 @@ export class NavbarComponent implements OnDestroy , OnInit  {
 
   setTitle(title:string){
     this.title = title;
-    
+   
   }
 
   toggleMenu(){
