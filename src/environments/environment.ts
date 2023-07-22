@@ -7,8 +7,8 @@ export const environment = {
 
   //baseApiUrl:'http://flavorfoods-001-site1.ctempurl.com'
 
-  //baseApiUrl:'http://flavorfoods-001-site1.ctempurl.com'
-  baseApiUrl:'https://localhost:7283'
+  baseApiUrl:'http://flavorfoods-001-site1.ctempurl.com'
+  //baseApiUrl:'https://localhost:7283'
 
 };
 
