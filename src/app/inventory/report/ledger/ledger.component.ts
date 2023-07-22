@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-ledger',
+  selector: 'ledger',
   templateUrl: './ledger.component.html',
   styleUrls: ['./ledger.component.css']
 })

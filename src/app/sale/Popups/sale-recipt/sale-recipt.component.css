@@ -1,0 +1,26 @@
+.main-box{
+ margin:10px;
+
+}
+.print-content{
+    text-align: center;
+}
+.print-content hr{
+    height: 5px;
+    border-top: 5px solid #000000;
+}
+
+td {
+    text-align: left;
+    vertical-align: top;
+    margin : 2px;
+  }
+
+.dashed{
+    border: 1px dotted black;
+}
+
+.dashed td{
+    border: 1px dotted black;
+    margin: 5px;
+}

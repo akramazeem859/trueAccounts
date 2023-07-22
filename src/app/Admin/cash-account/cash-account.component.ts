@@ -30,15 +30,18 @@ export class CashAccountComponent implements OnInit {
     accountBranchId : 0,
     accountBranch:{
       id: 0,
-      branchName:"",
-      supervisor:"",
-      contactNumber:"",
-      companyId:0,
-      company:{
+      branchName: "",
+      supervisor: "",
+      contactNumber: "",
+      companyId: 0,
+      company: {
         id: 0,
-        name:""
+        name: ""
+      },
+      uan: '',
+      address: '',
+      status: false
     }
-  }
 
   }
   /**

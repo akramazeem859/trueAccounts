@@ -33,15 +33,18 @@ export class SupplierlistingComponent implements OnInit {
     supplierBranchId: 0,
     supplierBranch : {
       id: 0,
-      branchName:"",
-      supervisor:"",
-      contactNumber:"",
-      companyId:0,
-      company:{
+      branchName: "",
+      supervisor: "",
+      contactNumber: "",
+      companyId: 0,
+      company: {
         id: 0,
-        name:""
+        name: ""
+      },
+      uan: '',
+      address: '',
+      status: false
     }
-  }
 }
 
 /**

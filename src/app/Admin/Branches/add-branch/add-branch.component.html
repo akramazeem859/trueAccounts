@@ -1,31 +1,51 @@
-
+<div class="card">
 <div class="m-3">
     <h2>Add Branch</h2>
 <div class="row">
     <div class="col-6">
         <form #form="ngForm" (ngSubmit)="addBranch()">
             <div class="mb-3">
-                <label for="BranchName" class="form-label">Name</label>
-                <input type="text" class="form-control" id="BranchName" name="BranchName"
-                [(ngModel)]="branchRequest.branchName" >
+                <div class="row">
 
-                <label for="BranchSupervisor" class="form-label">Supervisor</label>
-                <input type="text" class="form-control" id="BranchSupervisor" name="BranchSupervisor"
-                [(ngModel)]="branchRequest.supervisor" >
+                    <label for="BranchName" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="BranchName" name="BranchName"
+                    [(ngModel)]="branchRequest.branchName" >
+    
+                    <label for="BranchSupervisor" class="form-label">Supervisor</label>
+                    <input type="text" class="form-control" id="BranchSupervisor" name="BranchSupervisor"
+                    [(ngModel)]="branchRequest.supervisor" >
+    
+                </div>
+               
+                <div class="row">
 
-                <label for="BranchContact" class="form-label">Contact</label>
-                <input type="text" class="form-control" id="BranchContact" name="BranchContact"
-                [(ngModel)]="branchRequest.contactNumber" >
-
-                <div class="form-group">
+                    <label for="BranchContact" class="form-label">Contact</label>
+                    <input type="text" class="form-control" id="BranchContact" name="BranchContact"
+                    [(ngModel)]="branchRequest.contactNumber" >
+                
+                   <div class="form-group">
                     <label>Company</label>
                     <select class="form-control" name="companyId" #companyId="ngModel" [(ngModel)]="branchRequest.companyId">
-                   
                     <option *ngFor="let com of companies" [value]="com.id">{{com.name}}</option>
-                    
                     </select>
+                   </div>
                 </div>
+
+                <div class="row">
+                    <label for="UAN" class="form-label">UAN</label>
+                    <input type="text" class="form-control" id="UAN" name="UAN"
+                    [(ngModel)]="branchRequest.uan" >
                 
+                   <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" name="companyId" #companyId="ngModel" [(ngModel)]="branchRequest.address">
+                    <option></option>
+                    <option value="true">Active</option>
+                    <option value="false">Non Active</option>
+                    </select>
+                   </div>
+                </div>
+
             </div>
 
             <button type="submit" class="btn btn-primary">Add Company</button>
@@ -33,7 +53,7 @@
     </div>
 </div>
 </div>
-
+</div>
 <script>
     $(function () {
       //Initialize Select2 Elements

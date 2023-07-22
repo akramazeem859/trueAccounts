@@ -13,15 +13,17 @@ export class EditBranchComponent implements OnInit {
 
   branchEditRequest: Branch = {
     id: 0,
-    branchName :'',
-    supervisor :'',
-    contactNumber : '',
-    companyId :0,
+    branchName: '',
+    supervisor: '',
+    contactNumber: '',
+    companyId: 0,
     company: {
-      id : 0 ,
-      name : ''
-    }
-  
+      id: 0,
+      name: ''
+    },
+    uan: '',
+    address: '',
+    status: false
   }
 
   companies: Company[] = [];

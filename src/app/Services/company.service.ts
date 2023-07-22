@@ -28,6 +28,10 @@ import { level3 } from '../Models/COA/level3.model';
 import { level4 } from '../Models/COA/level4.model';
 import { jvInvoice } from '../Models/jvInvoice.model';
 import { jvInvDetail } from '../Models/jvInvDetail.model';
+import { customerLedger } from '../Models/customerLedger.model';
+import { customerLedgerReq } from '../Models/customerLedgerReq.model';
+import { Router } from '@angular/router';
+import { JwtHelperService} from '@auth0/angular-jwt';
 
 
 @Injectable({
@@ -43,7 +47,53 @@ export class CompanyService {
     return this._refreshRequired;
   }
 
-  constructor(private http: HttpClient) { }
+  private userPayLoad:any;
+  constructor(private http: HttpClient, private router:Router) {
+    this.userPayLoad = this.decodeToke();
+   }
+
+  login(userObj: any){
+    return this.http.post<any>(this.baseApiUrl+'/api/User/authenticate',userObj)
+   }
+   register(userObj: any){
+    return this.http.post<any>(this.baseApiUrl+'/api/User/register',userObj)
+   }
+
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['login']);
+  }
+  setToken(token:string){
+    localStorage.setItem('Token',token);
+    localStorage.setItem('session',JSON.stringify(token));
+  }
+  getToken(){
+    return localStorage.getItem('Token');
+  }
+  isLoggedin():boolean{
+    return !!localStorage.getItem('Token');
+  }
+
+  decodeToke(){
+    const jwtHelper = new JwtHelperService();
+    const token  = this.getToken();
+    console.log(jwtHelper.decodeToken(token));
+    return jwtHelper.decodeToken(token);
+  }
+
+  getNamefromToken(){
+    if(this.userPayLoad)
+    return this.userPayLoad.name;
+  }
+
+  getRolefromToken(){
+    if(this.userPayLoad)
+    return this.userPayLoad.role;
+  }
+  getBranchIdfromToken(){
+    if(this.userPayLoad)
+    return this.userPayLoad.branchId;
+  }
 
 
   getAllCompanies(): Observable<Company[]>{
@@ -99,6 +149,10 @@ export class CompanyService {
   getAllLevel4():Observable<level4[]> {
     return this.http.get<level4[]>(this.baseApiUrl+'/api/ChartAccount/coa/level4');
   }
+  getAllCustomerLedger(): Observable<customerLedger[]>{
+    return this.http.get<customerLedger[]>(this.baseApiUrl + '/api/CustomerLedgers');
+  }
+  
 
 
 
@@ -170,6 +224,9 @@ export class CompanyService {
 
   getlevel2bylevel1(level1:any){
     return this.http.get<level2[]>(this.baseApiUrl+'/api/ChartAccount/coa/level2/'+level1);
+  }
+  searchCustomerLedger(cusLReq : customerLedgerReq):Observable<customerLedger[]>{
+    return this.http.get<customerLedger[]>(this.baseApiUrl+'/api/CustomerLedgers/search?customerId='+cusLReq.customerId+'&branchId='+cusLReq.branchId +'&fromDate='+ cusLReq.fromDate +'&toDate='+ cusLReq.toDate);
   }
 
 

@@ -3,7 +3,7 @@ import { Inventory } from 'src/app/Models/inventory.model';
 import { CompanyService } from 'src/app/Services/company.service';
 
 @Component({
-  selector: 'app-inventorylist',
+  selector: 'inventorylist',
   templateUrl: './inventorylist.component.html',
   styleUrls: ['./inventorylist.component.css']
 })
