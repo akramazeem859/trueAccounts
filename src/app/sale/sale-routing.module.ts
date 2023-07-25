@@ -11,6 +11,7 @@ import { SaleInvoiceComponent } from './voucher/sale-invoice/sale-invoice.compon
 import { SaleOrderComponent } from './voucher/sale-order/sale-order.component';
 import { DispatchNoteComponent } from './voucher/dispatch-note/dispatch-note.component';
 import { CustomerLedgerComponent } from './customer/customer-ledger/customer-ledger.component';
+import { Saleinvoice2Component } from './voucher/saleinvoice2/saleinvoice2.component';
 
 const routes: Routes = [
   { path: 'sale', component:SaleComponent , children:[
@@ -19,7 +20,8 @@ const routes: Routes = [
     {path: 'customerrate', component:CustomerRatesComponent},
     {path: 'saleorder',component:SaleOrderComponent},
     {path: 'dispatch', component:DispatchNoteComponent},
-    {path: 'cledger', component:CustomerLedgerComponent}
+    {path: 'cledger', component:CustomerLedgerComponent},
+    {path: 'sInvoice2', component:Saleinvoice2Component},
   ]}
 ];
 

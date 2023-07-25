@@ -1,0 +1,130 @@
+<div class="container">
+    <div class="row">
+        <div class="card col-12">
+            <div class="card-header">
+                <h3>Sale Invoice</h3>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="saleInvform" (ngSubmit)="submit()">
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Code</mat-label>
+                            <input matInput formControlName="code" width=100>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="example-full-width" style="width: 100%;" appearance="fill">
+                              <mat-label>Customer</mat-label>
+                              <input type="text"
+                                     placeholder="Select Customer"
+                                     aria-label="Number"
+                                     matInput
+                                     formControlName="customerId"
+                                    
+                                     [matAutocomplete]="auto">
+                              <mat-autocomplete #auto="matAutocomplete"  
+                              (optionSelected)="findCustomer($event)" 
+                              [displayWith]="getCusName.bind(this)">
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
+                                  {{option.customerName}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Date</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="datetime">
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label>Adress</label>
+                            <input type="text" formControlName="address" class="form-control">
+                        </div>
+
+                        <div class="col">
+                            <label>Contact</label>
+                            <input type="text" formControlName="contact" class="form-control">
+                        </div>
+
+                        <div class="col">
+                            <label>Balance</label>
+                            <input type="text" formControlName="balance" class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row mb-3">
+                        <div class="col itemform">
+                            <table class="table table-bordered " formArrayName="detail">
+                                <thead class="bg-primary text-white">
+                                    <tr>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                            <label>Product</label>
+                                            <mat-form-field class="example-full-width" style="width: 100%;" appearance="fill">
+                                                <input type="text"
+                                                       placeholder="Select Product"
+                                                       aria-label="Number"
+                                                       matInput
+                                                       formControlName="productId"
+                                                       [matAutocomplete]="autop">
+                                                <mat-autocomplete #autop="matAutocomplete"  
+                                                (optionSelected)="findProduct($event)" 
+                                                [displayWith]="getProcductName.bind(this)">
+                                                  <mat-option *ngFor="let option of filteredOptions2 | async" [value]="option.id">
+                                                    {{option.productName}}
+                                                  </mat-option>
+                                                </mat-autocomplete>
+                                              </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <label>Available</label>
+                                            <input type="text"class="form-control">
+                                        </td>
+                                        <td>
+                                            <label>Quantity</label>
+                                            <input type="text"class="form-control">
+                                        </td>
+                                        <td>
+                                            <label>Price</label>
+                                            <input type="text"class="form-control">
+                                        </td>
+                                        <td>
+                                            <label>Add</label>
+                                            <button class="btn btn-success">Add Item</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th style="width: 10%;">Sr#</th>
+                                        <th style="width: 30%;">Product</th>
+                                       
+                                        <th>Qnty</th>
+                                        <th>Price</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                    </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

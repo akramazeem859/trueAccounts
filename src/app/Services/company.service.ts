@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 // import { Company } from '../Models/component';
-import { Observable, Subject, tap } from 'rxjs';
+import { Observable, Subject, of, tap } from 'rxjs';
 import { Company } from '../Models/company.model';
 import { Branch } from '../Models/branch.model';
 import { Brand } from '../Models/brand.model';
@@ -33,12 +33,15 @@ import { customerLedgerReq } from '../Models/customerLedgerReq.model';
 import { Router } from '@angular/router';
 import { JwtHelperService} from '@auth0/angular-jwt';
 import { users } from '../Models/users.model';
+import { data } from 'jquery';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
+
+  private custRateCache: any[] | null = null;
   
 
   baseApiUrl:string = environment.baseApiUrl;
@@ -185,7 +188,7 @@ export class CompanyService {
   getProduct(id: string){
     return this.http.get<Product>(this.baseApiUrl + '/api/Product/' + id);
   }
-  getCustomer(id: string){
+  getCustomer(id: any){
     return this.http.get<Customer>(this.baseApiUrl+'/api/Customer/'+id);
   }
   getSupplier(id:string){
@@ -198,7 +201,7 @@ export class CompanyService {
     return this.http.get<Inventory>(this.baseApiUrl+'/api/Inventory/' + id);
   }
   getBranchInv(id:any){
-    return this.http.get<Inventory>(this.baseApiUrl+'/api/Inventory/branchId/' + id);
+    return this.http.get<Inventory[]>(this.baseApiUrl+'/api/Inventory/branchId/' + id);
   }
   getPurchInv(id:any){
     return this.http.get<pInvoice>(this.baseApiUrl+'/api/PInvoice/' + id);
@@ -222,6 +225,7 @@ export class CompanyService {
   getCustRatebyCus(id:any){
     return this.http.get<customerRates[]>(this.baseApiUrl+'/api/CustomerRate/byCust/'+ id);
   }
+
   getCustRatebyProd(cusId:any, prodId:any){
     return this.http.get<customerRates>(this.baseApiUrl+'/api/CustomerRate/byProd/'+cusId+'/'+prodId);
   }

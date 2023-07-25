@@ -19,6 +19,8 @@ import { DispatchNoteComponent } from './voucher/dispatch-note/dispatch-note.com
 import { SalereturnComponent } from './voucher/salereturn/salereturn.component';
 import { CustomerLedgerComponent } from './customer/customer-ledger/customer-ledger.component';
 import { SaleReciptComponent } from './Popups/sale-recipt/sale-recipt.component';
+import { Saleinvoice2Component } from './voucher/saleinvoice2/saleinvoice2.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { SaleReciptComponent } from './Popups/sale-recipt/sale-recipt.component'
     DispatchNoteComponent,
     SalereturnComponent,
     CustomerLedgerComponent,
-    SaleReciptComponent
+    SaleReciptComponent,
+    Saleinvoice2Component,
+   
   ],
   imports: [
     CommonModule,
@@ -39,7 +43,7 @@ import { SaleReciptComponent } from './Popups/sale-recipt/sale-recipt.component'
     SaleRoutingModule,
     ToastrModule,
     MaterialModule
-
+    
    
  
   ],

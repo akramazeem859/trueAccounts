@@ -10,10 +10,10 @@ import { CompanyService } from 'src/app/Services/company.service';
 import { ToastrService } from 'ngx-toastr';
 import { sInvDetailDTO } from 'src/app/DTO/sInvDetailDTO.model';
 import { customerRates } from 'src/app/Models/customerRate.model';
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Time, DatePipe } from '@angular/common';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { sInvDetail } from 'src/app/Models/sInvDetail.model';
 import { sInvoice } from 'src/app/Models/sInvoice.model';
 import { UserStoreService } from 'src/app/Services/user.store.service';
@@ -21,7 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SaleReciptComponent } from '../../Popups/sale-recipt/sale-recipt.component';
 import { Branch } from 'src/app/Models/branch.model';
 
-declare var $ :any;
+declare var $: any;
 
 
 @Component({
@@ -38,14 +38,48 @@ export class SaleInvoiceComponent implements OnInit {
 
   myControl2 = new FormControl('');
   options2 !: Product[];
-  filteredOptions2 : Observable<Product[]>[] = [];
+  filteredOptions2: Observable<Product[]>[] = [];
 
-  branchId: string='';
+  branchId: string = '';
   tempbranch: Branch;
   tempuserName: string;
   tempInvoiceCode: string = '';
- 
-  
+  tempCustomer:Customer; 
+
+  isEditBtn: boolean = false;
+  isDeletBtn: boolean = false;
+  isAddBtn: boolean = true;
+  isPrint: boolean = false;
+
+  customerList !: Customer[];
+  customerRateList: customerRates[] = [];
+  branchStock: Inventory[] = [];
+  cashAccountList: cashAccount[] = [];
+  saleInvDetailList: sInvDetail[] = [];
+  productList: Product[] = [];
+
+  invoiceDetail: FormArray<any>;
+  invProduct: FormGroup<any>;
+  tempinvProduct: FormGroup<any>;
+
+  tempProdCount: number = 0;
+  saleCode: any;
+  newTime: any;
+  currentDate: any;
+  isProdAdded: boolean = false;
+  tempSalePrice: number = 0;
+
+  selectedAccout: cashAccount;
+  saleInvoice: sInvoice;
+  tempCusRat: customerRates;
+
+  detail: sInvDetailDTO = {
+    productId: 0,
+    salePrice: 0,
+    quantity: 0,
+    sInvoiceId: 0
+  }
+
   // getName(Id: any) {
   //   return this.options.find((customer) => customer.id === Id).customerName;
   // }
@@ -57,38 +91,10 @@ export class SaleInvoiceComponent implements OnInit {
     private router: Router,
     private service: CompanyService,
     private alert: ToastrService,
-    private datePipe : DatePipe,
+    private datePipe: DatePipe,
     private tokenservice: UserStoreService,
-    private dialog:MatDialog) {
+    private dialog: MatDialog) {
 
-  }
- 
-
-  customerList !: Customer[];
-  cashAccountList: cashAccount[] = [];
-  saleInvDetailList: sInvDetail[] = [];
-  productList: Product[] = [];
-
-  invoiceDetail: FormArray<any>;
-  invProduct: FormGroup<any>;
-  tempinvProduct: FormGroup<any>;
-
-  tempProdCount: number = 0;
-  saleCode: any;
-  newTime : any;
-  currentDate: any;
-  isProdAdded: boolean = false;
-  tempSalePrice: number = 0;
-  
-  selectedAccout:cashAccount;
-  saleInvoice: sInvoice;
-  tempCusRat: customerRates;
-
-  detail: sInvDetailDTO = {
-    productId: 0,
-    salePrice: 0,
-    quantity: 0,
-    sInvoiceId: 0
   }
 
 
@@ -103,7 +109,7 @@ export class SaleInvoiceComponent implements OnInit {
     detail: this.builder.array([]),
 
     accountId: this.builder.control(null),
-    branchId : this.builder.control(null),
+    branchId: this.builder.control(null),
     paid: this.builder.control(null),
     discount: this.builder.control(0),
     freight: this.builder.control(0),
@@ -112,45 +118,33 @@ export class SaleInvoiceComponent implements OnInit {
 
   })
 
-  isEditBtn: boolean = false;
-  isDeletBtn: boolean = false;
-  isAddBtn: boolean = true;
-  isPrint: boolean = false;
+
 
   ngOnInit(): void {
 
     //this.getName(0);
     var today = new Date();
-    var date = today.getDate()+'-'+ (today.getMonth()+1)+'-'+ today.getFullYear();
+    var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
-    
-    $(document).ready( function() {
+    var dateTime = date + ' ' + time;
+
+    $(document).ready(function () {
       $('#dt').val(new Date());
     });
 
     this.newTime = time;
-    
+
     this.currentDate = this.datePipe.transform((new Date), 'YYYY-MM-dd hh:mm');
-    var currentDateTxt = this.currentDate+" ";
+    var currentDateTxt = this.currentDate + " ";
 
     //console.log("current Date :" + this.currentDate);
     this.saleInvoiceForm.get('datetime').setValue(this.currentDate);
+
    
-    this.getAllCustomer();
-    this.getAllAccounts();
-    this.getAllProducts();
 
     //this.selectedAccout = this.cashAccountList[0].accountTitle;
 
-    this.filteredOptions = this.saleInvoiceForm.get('customerId').valueChanges.pipe(
-      startWith(''),
-      map(value => {
-        const name = value;
-        return name?this._filter(name as string, this.options):this.options
-      })
-      //map(value => this.utils._filterItemSelector(value, this.suggestedSites))
-    );
+   
 
     this.tokenservice.getBrnchIdFromStore().subscribe(value => {
       let tempbranchId = this.service.getBranchIdfromToken();
@@ -161,24 +155,57 @@ export class SaleInvoiceComponent implements OnInit {
       let tempuserName = this.service.getNamefromToken();
       this.tempuserName = value || tempuserName;
     })
-    
+
     this.service.getBranch(this.branchId).subscribe({
-      next:(res) => {
+      next: (res) => {
         this.tempbranch = res;
-      } ,
-      error:(err) => {
-         this.alert.warning('Branch Not Recognized.','Warning'); 
+        this.getAllCustomer(this.tempbranch.id);
+        
+        this.service.getBranchInv(this.tempbranch.id).subscribe({
+          next:(res)=> {
+            this.branchStock = res; 
+            
+          }
+        })
+    
+        
+      },
+      error: (err) => {
+        this.alert.warning('Branch Not Recognized.', 'Warning');
       }
     })
+
+    
+    this.getAllAccounts();
+    this.getAllProducts();
+
+
+    this.filteredOptions = this.saleInvoiceForm.get('customerId').valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = value;
+        return name ? this._filter(name as string, this.options) : this.options
+      })
+      //map(value => this.utils._filterItemSelector(value, this.suggestedSites))
+    );
+
+    
+
   }
 
   ManageNameControl(index: number) {
     var arrayControl = this.saleInvoiceForm.get('detail') as FormArray;
     this.filteredOptions2[index] = arrayControl.at(index).get('productId').valueChanges
       .pipe(
-      startWith(''),
-      map(value => this._filter2(value || ''))
-    );
+        startWith(''),
+        map(value => {
+          if (typeof value === 'string') {
+            return this._filter2(value.toLowerCase());
+          } else {
+            return this._filter2('');
+          }
+        })
+      );
   }
 
   private _filter2(value: string): Product[] {
@@ -188,15 +215,15 @@ export class SaleInvoiceComponent implements OnInit {
   }
 
 
-  private _filter(value: string , cus:Customer[]): Customer[] {
-    if(typeof value === 'string'){
+  private _filter(value: string, cus: Customer[]): Customer[] {
+    if (typeof value === 'string') {
       const filterValue = value.toLowerCase();
       return this.options.filter(option => option.customerName.toLowerCase().includes(filterValue));
     }
-   else{
-    return cus;
-   }
-    
+    else {
+      return cus;
+    }
+
   }
 
   displayFn(cus: Customer): string {
@@ -228,29 +255,29 @@ export class SaleInvoiceComponent implements OnInit {
   saveInvoice() {
 
     var mydate = this.saleInvoiceForm.get("datetime").value;
-   
+
     this.currentDate = this.datePipe.transform((mydate), 'YYYY-MM-dd hh:mm');
-    
+
     //mydate = mydate +" "+ this.newTime;
     //this.saleInvoiceForm.get("datetime").setValue(this.currentDate);
     console.log(this.saleInvoiceForm.value);
     //this.invoiceForm.reset();
-    if(mydate != null){
+    if (mydate != null) {
 
       let sId = 0;
       this.saleInvoiceForm.get('branchId').setValue(this.branchId);
       this.service.addSInvoice(this.saleInvoiceForm.value).subscribe(inv => {
-        this.tempInvoiceCode = inv.code; 
-        this.saleCode = inv.code; 
+        this.tempInvoiceCode = inv.code;
+        this.saleCode = inv.code;
         sId = inv.id;
         console.log("saleInvoice code :" + this.tempInvoiceCode);
         this.formCustomRest();
         this.alert.success("Record saved successfully...", "Successful")
-        
+
         this.PrintInvoice(this.saleCode);
       })
     }
-    else{
+    else {
       this.alert.warning("Please select date first");
     }
   }
@@ -272,37 +299,69 @@ export class SaleInvoiceComponent implements OnInit {
     //this.pInvoiceDTO = null;
   }
 
-  getAllCustomer() {
+  getAllCustomer(brchId: any) {
+    
     this.service.getAllCustomers().subscribe(cus => {
       this.customerList = cus;
-      this.options = cus;
-      console.log("Customer List :" + this.customerList);
+      this.options = cus.filter(x=> x.customerBranchId == this.tempbranch.id);
+      this.tempCustomer = cus.find(x=> x.customerName == 'Anomynous' && x.customerBranchId == this.tempbranch.id);
+      this.saleInvoiceForm.get('customerId').setValue(this.tempCustomer.id);
+
+      this.service.getCustomer(this.tempCustomer.id)
+      .subscribe(cus => {
+        this.saleInvoiceForm.get("address").setValue(cus.customerAddress);
+        this.saleInvoiceForm.get("contact").setValue(cus.customerNumber);
+        this.saleInvoiceForm.get("balance").setValue(cus.customerCurrentbalance);
+      })
     })
   }
   getAllAccounts() {
     this.service.getAllAccounts().subscribe(acc => {
       this.cashAccountList = acc;
-      
+
       this.saleInvoiceForm.get('accountId').setValue(this.cashAccountList[0].id);
-      console.log('acc : '+ this.saleInvoiceForm.get('accountId').value)
+      console.log('acc : ' + this.saleInvoiceForm.get('accountId').value)
     })
-    
+
   }
 
 
-  public getCusName(cusId : any){
-    return this.customerList.find(c => c.id === cusId).customerName;
+  public getCusName(cusId: any) {
+
+    //return this.customerList.find(c => c.id === cusId).customerName;
+
+    if (this.customerList && this.customerList.length > 0) {
+      const customer = this.customerList.find((item) => item.id === cusId);
+      if (customer) {
+        return customer.customerName;
+      }
+    }
+    return '';
+
+
   }
-  public getProcductName(pId : any){
-    return this.productList.find(c => c.id === pId).productName;
+  public getProcductName(pId: any) {
+    //return this.productList.find(c => c.id === pId).productName;
+
+    if (this.productList && this.productList.length > 0) {
+      const product = this.productList.find((item) => item.id === pId);
+      if (product) {
+        return product.productName;
+      }
+    }
+    return '';
   }
+
+ 
 
 
   findCustomer(event) {
-    console.log("customer ID : "+ this.saleInvoiceForm.get("customerId")?.value)
+    this.invoiceDetail.clear(); 
 
-   var  cusId = this.saleInvoiceForm.get("customerId")?.value;
-   //var  cusId = event.option.value;
+    this.customerRateList = [];
+    console.log("customer ID : " + this.saleInvoiceForm.get("customerId")?.value)
+    var cusId = this.saleInvoiceForm.get("customerId")?.value;
+    //var  cusId = event.option.value;
 
     this.service.getCustomer(cusId)
       .subscribe(cus => {
@@ -311,6 +370,14 @@ export class SaleInvoiceComponent implements OnInit {
         this.saleInvoiceForm.get("balance").setValue(cus.customerCurrentbalance);
       })
     console.log("find Customer = " + cusId);
+
+    this.service.getCustRatebyCus(cusId).subscribe({
+      next:(res) => {
+        this.customerRateList = res; 
+        console.log('customer Rate List : '+this.customerList)
+      }
+    })
+
   }
 
   getAllProducts() {
@@ -326,7 +393,7 @@ export class SaleInvoiceComponent implements OnInit {
 
     this.invoiceDetail = this.saleInvoiceForm.get('detail') as FormArray;
     let cusId = this.saleInvoiceForm.get('customerId')?.value;
-    
+
     if (cusId != null) {
       this.invoiceDetail.push(this.generateRow());
       this.ManageNameControl(this.invoiceDetail.length - 1);
@@ -369,33 +436,51 @@ export class SaleInvoiceComponent implements OnInit {
     }
     let custId = this.saleInvoiceForm.get("customerId").value;
 
-    this.service.getCustRatebyProd(custId, prodId)
-      .subscribe((item) => {
-        this.tempSalePrice = item.rate;
-        console.log("custome sale price :" + this.tempSalePrice)
-
-        this.invProduct.get("salePrice").setValue(this.tempSalePrice);
-        this.totalCalculation(index);
-
-      }, (err) => {
-        console.log('error msg :' + err.message)
-        this.service.getProduct(prodId)
-          .subscribe(prod => {
-            this.invProduct.get("salePrice").setValue(prod.salePrice);
-            this.totalCalculation(index);
-          })
-      })
+    if(this.customerRateList.length > 0){
+      this.tempSalePrice = this.customerRateList.find(x=> x.productId == prodId).rate;
+      console.log('tempsale price :'+this.tempSalePrice)
+    }
+    else{
+      this.tempSalePrice = this.productList.find(x=>x.id == prodId ).salePrice;
+      console.log('tempsale price :'+this.tempSalePrice)
+    }
 
 
+    this.invProduct.get("salePrice").setValue(this.tempSalePrice);
 
-    this.service.getProdInvt(prodId, 1)
-      .subscribe(avail => {
-        console.log(avail);
-        this.invProduct.get("available").setValue(avail);
-        if (avail == 0) {
-          this.alert.warning("Product not available at this time.", 'Stock not Available',)
-        }
-      })
+
+    this.totalCalculation(index);
+
+
+    // this.service.getCustRatebyProd(custId, prodId)
+    //   .subscribe((item) => {
+    //     this.tempSalePrice = item.rate;
+    //     console.log("custome sale price :" + this.tempSalePrice)
+
+    //     this.invProduct.get("salePrice").setValue(this.tempSalePrice);
+    //     this.totalCalculation(index);
+
+    //   }, (err) => {
+    //     console.log('error msg :' + err.message)
+    //     this.service.getProduct(prodId)
+    //       .subscribe(prod => {
+    //         this.invProduct.get("salePrice").setValue(prod.salePrice);
+    //         this.totalCalculation(index);
+    //       })
+    //   })
+
+
+    var tempstock = this.branchStock.find(x=> x.productId == prodId)
+    this.invProduct.get("available").setValue(tempstock.quantity);
+
+    // this.service.getProdInvt(prodId, 1)
+    //   .subscribe(avail => {
+    //     console.log(avail);
+    //     this.invProduct.get("available").setValue(avail);
+    //     if (avail == 0) {
+    //       this.alert.warning("Product not available at this time.", 'Stock not Available',)
+    //     }
+    //   })
 
 
   }
@@ -405,7 +490,7 @@ export class SaleInvoiceComponent implements OnInit {
     this.invProduct = this.invoiceDetail.at(index) as FormGroup;
     let quantity = this.invProduct.get("quantity").value;
     let salePrice = this.invProduct.get("salePrice").value;
-    
+
     let total = (quantity * salePrice);
 
     this.invProduct.get("total").setValue(total);
@@ -425,7 +510,7 @@ export class SaleInvoiceComponent implements OnInit {
     this.saleInvoiceForm.get("paid").setValue(sumTotal);
 
     let freight = this.saleInvoiceForm.get("freight").value;
-    let gTotal = (+ freight + sumTotal)-discount;
+    let gTotal = (+ freight + sumTotal) - discount;
 
     this.saleInvoiceForm.get("payable").setValue(gTotal);
     this.saleInvoiceForm.get("paid").setValue(gTotal);
@@ -535,12 +620,12 @@ export class SaleInvoiceComponent implements OnInit {
     this.isPrint = true;
   }
 
-  PrintInvoice(invCode : string){
-    this.dialog.open(SaleReciptComponent,{
-      width:'30%',
-      height:'600px',
-      data:{
-        title:'Print Invoice',
+  PrintInvoice(invCode: string) {
+    this.dialog.open(SaleReciptComponent, {
+      width: '30%',
+      height: '600px',
+      data: {
+        title: 'Print Invoice',
         branch: this.tempbranch.branchName,
         userName: this.tempuserName,
         invoiceCode: invCode

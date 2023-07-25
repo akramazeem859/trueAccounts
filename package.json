@@ -25,7 +25,7 @@
     "@fortawesome/angular-fontawesome": "^0.12.1",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@ng-select/ng-select": "^10.0.3",
+    "@ng-select/ng-select": "^10.0.4",
     "admin-lte": "3.2",
     "bootstrap-select": "^1.13.18",
     "component": "^0.19.9",
