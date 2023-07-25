@@ -20,6 +20,7 @@ import { UserStoreService } from 'src/app/Services/user.store.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SaleReciptComponent } from '../../Popups/sale-recipt/sale-recipt.component';
 import { Branch } from 'src/app/Models/branch.model';
+import { SaleService } from '../../sale.service';
 
 declare var $: any;
 
@@ -45,11 +46,14 @@ export class SaleInvoiceComponent implements OnInit {
   tempuserName: string;
   tempInvoiceCode: string = '';
   tempCustomer:Customer; 
+  preInvCounter: number = 0; 
 
   isEditBtn: boolean = false;
   isDeletBtn: boolean = false;
   isAddBtn: boolean = true;
   isPrint: boolean = false;
+  isnextdisable:boolean=true;
+  isprevdisable:boolean= false; 
 
   customerList !: Customer[];
   customerRateList: customerRates[] = [];
@@ -93,7 +97,8 @@ export class SaleInvoiceComponent implements OnInit {
     private alert: ToastrService,
     private datePipe: DatePipe,
     private tokenservice: UserStoreService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private saleService: SaleService) {
 
   }
 
@@ -101,7 +106,7 @@ export class SaleInvoiceComponent implements OnInit {
   public saleInvoiceForm = new FormGroup({
     code: this.builder.control("SI202302"),
     customerId: this.builder.control(null),
-    datetime: new FormControl(new Date()),
+    datetime: this.builder.control(null),
     address: this.builder.control({ value: "", disabled: true }),
     contact: this.builder.control({ value: "", disabled: true }),
     balance: this.builder.control({ value: 0, disabled: true }),
@@ -252,6 +257,70 @@ export class SaleInvoiceComponent implements OnInit {
 
   }
 
+  findPreInv(){
+    
+    let obj = { branchId: this.branchId , skip: this.preInvCounter}
+   
+
+    this.saleService.getPrevInv(obj).subscribe({
+      next:(res)=>{
+        //this.saleInvoice = null;
+        this.saleInvoice = res;
+
+        this.service.getAllSaleInvDetail(this.saleInvoice.id)
+            .subscribe(d => {
+              this.saleInvDetailList = d;
+              console.log("Sale detail : " + this.saleInvDetailList.length);
+            })
+       
+        this.preInvCounter = this.preInvCounter + 1;
+        if(this.preInvCounter > 1){
+          this.isnextdisable = false;
+         }
+         else{
+           this.isnextdisable = true;
+          }
+          console.log('Previous Invoice search :' + obj.skip)
+      },
+      error:(err)=>{
+        this.alert.warning('Fail to fetch Previous Invoice','Something Wrong')
+      }
+    })
+
+  }
+  findNextInv(){
+    if(this.preInvCounter > 0){
+      this.preInvCounter = this.preInvCounter - 1;
+      let obj = { branchId: this.branchId , skip: this.preInvCounter}
+      console.log('Next Invoice search :' + obj.skip)
+      this.saleService.getPrevInv(obj).subscribe({
+        next:(res)=>{
+          //this.saleInvoice = null;
+          this.saleInvoice = res;
+          
+          this.service.getAllSaleInvDetail(this.saleInvoice.id)
+            .subscribe(d => {
+              this.saleInvDetailList = d;
+              console.log("Sale detail : " + this.saleInvDetailList.length);
+            })
+
+          console.log('Previous Invoice code :' + res.code);
+         if(this.preInvCounter == 0){
+          this.isnextdisable = true;
+         }
+        },
+        error:(err)=>{
+          this.alert.warning('Fail to fetch Previous Invoice','Something Wrong')
+        }
+      })
+    }else{
+      this.isnextdisable = true;
+    }
+   
+  }
+
+
+
   saveInvoice() {
 
     var mydate = this.saleInvoiceForm.get("datetime").value;
@@ -272,9 +341,14 @@ export class SaleInvoiceComponent implements OnInit {
         sId = inv.id;
         console.log("saleInvoice code :" + this.tempInvoiceCode);
         this.formCustomRest();
-        this.alert.success("Record saved successfully...", "Successful")
+        this.alert.success("Record saved successfully...", "Successful");
+        this.saleInvoiceForm.get('customerId').setValue(this.tempCustomer.id);
 
         this.PrintInvoice(this.saleCode);
+        this.isAddBtn = true;
+        this.isEditBtn = false;
+     
+        this.isPrint = false;
       })
     }
     else {
@@ -507,24 +581,28 @@ export class SaleInvoiceComponent implements OnInit {
     });
     let discount = this.saleInvoiceForm.get('discount').value;
     this.saleInvoiceForm.get("summary").setValue(sumTotal);
-    this.saleInvoiceForm.get("paid").setValue(sumTotal);
+    this.saleInvoiceForm.get("paid").setValue(0);
 
     let freight = this.saleInvoiceForm.get("freight").value;
     let gTotal = (+ freight + sumTotal) - discount;
+    
 
     this.saleInvoiceForm.get("payable").setValue(gTotal);
-    this.saleInvoiceForm.get("paid").setValue(gTotal);
+    this.saleInvoiceForm.get("paid").setValue(0);
   }
 
   removeRow(index: any) {
-
+    
     this.invoiceDetail.removeAt(index);
     this.summaryCalculation();
     this.tempProdCount -= 1;
+    
   }
 
   editInvoice() {
     let pID = this.saleInvoice.id;
+    this.saleInvDetailList=[];
+
     console.log("tempCount : " + this.tempProdCount)
     //this.invProduct = this.purcInvoice.at(0) as FormGroup;
     //this.purcInvoice.id = this.invoiceForm.get("id").value;
@@ -536,42 +614,61 @@ export class SaleInvoiceComponent implements OnInit {
     this.saleInvoice.freight = this.saleInvoiceForm.get("freight").value;
     this.saleInvoice.code = this.saleInvoiceForm.get("code").value;
 
+    let tempdetail = this.saleInvoiceForm.get('detail') as FormArray;
+    
+    this.saleInvoice.sInvDetail = [];
 
-    for (let i = 0; i <= this.tempProdCount; i++) {
-      this.isProdAdded = false;
-
-      this.saleInvDetailList.forEach((element, index) => {
-        this.tempinvProduct = this.invoiceDetail.at(i) as FormGroup;
-        let tempprodId = this.tempinvProduct.get("productId").value;
-
-        console.log("index count : " + i + " qunty :" + this.tempinvProduct.get("quantity").value);
-
-        if (element.productId == tempprodId) {
-          element.quantity = this.tempinvProduct.get("quantity").value;
-          element.salePrice = this.tempinvProduct.get("salePrice").value;
-          this.isProdAdded = true;
-        }
-
-      });
-
-      if (this.isProdAdded == false) {
-        console.log("isProdAdded == false called");
-        this.detail.sInvoiceId = this.saleInvoice.id;
-        this.detail.productId = this.tempinvProduct.get("productId").value;
-        this.detail.salePrice = this.tempinvProduct.get("salePrice").value;
-        this.detail.quantity = this.tempinvProduct.get("quantity").value;
-        this.saleInvDetailList.push(this.detail);
-        this.isProdAdded = false;
-      }
+    for(var i=0 ; i<tempdetail.controls.length; i++){
+      this.tempinvProduct = this.invoiceDetail.at(i) as FormGroup;
+      let detail = {
+        sInvoiceId: this.saleInvoice.id,
+        productId: this.tempinvProduct.get("productId").value,
+        salePrice: this.tempinvProduct.get("salePrice").value,
+        quantity: this.tempinvProduct.get("quantity").value
+      };
+      
+      this.saleInvoice.sInvDetail.push(detail);
     }
-    this.saleInvoice.sInvDetail = this.saleInvDetailList;
+        //this.tempinvProduct = this.invoiceDetail.at(i) as FormGroup;
+       
+        // this.detail.sInvoiceId = this.saleInvoice.id;
+        // this.detail.productId = element.get("productId").value;
+        // this.detail.salePrice = element.get("salePrice").value;
+        // this.detail.quantity = element.get("quantity").value;
+        //alert(this.detail.productId + '-'+this.detail.salePrice+'-'+this.detail.quantity);
+       
+
+        // if (element.productId == tempprodId) {
+        //   element.quantity = this.tempinvProduct.get("quantity").value;
+        //   element.salePrice = this.tempinvProduct.get("salePrice").value;
+        //   this.isProdAdded = true;
+        // }
+     
+    //this.saleInvoice.sInvDetail = this.saleInvDetailList;
+    
+    //this.saleInvoice.sInvDetail.forEach((item,i)  => {
+      //    console.log('sale inv Detail list :'+item.productId +'-'+item.salePrice);
+      //  });
+
     console.log(this.saleInvoice);
-    this.service.editSaleInv(pID, this.saleInvoice)
-      .subscribe(pi => {
-        console.log("purchase Invoice Edit called.")
+    this.service.editSaleInv(pID, this.saleInvoice).subscribe({
+        next:(res)=>{
+          console.log("purchase Invoice Edit called.")
+
+          this.formCustomRest();
+          this.alert.success("Record updated successfully...", "Successful");
+          this.saleInvoice = null; 
+          this.saleInvoiceForm.get('customerId').setValue(this.tempCustomer.id);
+        },
+        error:(err)=>{
+          this.alert.warning("Unable to update Record, Try again.", "Warning");
+        }
+        
       })
-    this.formCustomRest();
-    this.alert.success("Record updated successfully...", "Successful")
+      this.isAddBtn = true;
+      this.isEditBtn = false;
+     
+      this.isPrint = false;
 
   }
 
@@ -580,6 +677,7 @@ export class SaleInvoiceComponent implements OnInit {
   }
 
   loadSInv() {
+
     this.formCustomRest();
     this.saleInvoiceForm.get("code").setValue(this.saleInvoice.code);
     this.saleInvoiceForm.get("customerId").setValue(this.saleInvoice.customerId);
@@ -616,7 +714,7 @@ export class SaleInvoiceComponent implements OnInit {
 
     this.isAddBtn = false;
     this.isEditBtn = true;
-    this.isDeletBtn = true;
+   
     this.isPrint = true;
   }
 

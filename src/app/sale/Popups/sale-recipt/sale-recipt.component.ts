@@ -27,7 +27,7 @@ myUAN :string ='';
   ngOnInit(): void {
    this.inputdata = this.data;
    this.invoicecode = this.data.invoiceCode;
-    alert(this.invoicecode);
+   // alert(this.invoicecode);
    this.service.getSaleInvByCode(this.invoicecode).subscribe({
     next:(res)=>{
       this.tempInvoice = res;

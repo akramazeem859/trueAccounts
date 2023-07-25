@@ -180,9 +180,9 @@
                         <button type="button" class="btn btn-primary mr-2" (click)="saveInvoice()"
                             [disabled]="!isAddBtn">Save Invoice</button>
                         <button type="button" class="btn btn-warning mr-2" (click)="editInvoice()"
-                            [disabled]="!isEditBtn">Edit</button>
-                        <button type="button" class="btn btn-danger mr-2" (click)="deleteInvoice(1)"
-                            [disabled]="!isDeletBtn">Delete</button>
+                            [disabled]="!isEditBtn">Update</button>
+                        <!-- <button type="button" class="btn btn-danger mr-2" (click)="deleteInvoice(1)"
+                            [disabled]="!isDeletBtn">Delete</button> -->
                         <button type="button" class="btn btn-success mr-2" (click)="PrintInvoice(saleCode)"
                             [disabled]="!isPrint">Print</button>
 
@@ -211,7 +211,7 @@
 
                             <span class="text-danger">*</span>
                             <input name="saleCode" #purhCode="ngModel" [(ngModel)]="saleCode" id="purchIdTxt"
-                                class="form-control">
+                                class="form-control" >
                         </div>
 
                         <div class="col">
@@ -220,6 +220,22 @@
                             <button type="button" class="btn btn-primary btn-block"
                                 (click)="findSaleInv()">Search</button>
                         </div>
+
+                        <div class="col">
+                            <label>Previous</label>
+                            <br>
+                            <button id="prebtn" [disabled]="isprevdisable" type="button" class="btn btn-primary btn-block"
+                                (click)="findPreInv()">Previous</button>
+                        </div>
+
+                        <div class="col">
+                            <label>Next</label>
+                            <br>
+                            <button id="nextbtn" [disabled]="isnextdisable" type="button" class="btn btn-primary btn-block"
+                                (click)="findNextInv()">Last</button>
+                        </div>
+
+
                     </div>
 
                     <div class="form-row mb-3">
@@ -229,7 +245,7 @@
                                 <th>SI Code</th>
                                 <th>Payable</th>
                                 <th>Paid</th>
-                                <th>Supplier</th>
+                                <th>Customer</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </thead>
@@ -241,7 +257,8 @@
                                     <td>{{saleInvoice.paid}}</td>
                                     <td>{{saleInvoice.customer.customerName}}</td>
                                     <td>{{saleInvoice.datetime | date: "dd-MMM-yyyy-HH:mm:ss" }}</td>
-                                    <td><button class="btn btn-primary" (click)="loadSInv()">Edit</button></td>
+                                    <td><button class="btn btn-primary mr-2" (click)="loadSInv()">Edit</button>
+                                        <button class="btn btn-success" (click)="PrintInvoice(saleInvoice.code)">Print</button></td>
                                 </tr>
                             </tbody>
                         </table>
