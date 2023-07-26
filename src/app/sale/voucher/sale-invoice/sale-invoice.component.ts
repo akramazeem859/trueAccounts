@@ -166,15 +166,11 @@ export class SaleInvoiceComponent implements OnInit {
       next: (res) => {
         this.tempbranch = res;
         this.getAllCustomer(this.tempbranch.id);
-        
         this.service.getBranchInv(this.tempbranch.id).subscribe({
           next:(res)=> {
             this.branchStock = res; 
-            
           }
         })
-    
-        
       },
       error: (err) => {
         this.alert.warning('Branch Not Recognized.', 'Warning');

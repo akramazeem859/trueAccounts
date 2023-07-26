@@ -238,7 +238,7 @@ export class CompanyService {
     return this.http.get<level2[]>(this.baseApiUrl+'/api/ChartAccount/coa/level2/'+level1);
   }
   searchCustomerLedger(cusLReq : customerLedgerReq):Observable<customerLedger[]>{
-    return this.http.get<customerLedger[]>(this.baseApiUrl+'/api/CustomerLedgers/search?customerId='+cusLReq.customerId+'&branchId='+cusLReq.branchId +'&fromDate='+ cusLReq.fromDate +'&toDate='+ cusLReq.toDate);
+    return this.http.post<customerLedger[]>(this.baseApiUrl+'/api/CustomerLedgers/search', cusLReq);
   }
 
  

@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,6 +11,7 @@ import { Branch } from 'src/app/Models/branch.model';
 import { Customer } from 'src/app/Models/customer.model';
 import { customerLedger } from 'src/app/Models/customerLedger.model';
 import { CompanyService } from 'src/app/Services/company.service';
+import { UserStoreService } from 'src/app/Services/user.store.service';
 
 @Component({
   selector: 'app-customer-ledger',
@@ -28,36 +29,58 @@ export class CustomerLedgerComponent implements OnInit {
   filteredbranchOptions !: Observable<Branch[]>;
 
   newform: FormGroup;
+  customerLedgerForm:FormGroup; 
+  tempuserName : string;
+  tempbranchId : string;
+  
+
+  
 
   constructor(private builder: FormBuilder,
     private router: Router,
     private service: CompanyService,
-    private alert: ToastrService,
-    private datePipe : DatePipe) {
+    private myalert: ToastrService,
+    private datePipe : DatePipe,
+    private tokenservice: UserStoreService,
+    private fb: FormBuilder ) {
 
   }
+
   customerList !: Customer[];
-  branchList !: Branch[];
   customerLedgerList !: customerLedger[];
+
   datasource : any;
   displayedColumns : string[] = ['Id','DateTime','Type','InvCode','Particular','Credit','Debit','Balance']
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
-  public customerLedgerForm = new FormGroup({
-    customerId: this.builder.control(null),
-    branchId : this.builder.control(null),
-    fromDate : new FormControl(),
-    toDate : new FormControl(),
-  })
-
+ 
   
  
   ngOnInit(): void { 
 
+    this.tokenservice.getBrnchIdFromStore().subscribe(value => {
+      let tempb = this.service.getBranchIdfromToken();
+      this.tempbranchId = value || tempb;
+      console.log('temp branch id :'+ this.tempbranchId);
+    })
+
+    this.tokenservice.getNameFromStore().subscribe(value => {
+      let tempuserName = this.service.getNamefromToken();
+      this.tempuserName = value || tempuserName;
+    })
+
     this.getAllCustomer();
-    this.getAllBranch(); 
     this.getCustomerLedger();
+
+    
+
+    this.customerLedgerForm = this.fb.group({
+      customerId: [],
+      branchId : [this.branchId, Validators.required],
+      fromDate : [''],
+      toDate : [''],
+    })
 
     this.filteredOptions = this.customerLedgerForm.get('customerId').valueChanges.pipe(
       startWith(''),
@@ -67,16 +90,10 @@ export class CustomerLedgerComponent implements OnInit {
       })
       //map(value => this.utils._filterItemSelector(value, this.suggestedSites))
     );
-
-    this.filteredbranchOptions = this.customerLedgerForm.get('branchId').valueChanges.pipe(
-      startWith(''),
-      map(valueb => {
-        const nameb = valueb;
-        return nameb ?this._filterBranch(nameb as string, this.optionsbranch):this.optionsbranch
-         })
-      //map(value => this.utils._filterItemSelector(value, this.suggestedSites))
-    );
   }
+
+  
+
 
   private _filter(value: string , cus:Customer[]): Customer[] {
     if(typeof value === 'string'){
@@ -88,34 +105,24 @@ export class CustomerLedgerComponent implements OnInit {
     }
   }
 
-  private _filterBranch(value: string , brch:Branch[]): Branch[] {
-    if(typeof value === 'string'){
-      const filterbValue = value.toLowerCase();
-      return this.optionsbranch.filter(option => option.branchName.toLowerCase().includes(filterbValue));
-    }
-    else{
-      return brch;
-    }
-    
-  }
-
-  
+ 
 
   getAllCustomer() {
-    this.service.getAllCustomers().subscribe(cus => {
-      this.customerList = cus;
-      this.options = cus;
-      console.log("Customer List :" + this.customerList);
+    
+    this.service.getAllCustomers().subscribe({
+      next:(cus)=>{
+
+        this.customerList = cus;
+        this.options = cus;
+        console.log("Customer List :" + this.customerList);
+      },
+      error:(err)=>{
+        this.myalert.warning('Unable to fetch Customers' , 'Something Wrong');
+      }
     })
   }
 
-  getAllBranch(){
-    this.service.getAllBranches().subscribe(brch =>{
-      this.branchList = brch;
-      this.optionsbranch = brch; 
-      console.log("Branch List :" + this.branchList[0].branchName);
-    })
-  }
+ 
 
   getCustomerLedger(){
     this.service.getAllCustomerLedger().subscribe(cusL =>{
@@ -138,21 +145,30 @@ export class CustomerLedgerComponent implements OnInit {
   }
 
   public getCusName(cusId : any){
-    return this.customerList.find(c => c.customerCode === cusId).customerName;
+    
+    //return this.customerList.find(c => c.customerCode === cusId).customerName;
+    if (this.customerList && this.customerList.length > 0) {
+      const customer = this.customerList.find((item) => item.id === cusId);
+      if (customer) {
+        return customer.customerName;
+      }
+    }
+    return '';
   }
 
-  public getBranchName(brchId : any){
-    return this.branchList.find(c => c.id === brchId).branchName;
-  }
+
   public searchRecord(){
-  
-    let fromDate = this.datePipe.transform(this.customerLedgerForm.get('fromDate').value, 'MM/dd/yyyy');
-    let toDate = this.datePipe.transform(this.customerLedgerForm.get('toDate').value, 'MM/dd/yyyy');
-    this.customerLedgerForm.get('fromDate').setValue(fromDate);
-    this.customerLedgerForm.get('toDate').setValue(toDate);
+  debugger;
+    let fromDate = this.datePipe.transform(this.customerLedgerForm.get('fromDate').value, 'yyyy/MM/dd');
+    let toDate = this.datePipe.transform(this.customerLedgerForm.get('toDate').value, 'yyyy/MM/dd');
+    this.customerLedgerForm.get('fromDate').setValue(''+fromDate);
+    this.customerLedgerForm.get('toDate').setValue(''+toDate);
 
-
+    console.log('temp branch Id............'+this.tempbranchId);
+    this.customerLedgerForm.get('branchId').setValue(+this.tempbranchId);
+    
     console.log(this.customerLedgerForm.value);
+
     this.service.searchCustomerLedger(this.customerLedgerForm.value).subscribe(res =>{
       console.log(res);
       this.customerLedgerList = res;

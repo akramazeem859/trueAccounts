@@ -73,6 +73,7 @@ export class UsersComponent implements OnInit{
   submitUser(){
     //this.btntitle = "updated.";
     console.log(this.userform.value);
+    this.userform.get('Id').setValue(0);
 
     if(this.tempuserId == 0){
 
