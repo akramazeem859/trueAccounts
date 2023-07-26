@@ -120,6 +120,10 @@ export class CompanyService {
     return this.http.get<Customer[]>(this.baseApiUrl+'/api/Customer');
   }
 
+  getBranchCustomers(branchId: any):Observable<Customer[]>{
+    return this.http.post<Customer[]>(this.baseApiUrl+'/api/Customer/branchCustomer', branchId);
+  }
+
   getAllSupplier():Observable<Supplier[]>{
     return this.http.get<Supplier[]>(this.baseApiUrl+'/api/Supplier/');
   }

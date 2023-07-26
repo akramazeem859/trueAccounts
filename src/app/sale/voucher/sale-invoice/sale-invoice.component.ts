@@ -100,6 +100,7 @@ export class SaleInvoiceComponent implements OnInit {
     private dialog: MatDialog,
     private saleService: SaleService) {
 
+      this.customerRateList = [];
   }
 
 
@@ -375,7 +376,7 @@ export class SaleInvoiceComponent implements OnInit {
 
   getAllCustomer(brchId: any) {
     
-    this.service.getAllCustomers().subscribe(cus => {
+    this.service.getBranchCustomers(this.tempbranch.id).subscribe(cus => {
       this.customerList = cus;
       this.options = cus.filter(x=> x.customerBranchId == this.tempbranch.id);
       this.tempCustomer = cus.find(x=> x.customerName == 'Anomynous' && x.customerBranchId == this.tempbranch.id);
@@ -430,6 +431,7 @@ export class SaleInvoiceComponent implements OnInit {
 
 
   findCustomer(event) {
+    if(this.invoiceDetail)
     this.invoiceDetail.clear(); 
 
     this.customerRateList = [];
@@ -492,6 +494,7 @@ export class SaleInvoiceComponent implements OnInit {
   }
 
   prodSelect(index: any) {
+    
     this.invoiceDetail = this.saleInvoiceForm.get('detail') as FormArray;
     this.invProduct = this.invoiceDetail.at(index) as FormGroup;
     let prodId = this.invProduct.get("productId").value;
@@ -509,10 +512,18 @@ export class SaleInvoiceComponent implements OnInit {
       }
     }
     let custId = this.saleInvoiceForm.get("customerId").value;
+    debugger;
+    if(this.customerRateList){
+      let cusRate = this.customerRateList.find(x=> x.productId == prodId);
+      if(cusRate && cusRate.rate){
 
-    if(this.customerRateList.length > 0){
-      this.tempSalePrice = this.customerRateList.find(x=> x.productId == prodId).rate;
+        this.tempSalePrice = cusRate.rate;
+        console.log('tempsale price :'+this.tempSalePrice)
+      }
+      else{
+        this.tempSalePrice = this.productList.find(x=>x.id == prodId ).salePrice;
       console.log('tempsale price :'+this.tempSalePrice)
+      }
     }
     else{
       this.tempSalePrice = this.productList.find(x=>x.id == prodId ).salePrice;
