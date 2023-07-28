@@ -34,6 +34,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService} from '@auth0/angular-jwt';
 import { users } from '../Models/users.model';
 import { data } from 'jquery';
+import { ledgerResult } from '../Models/ledgerResult.model';
 
 
 @Injectable({
@@ -43,6 +44,14 @@ export class CompanyService {
 
   private custRateCache: any[] | null = null;
   
+  public branchId:any;
+  getbranchId(){
+    return this.branchId; 
+  }
+  setbranchId(id:any){
+   
+    this.branchId = id; 
+  }
 
   baseApiUrl:string = environment.baseApiUrl;
   private _refreshRequired = new Subject<void>();
@@ -97,6 +106,7 @@ export class CompanyService {
   getBranchIdfromToken(){
     if(this.userPayLoad)
     return this.userPayLoad.branchId;
+    this.setbranchId(this.userPayLoad.branchId);
   }
 
 
@@ -240,6 +250,9 @@ export class CompanyService {
   searchCustomerLedger(cusLReq : customerLedgerReq):Observable<customerLedger[]>{
     return this.http.post<customerLedger[]>(this.baseApiUrl+'/api/CustomerLedgers/search', cusLReq);
   }
+  searchLvl4Ledger(obj:any):Observable<ledgerResult[]>{
+    return this.http.post<ledgerResult[]>(this.baseApiUrl+'/api/Ledger/search', obj)
+  }
 
  
 
@@ -312,6 +325,9 @@ export class CompanyService {
   }
   updateUser(user:users):Observable<any>{
     return this.http.post<users>(this.baseApiUrl+'/api/User/updateUser' , user);
+  }
+  geBranchLvl4(branchId:any):Observable<any>{
+    return this.http.get<any>(this.baseApiUrl+'/api/ChartAccount/coa/branchlvl4?branchId='+ branchId)
   }
  
 

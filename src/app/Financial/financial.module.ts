@@ -10,10 +10,11 @@ import { MaterialModule } from 'src/Material-Module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatTableModule} from '@angular/material/table';
-import { CashReciptComponent } from './Voucher/cashRecipt/cash-recipt.component';
-import { CashPaymentComponent } from './Voucher/cashPayment/cash-payment.component';
-import { BankReciptComponent } from './Voucher/bankRecipt/bank-recipt.component';
-import { BankPaymentComponent } from './Voucher/bankPayment/bank-payment.component';
+import { CashReciptComponent } from './Voucher/CashRecipt/cash-recipt.component';
+import { CashPaymentComponent } from './Voucher/CashPayment/cash-payment.component';
+import { BankReciptComponent } from './Voucher/BankRecipt/bank-recipt.component';
+import { BankPaymentComponent } from './Voucher/BankPayment/bank-payment.component';
+import { AllLedgerComponent } from './Reports/Ledger/all-ledger/all-ledger.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { BankPaymentComponent } from './Voucher/bankPayment/bank-payment.compone
     CashReciptComponent,
     CashPaymentComponent,
     BankReciptComponent,
-    BankPaymentComponent
+    BankPaymentComponent,
+    AllLedgerComponent
   ],
   imports: [
     CommonModule,

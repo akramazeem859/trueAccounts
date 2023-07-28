@@ -24,18 +24,16 @@ export class CustomerLedgerComponent implements OnInit {
   options !: Customer[];
   filteredOptions !: Observable<Customer[]>;
 
-  branchId = new FormControl('');
-  optionsbranch !: Branch[];
-  filteredbranchOptions !: Observable<Branch[]>;
-
   newform: FormGroup;
   customerLedgerForm:FormGroup; 
   tempuserName : string;
   tempbranchId : string;
-  
+
+  tempcustomerId : string; 
+  tempfromDate:string; 
+  temptoDate: string; 
 
   
-
   constructor(private builder: FormBuilder,
     private router: Router,
     private service: CompanyService,
@@ -44,13 +42,20 @@ export class CustomerLedgerComponent implements OnInit {
     private tokenservice: UserStoreService,
     private fb: FormBuilder ) {
 
+      this.customerLedgerForm = this.fb.group({
+        customerId: [],
+        branchId : [this.tempbranchId, Validators.required],
+        fromDate : [this.tempfromDate],
+        toDate : [this.temptoDate],
+      })
+
   }
 
   customerList !: Customer[];
   customerLedgerList !: customerLedger[];
 
   datasource : any;
-  displayedColumns : string[] = ['Id','DateTime','Type','InvCode','Particular','Credit','Debit','Balance']
+  displayedColumns : string[] = ['Id','DateTime','Type','InvCode','Particular','Debit','Credit','Balance']
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
@@ -75,12 +80,7 @@ export class CustomerLedgerComponent implements OnInit {
 
     
 
-    this.customerLedgerForm = this.fb.group({
-      customerId: [],
-      branchId : [this.branchId, Validators.required],
-      fromDate : [''],
-      toDate : [''],
-    })
+   
 
     this.filteredOptions = this.customerLedgerForm.get('customerId').valueChanges.pipe(
       startWith(''),
@@ -158,13 +158,16 @@ export class CustomerLedgerComponent implements OnInit {
 
 
   public searchRecord(){
-  debugger;
+  
     let fromDate = this.datePipe.transform(this.customerLedgerForm.get('fromDate').value, 'yyyy/MM/dd');
     let toDate = this.datePipe.transform(this.customerLedgerForm.get('toDate').value, 'yyyy/MM/dd');
+
+    this.tempcustomerId = this.customerLedgerForm.get('customerId').value;
+    this.tempfromDate = this.customerLedgerForm.get('fromDate').value;;
+    this.temptoDate = this.customerLedgerForm.get('toDate').value;
+
     this.customerLedgerForm.get('fromDate').setValue(''+fromDate);
     this.customerLedgerForm.get('toDate').setValue(''+toDate);
-
-    console.log('temp branch Id............'+this.tempbranchId);
     this.customerLedgerForm.get('branchId').setValue(+this.tempbranchId);
     
     console.log(this.customerLedgerForm.value);
@@ -175,6 +178,12 @@ export class CustomerLedgerComponent implements OnInit {
       this.datasource = new MatTableDataSource<customerLedger>(this.customerLedgerList);
       this.datasource.paginator = this.paginator;
       this.datasource.sort = this.sort;
+    })
+
+    this.customerLedgerForm.reset({
+        customerId:this.tempcustomerId,
+        fromDate:this.tempfromDate,
+        toDate:this.temptoDate
     })
   }
   

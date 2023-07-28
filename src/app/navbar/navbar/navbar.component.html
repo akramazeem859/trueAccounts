@@ -35,8 +35,7 @@
             aria-haspopup="true"
             aria-expanded="false"
             class="nav-link dropdown-toggle"
-            >Financial</a
-          >
+            >Financial</a>
 
           <ul
             aria-labelledby="dropdownSubMenu1"
@@ -111,7 +110,9 @@
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Balance</a></li>
                 <li class="dropdown-divider"></li>
-                <li><a href="#" class="dropdown-item">Ledger</a></li>
+                <li><a routerLink="financial/allLedger"
+                  (click)="setTitle('Ledgers')"
+                  class="dropdown-item">Ledger</a></li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Aging</a></li>
               </ul>

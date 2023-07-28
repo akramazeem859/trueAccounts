@@ -48,6 +48,7 @@ export class NavbarComponent implements OnDestroy , OnInit  {
     this.tokenservice.getBrnchIdFromStore().subscribe(value => {
       let tempbranchId = this.service.getBranchIdfromToken();
       this.branchId = value || tempbranchId;
+      this.service.setbranchId(this.service.getBranchIdfromToken());
     })
     this.service.getBranch(this.branchId).subscribe(res => {
       this.branchName = res.branchName;
