@@ -108,7 +108,8 @@ export class CustomerComponent implements OnInit {
     if (confirm("Are you sure to edit this record?"))
      this.customerform.get('id').setValue(this.tempcustomer.id);
 
-     console.log()
+     //console.log(this.customerform.value);
+
       this.service.editCustomer(this.customerform.value).subscribe({
         next: (cus) => {
           this.getAllCustomers();

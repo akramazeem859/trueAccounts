@@ -74,59 +74,45 @@
           <td>&nbsp;</td>
         </tr>
         <tr>
-          <td><b>Invoice Value :</b></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>{{ (tempInvoice.payable + tempInvoice.discount) - tempInvoice.freight| currency: 'Rs- ' : 'symbol' : '1.0-0' }}</td>
+          <td colspan="3"><b>Invoice Value :</b></td>
+          
+          <td colspan="2">{{ (tempInvoice.payable + tempInvoice.discount) - tempInvoice.freight| currency: 'Rs- ' : 'symbol' : '1.0-0' }}</td>
         </tr>
         <tr>
-          <td><b>Discount :</b></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>{{ tempInvoice.discount | currency : 'Rs- ' : 'symbol' : '1.0-0'}}</td>
+          <td colspan="3"><b>Discount :</b></td>
+         
+          <td colspan="2">{{ tempInvoice.discount | currency : 'Rs.' }}</td>
         </tr>
         <tr>
-            <td><b>Frieght :</b></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>{{ tempInvoice.freight | currency: 'Rs- ' : 'symbol' : '1.0-0' }}</td>
+            <td colspan="3"><b>Frieght :</b></td>
+            
+            <td colspan="2">{{ tempInvoice.freight | currency: 'Rs.'}}</td>
           </tr>
        
         <tr>
-          <td><b>Net Invoice</b></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>{{ tempInvoice.payable | currency : 'Rs- ' : 'symbol' : '1.0-0' }}</td>
+          <td colspan="3"><b>Net Invoice</b></td>
+         
+          <td colspan="2">{{ tempInvoice.payable | currency : 'Rs. '}}</td>
         </tr>
         <tr>
-          <td colspan="2"><b>Cash Received :</b></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>{{ tempInvoice.paid | currency : 'Rs- ' : 'symbol' : '1.0-0' }}</td>
+          <td colspan="3"><b>Cash Received :</b></td>
+          
+          <td colspan="2">{{ tempInvoice.paid | currency : 'Rs. '}}</td>
         </tr>
         <tr>
-          <td colspan="2"><b>Receivable :</b></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>{{tempInvoice.payable-tempInvoice.paid | currency : 'Rs- ' : 'symbol' : '1.0-0' }}</td>
+          <td colspan="3"><b>Receivable :</b></td>
+         
+          <td colspan="2">{{tempInvoice.payable-tempInvoice.paid | currency : 'Rs. '}}</td>
         </tr>
         <tr>
-          <td><b>Previous Balance :</b></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>{{tempInvoice.customer.customerPrevioubalance | currency : 'Rs- ' : 'symbol' : '1.0-0'}}</td>
+          <td colspan="3"><b>Previous Balance :</b></td>
+         
+          <td colspan="2">{{tempInvoice.customer.customerPrevioubalance | currency : 'Rs.'}}</td>
         </tr>
         <tr>
-          <td><b>Current Balance :</b></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>{{tempInvoice.customer.customerCurrentbalance | currency : 'Rs- ' : 'symbol' : '1.0-0'}} </td>
+          <td colspan="3"><b>Current Balance :</b></td>
+          
+          <td colspan="2">{{tempInvoice.customer.customerCurrentbalance | currency : 'Rs.'}} </td>
         </tr>
         <tr>
           <td>&nbsp;</td>

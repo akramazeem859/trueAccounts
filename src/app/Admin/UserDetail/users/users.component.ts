@@ -20,6 +20,7 @@ export class UsersComponent implements OnInit{
   btntitle : string = "Save";
   userform : FormGroup; 
   tempuserId: any = 0;
+  tempuser: users; 
 
   constructor(
     private service:CompanyService,
@@ -72,6 +73,7 @@ export class UsersComponent implements OnInit{
   }
   submitUser(){
     //this.btntitle = "updated.";
+    
     console.log(this.userform.value);
     this.userform.get('Id').setValue(0);
 
@@ -88,6 +90,8 @@ export class UsersComponent implements OnInit{
       })
     }
     else{
+      console.log('temp user id : '+ this.tempuser.id);
+      this.userform.get('Id').setValue(this.tempuser.id);
       this.service.updateUser(this.userform.value).subscribe({
         next:(res)=>{
           this.alert.success("Record updated successfully","Success");
@@ -102,7 +106,9 @@ export class UsersComponent implements OnInit{
   }
   selectUser(user:users){
     console.log(user);
+    this.tempuser = user; 
     user.password = '';
+    this.userform.get('Id').setValue(user.id);
     this.userform.get('FirstName').setValue(user.firstName);
     this.userform.get('LastName').setValue(user.lastName);
     this.userform.get('Email').setValue(user.email);
