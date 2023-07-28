@@ -356,8 +356,8 @@ export class CompanyService {
   editProduct(id: number , productEditRequest: Product):Observable<Product>{
     return this.http.put<Product>(this.baseApiUrl + '/api/Product/' + id , productEditRequest);
   }
-  editCustomer(id: number , customerEditRequest: Customer):Observable<Customer>{
-    return this.http.put<Customer>(this.baseApiUrl + '/api/Customer/' + id , customerEditRequest);
+  editCustomer(customerEditRequest: Customer):Observable<any>{
+    return this.http.post<Customer>(this.baseApiUrl + '/api/Customer/edit', customerEditRequest);
   }
   
   editSupplier(id: number , supplierEditRequest: Supplier):Observable<Supplier>{
