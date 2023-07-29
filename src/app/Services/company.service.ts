@@ -35,6 +35,7 @@ import { JwtHelperService} from '@auth0/angular-jwt';
 import { users } from '../Models/users.model';
 import { data } from 'jquery';
 import { ledgerResult } from '../Models/ledgerResult.model';
+import { cashRecipt } from '../Models/cashRecipt.model';
 
 
 @Injectable({
@@ -130,8 +131,8 @@ export class CompanyService {
     return this.http.get<Customer[]>(this.baseApiUrl+'/api/Customer');
   }
 
-  getBranchCustomers(branchId: any):Observable<Customer[]>{
-    return this.http.post<Customer[]>(this.baseApiUrl+'/api/Customer/branchCustomer', branchId);
+  getBranchCustomers(branchId:any):Observable<Customer[]>{
+    return this.http.get<Customer[]>(this.baseApiUrl+'/api/Customer/branchCustomer?branchId='+branchId);
   }
 
   getAllSupplier():Observable<Supplier[]>{
@@ -208,7 +209,7 @@ export class CompanyService {
   getSupplier(id:string){
     return this.http.get<Supplier>(this.baseApiUrl+'/api/Supplier/'+id);
   }
-  getAccount(id:string){
+  getAccount(id:any){
     return this.http.get<cashAccount>(this.baseApiUrl+'/api/CashAccount/'+ id);
   }
   getInventory(id:any){
@@ -226,6 +227,9 @@ export class CompanyService {
   }
   getProdInvt(pid:number,bid:number){
     return this.http.get<number>(this.baseApiUrl+'/api/Inventory/getProdInvt?pid='+pid+'&bid='+bid);
+  }
+  getbrnchCashAcc(id:any){
+    return this.http.get<cashAccount[]>(this.baseApiUrl+'/api/CashAccount/branchid?id='+id);
   }
 
   getSaleInvByCode(id:any){
@@ -253,6 +257,7 @@ export class CompanyService {
   searchLvl4Ledger(obj:any):Observable<ledgerResult[]>{
     return this.http.post<ledgerResult[]>(this.baseApiUrl+'/api/Ledger/search', obj)
   }
+
 
  
 
@@ -329,6 +334,12 @@ export class CompanyService {
   geBranchLvl4(branchId:any):Observable<any>{
     return this.http.get<any>(this.baseApiUrl+'/api/ChartAccount/coa/branchlvl4?branchId='+ branchId)
   }
+  addCashRecipt(obj:any):Observable<any>{
+    return this.http.post<any>(this.baseApiUrl+'/api/CashRecipts', obj)
+  }
+  searchCashRecipt(obj:any):Observable<cashRecipt[]>{
+    return this.http.post<cashRecipt[]>(this.baseApiUrl+'/api/CashRecipts/SearchCashRecipt', obj)
+  }
  
 
 
@@ -340,7 +351,9 @@ export class CompanyService {
 
 
 
-
+  editCustomer(customerEditRequest: Customer):Observable<any>{
+    return this.http.post<Customer>(this.baseApiUrl + '/api/Customer/edit', customerEditRequest);
+  }
   editCompany(id: number , companyEditRequest : Company):Observable<Company>{
     return this.http.put<Company>(this.baseApiUrl + '/api/Companies/' + id , companyEditRequest);
   }
@@ -356,9 +369,7 @@ export class CompanyService {
   editProduct(id: number , productEditRequest: Product):Observable<Product>{
     return this.http.put<Product>(this.baseApiUrl + '/api/Product/' + id , productEditRequest);
   }
-  editCustomer(customerEditRequest: Customer):Observable<any>{
-    return this.http.post<Customer>(this.baseApiUrl + '/api/Customer/edit', customerEditRequest);
-  }
+ 
   
   editSupplier(id: number , supplierEditRequest: Supplier):Observable<Supplier>{
     return this.http.put<Supplier>(this.baseApiUrl + '/api/Supplier/' + id , supplierEditRequest);
