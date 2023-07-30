@@ -8,5 +8,6 @@ export interface cashAccount{
     accountBalance?: number;
     accountBranchId? : number;
     accountBranch?: Branch;
+    accountStatus : boolean; 
 
 }

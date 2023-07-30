@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { error } from 'jquery';
+import { ToastrService } from 'ngx-toastr';
 import { Branch } from 'src/app/Models/branch.model';
 import { cashAccount } from 'src/app/Models/cashAccount.model';
 import { CompanyService } from 'src/app/Services/company.service';
@@ -11,37 +13,25 @@ import { CompanyService } from 'src/app/Services/company.service';
 })
 export class CashAccountComponent implements OnInit {
 
-  @ViewChild('cashAccountForm',{static :  false}) cashAccountForm: NgForm
-
-  cashAccount$ : cashAccount [] = [];
+  cashAccount: cashAccount [] = [];
   branches : Branch[] = [];
+  tempAccount: cashAccount;
 
-  isAddBtn : boolean = true;
-  isEditBtn:boolean;
+  btntitle : string = 'Add Record';
   isDeletBtn:boolean;
   
+  cashAccountForm : FormGroup;
 
-  cashAccountRequest : cashAccount = {
-    id:0,
-    accountCode: "",
-    accountTitle: "",
-    accountType: "",
-    accountBalance: 0,
-    accountBranchId : 0,
-    accountBranch:{
-      branchName: "",
-      id: 0,
-      supervisor: '',
-      contactNumber: '',
-      uan: '',
-      address: '',
-      status: false,
-      companyId: 0
-    }
-  }
-
-  constructor(private services:CompanyService) {
+  constructor(private services:CompanyService,
+    private fb:FormBuilder,
+    private myalert:ToastrService) {
     
+      this.cashAccountForm = this.fb.group({
+        accountTitle:['',Validators.required],
+        accountBranchId:[,Validators.required],
+        accountType:['',Validators.required],
+        accountStatus: [true]
+      })
   }
 
   ngOnInit(): void {
@@ -52,8 +42,8 @@ export class CashAccountComponent implements OnInit {
   getAllAccounts(){
     this.services.getAllAccounts().subscribe({
       next: (account) => {
-        this.cashAccount$ = account;
-        console.log(this.cashAccount$);
+        this.cashAccount = account;
+        console.log(this.cashAccount);
       }
     })
   }
@@ -67,37 +57,59 @@ export class CashAccountComponent implements OnInit {
 
 
   addCashAccount(){
-    this.services.addAccount(this.cashAccountRequest).subscribe({
-      next: (account)=>{
-        console.log("Add function called");
-      }
-    })
+    debugger;
+    if(this.tempAccount == null){
+      console.log('account form value :'+ this.cashAccountForm.value);
+      this.services.addAccount(this.cashAccountForm.value).subscribe({
+        next: (res)=>{
+          console.log('result for success account add:'+ res);
+          this.myalert.success('New Cash Account Added Successfully.','Successful');
+          this.cashAccountForm.reset(); 
+          this.btntitle = 'Add Record'
+          this.getAllAccounts();
+        },
+        error:(err)=>{
+          this.myalert.warning('Unable to add new record','Something Wrong')
+        }
+      })
+   }
+   else{
+     this.editAccount();
+   }
   }
 
-  selectAccount(id:any){
-    this.isEditBtn = true;
+  selectAccount(acc:cashAccount){
+  
     this.isDeletBtn = true;
-    this.isAddBtn = false;
-    this.services.getAccount(id).subscribe({
-      next: (acc) =>{
-        this.cashAccountRequest = acc;
-        console.log("account find....");
-      }
-    })
+    
+    this.cashAccountForm.patchValue(acc);
+    this.tempAccount = acc; 
+    this.btntitle = 'Update Record';
+
   }
 
   editAccount(){
     if(confirm("Are you sure to edit this record?"))
-    this.services.editCashAccount(this.cashAccountRequest.id, this.cashAccountRequest).subscribe({
+    this.services.editCashAccount(this.tempAccount.id, this.cashAccountForm.value).subscribe({
       next: (cus) => {
         this.getAllAccounts();
         this.cashAccountForm.reset();
       }
     })
-    this.isEditBtn = false;
+   
     this.isDeletBtn = false;
-    this.isAddBtn = true;
+   
   }
 
-  deleteAccount(id:any){}
+  deleteAccount(){
+    this.services.deleteCashAccount(this.tempAccount.id).subscribe({
+      next:(res)=>{
+        console.log('delete account : '+ res);
+        this.myalert.success('Account has been removed successfully','Successfull');
+        this.cashAccountForm.reset();
+        this.btntitle = 'Add Record';
+        this.getAllAccounts(); 
+      }
+    })
+  }
 }
