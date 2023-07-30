@@ -11,7 +11,7 @@ import { Branch } from '../Models/branch.model';
 import { Brand } from '../Models/brand.model';
 import { Product } from '../Models/product.model';
 import { Customer } from '../Models/customer.model';
-import { Supplier } from '../Models/suppliet.model';
+import { Supplier } from '../Models/supplier.model';
 import { cashAccount } from '../Models/cashAccount.model';
 import { Inventory } from '../Models/inventory.model';
 import { pInvoice } from '../Models/pInvoice.model';
@@ -206,7 +206,7 @@ export class CompanyService {
   getCustomer(id: any){
     return this.http.get<Customer>(this.baseApiUrl+'/api/Customer/'+id);
   }
-  getSupplier(id:string){
+  getSupplier(id:any){
     return this.http.get<Supplier>(this.baseApiUrl+'/api/Supplier/'+id);
   }
   getAccount(id:any){

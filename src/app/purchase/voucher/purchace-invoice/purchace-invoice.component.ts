@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { pInvoice } from 'src/app/Models/pInvoice.model';
 
-import { Supplier } from 'src/app/Models/suppliet.model';
+import { Supplier } from 'src/app/Models/supplier.model';
 import { pInvoiceDTO } from 'src/app/DTO/pInvoiceDTO.model';
 import { CompanyService } from 'src/app/Services/company.service';
 
@@ -13,7 +13,8 @@ import { PInvDetailDTO } from 'src/app/DTO/p-inv-detail-dto';
 import { DatePipe } from '@angular/common';
 import { pInvDetail } from 'src/app/Models/pInvDetail.model';
 import { cashAccount } from 'src/app/Models/cashAccount.model';
-import { count } from 'rxjs';
+import { Observable, count, map, startWith } from 'rxjs';
+import { Product } from 'src/app/Models/product.model';
 
 
 declare var $ :any;
@@ -26,16 +27,20 @@ declare var $ :any;
 })
 export class PurchaceInvoiceComponent implements OnInit {
 
-  /**
-   *
-   */
+  myControl = new FormControl('');
+  options !: Supplier[];
+  filteredOptions !: Observable<Supplier[]>;
+
+  myControl2 = new FormControl('');
+  options2 !: Product[];
+  filteredOptions2: Observable<Product[]>[] = [];
 
 
   constructor(private builder: FormBuilder,
     private service: CompanyService,
     private router: Router,
     private alert: ToastrService,
-    private notifyService: NotificationService) { }
+    private notifyService: NotificationService) {    }
 
 
   invoiceDetail !: FormArray<any>;
@@ -51,6 +56,7 @@ export class PurchaceInvoiceComponent implements OnInit {
   purcCode: string = '';
   tempProdCount: number = 0;
   isProdAdded: boolean = false;
+  tempbranchId: number;
 
   pInvoiceDTO: pInvoiceDTO = {
     id: 0,
@@ -94,6 +100,9 @@ export class PurchaceInvoiceComponent implements OnInit {
   isAddBtn: boolean = true;
 
   ngOnInit(): void {
+
+    this.tempbranchId = this.service.getbranchId(); 
+
     var today = new Date();
     var date = today.getDate()+'/'+ (today.getMonth()+1)+'/'+ today.getFullYear();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -116,12 +125,69 @@ export class PurchaceInvoiceComponent implements OnInit {
     //this.getProductStock()
     this.getAccounts();
     
+    this.filteredOptions = this.invoiceForm.get('supplierId').valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = value;
+        return name ? this._filter(name as string, this.options) : this.options
+      })
+      //map(value => this.utils._filterItemSelector(value, this.suggestedSites))
+    );
+
    
   }
 
+  ManageNameControl(index: number) {
+    var arrayControl = this.invoiceForm.get('detail') as FormArray;
+    this.filteredOptions2[index] = arrayControl.at(index).get('productId').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => {
+          if (typeof value === 'string') {
+            return this._filter2(value.toLowerCase());
+          } else {
+            return this._filter2('');
+          }
+        })
+      );
+  }
+
+  private _filter2(value: string): Product[] {
+    const filterValue = value.toLocaleLowerCase();
+
+    return this.options2.filter(option => option.productName.toLocaleLowerCase().includes(filterValue));
+  }
+
+
+  private _filter(value: string, sup: Supplier[]): Supplier[] {
+    if (typeof value === 'string') {
+      const filterValue = value.toLowerCase();
+      return this.options.filter(option => option.supplierName.toLowerCase().includes(filterValue));
+    }
+    else {
+      return sup;
+    }
+
+  }
+  getSuppliers() {
+    this.service.getAllSupplier()
+      .subscribe(sup => {
+        this.supplierList = sup;
+        this.options = sup;
+        console.log('All suppliers' + sup);
+      })
+  }
+  getProducts() {
+    this.service.getAllProducts()
+      .subscribe(pro => {
+        this.productList = pro;
+        this.options2 = pro;
+        console.log(pro);
+      })
+  }
   getAccounts() {
     this.service.getAllAccounts().subscribe(a => {
-      this.cashAccountList = a;
+      this.cashAccountList = a.filter(x=> x.accountBranchId == this.tempbranchId );
       console.log(this.cashAccountList);
     })
   }
@@ -159,24 +225,26 @@ export class PurchaceInvoiceComponent implements OnInit {
       })
   }
 
-  getSuppliers() {
-    this.service.getAllSupplier()
-      .subscribe(sup => {
-        this.supplierList = sup;
-        console.log(sup);
-      })
-  }
-  getProducts() {
-    this.service.getAllProducts()
-      .subscribe(pro => {
-        this.productList = pro;
-        console.log(pro);
-      })
+  public getSupName(supId: any) {
+
+    //return this.customerList.find(c => c.id === cusId).customerName;
+
+    if (this.supplierList && this.supplierList.length > 0) {
+      const supplier = this.supplierList.find((item) => item.id === supId);
+      if (supplier) {
+        return supplier.supplierName;
+      }
+    }
+    return '';
+
+
   }
 
 
-  findSupplier() {
+  findSupplier(event) {
     let supId = this.invoiceForm.get("supplierId")?.value;
+     
+    console.log('event have :' + event);
 
     this.service.getSupplier(supId)
       .subscribe(sup => {

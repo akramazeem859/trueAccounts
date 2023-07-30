@@ -10,5 +10,6 @@ export interface Supplier{
     supplierBranch : Branch;
     supplierOpeningbalance: number;
     supplierCurrentbalance: number; 
+    supplierStatus:boolean; 
 
 }

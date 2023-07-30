@@ -9,35 +9,41 @@
                 <div class="card-body">
                     <div class="form-row mb-3">
                         <div class="col">
-                            <label>Code</label>
-                            <span class="text-danger">*</span>
-                            <input formControlName="code" placeholder="PI2023020004" type="text" class="form-control" [readOnly]="true">
-                        </div>
-                        <div class="col">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Code</mat-label>
+                                <input matInput placeholder="PI2023020004" formControlName="code" width=100>
+                            </mat-form-field>
 
-                            <label for="select2">Supplier<span class="text-danger">*</span></label>
-                            
-
-                            <ng-select 
-                            placeholder="Select Supplier"
-                            
                            
-                            bindLabel="supplierName"
-                            bindValue="id"
-                            formControlName="supplierId" 
-                            (change)="findSupplier()">
-                               
-                            </ng-select>
-
-                            
                         </div>
+                       
 
                         <div class="col">
-                            <label class="form-label">Date</label>
-                            <input type="datetime" 
-                            name="dates" formControlName="date" class="form-control">
-                            
+
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Supplier</mat-label>
+                                <input type="text" placeholder="Select Customer" aria-label="Number" matInput
+                                    formControlName="supplierId" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="findSupplier($event)"
+                                    [displayWith]="getSupName.bind(this)">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
+                                        {{option.supplierName}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
                         </div>
+
+
+                        <div class="col">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Date</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="date">
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+
                     </div>
                     <div class="form-row mb-3">
                         <div class="col">

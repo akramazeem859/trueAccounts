@@ -6,24 +6,21 @@
                 <h4>Add Supplier</h4>
             </div>
             <div class="card-body">
-                <form #supplierForm="ngForm" name="supplierForm" (ngSubmit)="addSupplier()">
+                <form [formGroup]="supplierform" (ngSubmit)="addSupplier()">
                     <div class="form-row mb-3">
                         <div class="col">
                             <label for="supplierName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="supplierName" name="supplierName"
-                            [(ngModel)]="supplierRequest.supplierName">
+                            <input type="text" formControlName="supplierName" class="form-control" id="supplierName" name="supplierName">
                         </div>
                         <div class="col">
                             <label for="supplierNumber" class="form-label">Number</label>
-                            <input type="text" class="form-control" id="supplierNumber" name="supplierNumber"
-                            [(ngModel)]="supplierRequest.supplierNumber">
+                            <input type="text" formControlName="supplierNumber" class="form-control" id="supplierNumber" name="supplierNumber">
                         </div>
                     </div>
                     <div class="form-row mb-3">
                         <div class="col">
                             <label for="supplierAddress" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="supplierAddress" name="supplierAddress"
-                            [(ngModel)]="supplierRequest.supplierAddress">
+                            <input type="text" formControlName="supplierAddress" class="form-control" id="supplierAddress" name="supplierAddress">
                         </div>
                     </div>
 
@@ -31,14 +28,12 @@
 
                         <div class="col">
                             <label for="supplierOpenBal" class="form-label">Open Balance</label>
-                            <input type="text" class="form-control" id="supplierOpenBal" name="supplierOpenBal"
-                            [(ngModel)]="supplierRequest.supplierOpeningbalance">
+                            <input type="text" formControlName="supplierOpeningbalance" class="form-control" id="supplierOpenBal" name="supplierOpenBal">
                         </div>
 
                         <div class="col">
                             <label for="supplierBalance" class="form-label">Balance</label>
-                            <input type="text" class="form-control" id="supplierBalance" name="supplierBalance"
-                            [(ngModel)]="supplierRequest.supplierCurrentbalance">
+                            <input type="text" formControlName="supplierCurrentbalance" class="form-control" id="supplierBalance" name="supplierBalance">
                         </div>
 
                     </div>
@@ -46,18 +41,22 @@
                     <div class="form-row mb-3">
                         <div class="col">
                             <label for="supplierBranch" class="form-label">Branch</label>
-                            <select class="form-control" name="supplierBranch"
-                            [(ngModel)]="supplierRequest.supplierBranchId">
+                            <select class="form-control" formControlName="supplierBranchId" name="supplierBranch">
                                 <option *ngFor="let branch of branches" [value]="branch.id">{{branch.branchName}}</option>
                             </select>
                         </div>
 
                         <div class="col">
+                            <label for="supplierStatus" class="form-label">Status</label>
+                            <br>
+                            <input type="checkbox" class="mr-2" formControlName="supplierStatus" name="supplierStatus">Is Active
+                        </div>
+
+                        <div class="col">
                             <label for="action" class="form-label">Action</label>
                             <br>
-                            <button type="submit" class="btn btn-primary mr-2" [disabled]="!isAddBtn">Add Supplier</button>
-                            <button type="button" class="btn btn-warning mr-2" (click)="editSupplier()"[disabled]="!isEditBtn">Edit</button>
-                            <button type="button" class="btn btn-danger" (click)="deleteSupplier(supplierRequest.id)" [disabled]="!isDeletBtn">Delete</button>
+                            <button type="submit" class="btn btn-primary mr-2" >{{btnTitle}}</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteSupplier(tempSupplier.id)" [disabled]="!isDeletBtn">Delete</button>
 
                         </div>
                     </div>
@@ -76,7 +75,7 @@
             </div>
 
             <div class="card-body">
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                         <th>Sr#</th>
                         <th>Code</th>
@@ -85,11 +84,12 @@
                         <th>Address</th>
                         <th>O-Balance</th>
                         <th>Balance</th>
+                        <th>Status</th>
                         <th>Branch</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let sup of suppliers$ ; index as i">
+                        <tr *ngFor="let sup of supplierList ; index as i">
                             <td>{{i+1}}</td>
                             <td>{{sup.supplierCode}}</td>
                             <td>{{sup.supplierName}}</td>
@@ -97,8 +97,9 @@
                             <td>{{sup.supplierAddress}}</td>
                             <td>{{sup.supplierOpeningbalance}}</td>
                             <td>{{sup.supplierCurrentbalance}}</td>
+                            <td>{{sup.supplierStatus}}</td>
                             <td>{{sup.supplierBranch.branchName}}</td>
-                            <td><button type="button" class="btn btn-primary" (click)="getSupplierById(sup.id)">Edit</button></td>
+                            <td><button type="button" class="btn btn-primary" (click)="LoadSupplier(sup)">Edit</button></td>
                         </tr>
                     </tbody>
                 </table>

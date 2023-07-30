@@ -1,7 +1,7 @@
 
 import { Branch } from "./branch.model";
 import { pInvDetail } from "./pInvDetail.model";
-import { Supplier } from "./suppliet.model";
+import { Supplier } from "./supplier.model";
 
 export interface pInvoice{
     id:number;

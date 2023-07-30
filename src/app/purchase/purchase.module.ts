@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PurchaceInvoiceComponent } from './voucher/purchace-invoice/purchace-invoice.component';
 
 import { SupplierlistingComponent } from './report/supplierReport/supplierlisting/supplierlisting.component';
+import { MaterialModule } from 'src/Material-Module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { SupplierlistingComponent } from './report/supplierReport/supplierlistin
     CommonModule,
     PurchaseRoutingModule,
     FormsModule,
+    MaterialModule,
  
     ReactiveFormsModule
   ],
