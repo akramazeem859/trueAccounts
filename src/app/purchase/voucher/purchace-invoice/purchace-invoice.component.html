@@ -78,16 +78,19 @@
                                     <tr *ngFor="let item of invProducts().controls ; index as i" [formGroupName]="i">
                                         <td>{{i+1}}</td>
                                         <td>
-                                            <ng-select 
-                                            placeholder="Select Product"
-                                        
-                                           
-                                            bindLabel="productName"
-                                            bindValue="id"
-                                            formControlName="productId" 
-                                            (change)="prodSelect(i)">
-                                               
-                                            </ng-select>
+                                            <mat-form-field class="example-full-width" style="height: 60px;" appearance="fill">
+                                                <input type="text" placeholder="Select Product" aria-label="Number"
+                                                    matInput formControlName="productId"
+                                                    [matAutocomplete]="productauto">
+                                                <mat-autocomplete #productauto="matAutocomplete"
+                                                    (optionSelected)="prodSelect(i)"
+                                                    [displayWith]="getProcductName.bind(this)">
+                                                    <mat-option *ngFor="let option of filteredOptions2[i] | async"
+                                                        [value]="option.id">
+                                                        {{option.productName}}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
                                            
                                         </td>
 

@@ -134,17 +134,14 @@ export class SaleInvoiceComponent implements OnInit {
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + ' ' + time;
 
-    $(document).ready(function () {
-      $('#dt').val(new Date());
-    });
-
+   
     this.newTime = time;
 
     this.currentDate = this.datePipe.transform((new Date), 'YYYY-MM-dd hh:mm');
-    var currentDateTxt = this.currentDate + " ";
+  
 
     //console.log("current Date :" + this.currentDate);
-    this.saleInvoiceForm.get('datetime').setValue(this.currentDate);
+    this.saleInvoiceForm.get('datetime').setValue(today);
 
    
 

@@ -57,6 +57,7 @@ export class PurchaceInvoiceComponent implements OnInit {
   tempProdCount: number = 0;
   isProdAdded: boolean = false;
   tempbranchId: number;
+  tempSupplier:Supplier;
 
   pInvoiceDTO: pInvoiceDTO = {
     id: 0,
@@ -109,16 +110,7 @@ export class PurchaceInvoiceComponent implements OnInit {
     var dateTime = date+' '+time;
     console.log(today);
 
-    $('input[name="dates"]').daterangepicker({
-      singleDatePicker: true,
-      showDropdowns: true,
-      timePicker: true,
-      minYear: 2022,
-      maxYear: today.getFullYear()
-    });
-    
-
-    this.invoiceForm.get('date').setValue(dateTime);
+    this.invoiceForm.get('date').setValue(today);
     this.getSuppliers();
     this.getProducts();
     //this.getPurchInv();
@@ -137,6 +129,17 @@ export class PurchaceInvoiceComponent implements OnInit {
    
   }
 
+  private _filter(value: string, sup: Supplier[]): Supplier[] {
+    if (typeof value === 'string') {
+      const filterValue = value.toLowerCase();
+      return this.options.filter(option => option.supplierName.toLowerCase().includes(filterValue));
+    }
+    else {
+      return sup;
+    }
+  }
+
+
   ManageNameControl(index: number) {
     var arrayControl = this.invoiceForm.get('detail') as FormArray;
     this.filteredOptions2[index] = arrayControl.at(index).get('productId').valueChanges
@@ -154,21 +157,12 @@ export class PurchaceInvoiceComponent implements OnInit {
 
   private _filter2(value: string): Product[] {
     const filterValue = value.toLocaleLowerCase();
-
     return this.options2.filter(option => option.productName.toLocaleLowerCase().includes(filterValue));
   }
 
 
-  private _filter(value: string, sup: Supplier[]): Supplier[] {
-    if (typeof value === 'string') {
-      const filterValue = value.toLowerCase();
-      return this.options.filter(option => option.supplierName.toLowerCase().includes(filterValue));
-    }
-    else {
-      return sup;
-    }
 
-  }
+
   getSuppliers() {
     this.service.getAllSupplier()
       .subscribe(sup => {
@@ -177,14 +171,52 @@ export class PurchaceInvoiceComponent implements OnInit {
         console.log('All suppliers' + sup);
       })
   }
+
+  findSupplier(event) {
+    let supId = this.invoiceForm.get("supplierId")?.value;
+    console.log('event have :' + event);
+    this.tempSupplier = this.supplierList.find(x=> x.id == supId);
+
+        this.invoiceForm.get("address").setValue(this.tempSupplier.supplierAddress);
+        this.invoiceForm.get("contact").setValue(this.tempSupplier.supplierNumber);
+        this.invoiceForm.get("balance").setValue(this.tempSupplier.supplierCurrentbalance);
+     
+    console.log("find supplier = " + supId);
+  }
+
+
   getProducts() {
     this.service.getAllProducts()
       .subscribe(pro => {
         this.productList = pro;
         this.options2 = pro;
-        console.log(pro);
+        console.log('all products : '+this.options2);
       })
   }
+
+  public getSupName(supId: any) {
+    //return this.customerList.find(c => c.id === cusId).customerName;
+    if (this.supplierList && this.supplierList.length > 0) {
+      const supplier = this.supplierList.find((item) => item.id === supId);
+      if (supplier) {
+        return supplier.supplierName;
+      }
+    }
+    return '';
+  }
+
+  public getProcductName(pId: any) {
+    //return this.productList.find(c => c.id === pId).productName;
+    if (this.productList && this.productList.length > 0) {
+      const product = this.productList.find((item) => item.id === pId);
+      if (product) {
+        return product.productName;
+      }
+    }
+    return '';
+  }
+
+
   getAccounts() {
     this.service.getAllAccounts().subscribe(a => {
       this.cashAccountList = a.filter(x=> x.accountBranchId == this.tempbranchId );
@@ -225,36 +257,10 @@ export class PurchaceInvoiceComponent implements OnInit {
       })
   }
 
-  public getSupName(supId: any) {
-
-    //return this.customerList.find(c => c.id === cusId).customerName;
-
-    if (this.supplierList && this.supplierList.length > 0) {
-      const supplier = this.supplierList.find((item) => item.id === supId);
-      if (supplier) {
-        return supplier.supplierName;
-      }
-    }
-    return '';
+ 
 
 
-  }
-
-
-  findSupplier(event) {
-    let supId = this.invoiceForm.get("supplierId")?.value;
-     
-    console.log('event have :' + event);
-
-    this.service.getSupplier(supId)
-      .subscribe(sup => {
-        this.invoiceForm.get("address").setValue(sup.supplierAddress);
-        this.invoiceForm.get("contact").setValue(sup.supplierNumber);
-        this.invoiceForm.get("balance").setValue(sup.supplierCurrentbalance);
-      })
-    console.log("find supplier = " + supId);
-  }
-
+  
   prodSelect(index: any) {
     
     this.invoiceDetail = this.invoiceForm.get('detail') as FormArray;
@@ -273,11 +279,12 @@ export class PurchaceInvoiceComponent implements OnInit {
         this.tempProdCount = index;
       }
     }
-    this.service.getProduct(prodId)
-      .subscribe(prod => {
-        this.invProduct.get("purchasePrice").setValue(prod.purchasePrice);
-        this.totalCalculation(index);
-      })
+      
+    let purchasePrice = this.productList.find(x=> x.id == prodId).purchasePrice;
+
+    this.invProduct.get("purchasePrice").setValue(purchasePrice);
+    this.totalCalculation(index);
+      
   }
 
   editInvoice() {
@@ -335,11 +342,15 @@ export class PurchaceInvoiceComponent implements OnInit {
     this.invoiceForm.reset(); 
     this.invoiceForm.get('code').setValue('PI202302');
     this.invoiceForm.get('freight').setValue(0);
-    for (let i = 0; i <= this.tempProdCount; i++) {
-      this.invoiceDetail.removeAt(i);
+
+    if (this.invoiceDetail != undefined) {
+       while (this.invoiceDetail.length !== 0) {
+         this.invoiceDetail.removeAt(0)
+       }
      }
+ 
      this.tempProdCount = 0;
-     this.pInvoiceDTO = null;
+ 
   }
 
   totalCalculation(index: any) {
@@ -379,15 +390,14 @@ export class PurchaceInvoiceComponent implements OnInit {
 
     if (supId != null) {
       this.invoiceDetail.push(this.generateRow());
+      this.ManageNameControl(this.invoiceDetail.length - 1);
     }
     else {
       this.alert.warning('Please select Supplier first.', 'Validation')
     }
   }
 
-  invProducts() {
-    return this.invoiceForm.get('detail') as FormArray;
-  }
+ 
 
   generateRow() {
     return this.builder.group({
@@ -396,6 +406,10 @@ export class PurchaceInvoiceComponent implements OnInit {
       purchasePrice: this.builder.control(0),
       total: this.builder.control(0)
     })
+  }
+
+  invProducts() {
+    return this.invoiceForm.get('detail') as FormArray;
   }
 
   saveInvoice() {
