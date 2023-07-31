@@ -149,21 +149,23 @@ export class SaleInvoiceComponent implements OnInit {
 
    
 
-    this.tokenservice.getBrnchIdFromStore().subscribe(value => {
-      let tempbranchId = this.service.getBranchIdfromToken();
-      this.branchId = value || tempbranchId;
-    })
+    // this.tokenservice.getBrnchIdFromStore().subscribe(value => {
+    //   let tempbranchId = this.service.getBranchIdfromToken();
+    //   this.branchId = value || tempbranchId;
+    // })
 
     this.tokenservice.getNameFromStore().subscribe(value => {
       let tempuserName = this.service.getNamefromToken();
       this.tempuserName = value || tempuserName;
     })
 
+    this.branchId = this.service.getbranchId(); 
+
     this.service.getBranch(this.branchId).subscribe({
       next: (res) => {
         this.tempbranch = res;
         this.getAllCustomer(this.tempbranch.id);
-        this.service.getBranchInv(this.tempbranch.id).subscribe({
+        this.service.getBranchInvt(this.tempbranch.id).subscribe({
           next:(res)=> {
             this.branchStock = res; 
           }
@@ -505,7 +507,7 @@ export class SaleInvoiceComponent implements OnInit {
       }
     }
     let custId = this.saleInvoiceForm.get("customerId").value;
-    debugger;
+    
     if(this.customerRateList){
       let cusRate = this.customerRateList.find(x=> x.productId == prodId);
       if(cusRate && cusRate.rate){

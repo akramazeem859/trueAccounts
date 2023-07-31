@@ -215,7 +215,7 @@ export class CompanyService {
   getInventory(id:any){
     return this.http.get<Inventory>(this.baseApiUrl+'/api/Inventory/' + id);
   }
-  getBranchInv(id:any){
+  getBranchInvt(id:any){
     return this.http.get<Inventory[]>(this.baseApiUrl+'/api/Inventory/branchId/' + id);
   }
   getPurchInv(id:any){

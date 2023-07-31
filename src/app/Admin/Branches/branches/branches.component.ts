@@ -65,7 +65,8 @@ export class BranchesComponent implements OnInit {
   }
 
   submit(){
-    if(this.tempBranchId == 0){
+    if(this.tempBranchId == 0){+
+      this.branchform.get('id').setValue(0);
       this.companyservice.addBranch(this.branchform.value).subscribe({
         next:(res)=>{
           this.myalert.success('New Record Enter Successfully.','Success');
@@ -101,6 +102,18 @@ export class BranchesComponent implements OnInit {
     this.branchform.patchValue(brch);
     this.btnTitle = 'Edit';
     this.tempBranchId = brch.id; 
+  }
+
+  DeleteBranch(brch: Branch){
+    this.companyservice.deletBranch(brch.id).subscribe({
+      next:(res)=>{
+        this.myalert.success('Branch deleted successfully','Done');
+        this.getAllbranches();
+      },
+      error:(err)=>{
+        this.myalert.warning('Unable to delete branch','Something Wrong');
+      }
+    })
   }
 
   

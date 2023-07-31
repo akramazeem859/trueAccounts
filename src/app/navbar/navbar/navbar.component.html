@@ -2,89 +2,51 @@
 <nav *ngIf="showNavbar" class="main-header navbar navbar-expand-md navbar-light navbar-white">
   <div class="container">
     <a href="" class="navbar-brand">
-      <img
-        src="assets/img/AdminLTELogo.png"
-        alt="AdminLTE Logo"
-        class="brand-image img-circle elevation-3"
-        style="opacity: 0.8"
-      />
+      <img src="assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        style="opacity: 0.8" />
       <span class="brand-text font-weight-light">TrueAccounts</span>
     </a>
 
-    <button
-      class="navbar-toggler order-1"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarCollapse"
-      aria-controls="navbarCollapse"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse order-3" id="navbarCollapse">
       <!-- Top navbar links -->
       <ul class="navbar-nav">
+
+
+
         <!-- Financial -->
         <li class="nav-item dropdown">
-          <a
-            id="dropdownSubMenu1"
-            href="#"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            class="nav-link dropdown-toggle"
-            >Financial</a>
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            class="nav-link dropdown-toggle">Financial</a>
 
-          <ul
-            aria-labelledby="dropdownSubMenu1"
-            class="dropdown-menu border-0 shadow"
-          >
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
             <!-- Level two dropdown-->
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Voucher</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Voucher</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li>
-                  <a routerLink="financial/cashRecipt" class="dropdown-item"
-                    >Cash Recipt</a
-                  >
+                  <a routerLink="financial/cashRecipt" class="dropdown-item">Cash Recipt</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a routerLink="financial/cashPayment" class="dropdown-item"
-                    >Cash Payment</a
-                  >
+                  <a routerLink="financial/cashPayment" class="dropdown-item">Cash Payment</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a routerLink="financial/bankRecipt" class="dropdown-item"
-                    >Bank Recipt</a
-                  >
+                  <a routerLink="financial/bankRecipt" class="dropdown-item">Bank Recipt</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a routerLink="financial/bankPayment" class="dropdown-item"
-                    >Bank Payment</a
-                  >
+                  <a routerLink="financial/bankPayment" class="dropdown-item">Bank Payment</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a routerLink="financial/jv" class="dropdown-item"
-                    >Journal Voucher</a
-                  >
+                  <a routerLink="financial/jv" class="dropdown-item">Journal Voucher</a>
                 </li>
               </ul>
             </li>
@@ -92,27 +54,15 @@
             <li class="dropdown-divider"></li>
 
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Report</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Report</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li><a href="#" class="dropdown-item">Trial Balance</a></li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Balance</a></li>
                 <li class="dropdown-divider"></li>
-                <li><a routerLink="financial/allLedger"
-                  (click)="setTitle('Ledgers')"
-                  class="dropdown-item">Ledger</a></li>
+                <li><a routerLink="financial/allLedger" (click)="setTitle('Ledgers')" class="dropdown-item">Ledger</a>
+                </li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Aging</a></li>
               </ul>
@@ -122,47 +72,22 @@
 
         <!-- Sales -->
         <li class="nav-item dropdown">
-          <a
-            id="dropdownSubMenu1"
-            href="#"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            class="nav-link dropdown-toggle"
-            >Sales</a
-          >
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            class="nav-link dropdown-toggle">Sales</a>
 
-          <ul
-            aria-labelledby="dropdownSubMenu1"
-            class="dropdown-menu border-0 shadow"
-          >
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
             <!-- Level two dropdown-->
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Voucher</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Voucher</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li><a href="#" class="dropdown-item">Sales Order </a></li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Dispatch Note</a></li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a
-                    routerLink="sale/sInvoice"
-                    (click)="setTitle('Sale Invoice')"
-                    class="dropdown-item"
-                    >Sale Invoice</a
-                  >
+                  <a routerLink="sale/sInvoice" (click)="setTitle('Sale Invoice')" class="dropdown-item">Sale
+                    Invoice</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Sale Return</a></li>
@@ -172,47 +97,22 @@
             </li>
             <li class="dropdown-divider"></li>
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Customer Report</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Customer Report</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li>
-                  <a
-                    routerLink="sale/customer"
-                    (click)="setTitle('Customer')"
-                    class="dropdown-item"
-                    >Listing</a
-                  >
+                  <a routerLink="sale/customer" (click)="setTitle('Customer')" class="dropdown-item">Listing</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a
-                    routerLink="sale/customerrate"
-                    (click)="setTitle('Customer Rates')"
-                    class="dropdown-item"
-                    >Customer Rates</a
-                  >
+                  <a routerLink="sale/customerrate" (click)="setTitle('Customer Rates')" class="dropdown-item">Customer
+                    Rates</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Balance</a></li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a
-                    routerLink="sale/cledger"
-                    (click)="setTitle('Customer Ledger')"
-                    class="dropdown-item"
-                    >Ledger</a
-                  >
+                  <a routerLink="sale/cledger" (click)="setTitle('Customer Ledger')" class="dropdown-item">Ledger</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Aging</a></li>
@@ -222,27 +122,12 @@
             <li class="dropdown-divider"></li>
 
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Sales Report</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Sales Report</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li>
-                  <a
-                    routerLink="sale/viewSInvoice"
-                    (click)="setTitle('View Sale Invoice')"
-                    class="dropdown-item"
-                    >Sales Reports</a
-                  >
+                  <a routerLink="sale/viewSInvoice" (click)="setTitle('View Sale Invoice')" class="dropdown-item">Sales
+                    Reports</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
@@ -259,43 +144,18 @@
 
         <!-- Purchase -->
         <li class="nav-item dropdown">
-          <a
-            id="dropdownSubMenu1"
-            href="#"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            class="nav-link dropdown-toggle"
-            >Purchase</a
-          >
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            class="nav-link dropdown-toggle">Purchase</a>
 
-          <ul
-            aria-labelledby="dropdownSubMenu1"
-            class="dropdown-menu border-0 shadow"
-          >
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
             <!-- Level two dropdown-->
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Voucher</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Voucher</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li>
-                  <a
-                    routerLink="purchase/pInvoice"
-                    (click)="setTitle('Purchase Invoice')"
-                    class="dropdown-item"
-                    >Purchase Invoice</a
-                  >
+                  <a routerLink="purchase/pInvoice" (click)="setTitle('Purchase Invoice')"
+                    class="dropdown-item">Purchase Invoice</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Payment Order </a></li>
@@ -311,27 +171,12 @@
             <li class="dropdown-divider"></li>
 
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Supplier Report</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Supplier Report</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li>
-                  <a
-                    routerLink="purchase/supplierlisting"
-                    (click)="setTitle('Supplier')"
-                    class="dropdown-item"
-                    >Listing</a
-                  >
+                  <a routerLink="purchase/supplierlisting" (click)="setTitle('Supplier')"
+                    class="dropdown-item">Listing</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Balance</a></li>
@@ -345,20 +190,9 @@
             <li class="dropdown-divider"></li>
 
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Purchase Report</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Purchase Report</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li><a href="#" class="dropdown-item">Purchase Reports</a></li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Return Report</a></li>
@@ -369,35 +203,14 @@
 
         <!-- Inventory -->
         <li class="nav-item dropdown">
-          <a
-            id="dropdownSubMenu1"
-            href="#"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            class="nav-link dropdown-toggle"
-            >Inventory</a
-          >
-          <ul
-            aria-labelledby="dropdownSubMenu1"
-            class="dropdown-menu border-0 shadow"
-          >
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            class="nav-link dropdown-toggle">Inventory</a>
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
             <!-- Level two dropdown-->
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Voucher</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Voucher</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li><a href="#" class="dropdown-item">Stock Transfer</a></li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Stock Adjustment</a></li>
@@ -407,45 +220,19 @@
             <li class="dropdown-divider"></li>
 
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Report</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Report</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li>
-                  <a
-                    routerLink="inventory/listing"
-                    (click)="setTitle('Inventory')"
-                    class="dropdown-item"
-                    >Listing</a
-                  >
+                  <a routerLink="inventory/listing" (click)="setTitle('Inventory')" class="dropdown-item">Listing</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a
-                    routerLink="inventory/balance"
-                    (click)="setTitle('Balance')"
-                    class="dropdown-item"
-                    >Balance</a
-                  >
+                  <a routerLink="inventory/balance" (click)="setTitle('Balance')" class="dropdown-item">Balance</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a
-                    routerLink="inventory/ledger"
-                    (click)="setTitle('Ledger')"
-                    class="dropdown-item"
-                    >Ledger</a
-                  >
+                  <a routerLink="inventory/ledger" (click)="setTitle('Ledger')" class="dropdown-item">Ledger</a>
                 </li>
               </ul>
             </li>
@@ -454,71 +241,29 @@
 
         <!-- Production -->
         <li class="nav-item dropdown">
-          <a
-            id="dropdownSubMenu1"
-            href="#"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            class="nav-link dropdown-toggle"
-            >Production</a
-          >
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            class="nav-link dropdown-toggle">Production</a>
 
-          <ul
-            aria-labelledby="dropdownSubMenu1"
-            class="dropdown-menu border-0 shadow"
-          >
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
             <!-- Level two dropdown-->
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Resaller</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Resaller</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li>
-                  <a
-                    routerLink="production/brands"
-                    (click)="setTitle('Brands')"
-                    class="dropdown-item"
-                    >Brands</a
-                  >
+                  <a routerLink="production/brands" (click)="setTitle('Brands')" class="dropdown-item">Brands</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a
-                    routerLink="production/product"
-                    (click)="setTitle('Products')"
-                    class="dropdown-item"
-                    >Products</a
-                  >
+                  <a routerLink="production/product" (click)="setTitle('Products')" class="dropdown-item">Products</a>
                 </li>
               </ul>
             </li>
 
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Voucher</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Voucher</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li><a href="#" class="dropdown-item">page 1</a></li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">page 2</a></li>
@@ -526,20 +271,9 @@
             </li>
 
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Report</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Report</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li><a href="#" class="dropdown-item">page 1</a></li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">page 2</a></li>
@@ -550,36 +284,15 @@
 
         <!-- Payrol -->
         <li class="nav-item dropdown">
-          <a
-            id="dropdownSubMenu1"
-            href="#"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            class="nav-link dropdown-toggle"
-            >Payrol</a
-          >
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            class="nav-link dropdown-toggle">Payrol</a>
 
-          <ul
-            aria-labelledby="dropdownSubMenu1"
-            class="dropdown-menu border-0 shadow"
-          >
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
             <!-- Level two dropdown-->
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Activity</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Activity</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li><a href="#" class="dropdown-item">Employess</a></li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Departments</a></li>
@@ -596,40 +309,18 @@
             </li>
 
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Voucher</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Voucher</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li><a href="#" class="dropdown-item">Sallery Increment</a></li>
                 <li class="dropdown-divider"></li>
               </ul>
             </li>
 
             <li class="dropdown-submenu dropdown-hover">
-              <a
-                id="dropdownSubMenu2"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="dropdown-item dropdown-toggle"
-                >Reports</a
-              >
-              <ul
-                aria-labelledby="dropdownSubMenu2"
-                class="dropdown-menu border-0 shadow"
-              >
+              <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" class="dropdown-item dropdown-toggle">Reports</a>
+              <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                 <li><a href="#" class="dropdown-item">Sallery Increment</a></li>
                 <li class="dropdown-divider"></li>
                 <li><a href="#" class="dropdown-item">Loan</a></li>
@@ -640,73 +331,39 @@
 
         <!-- Settings -->
         <li class="nav-item dropdown">
-          <a
-            id="dropdownSubMenu1"
-            href="#"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            class="nav-link dropdown-toggle"
-            >Settings</a
-          >
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            class="nav-link dropdown-toggle">Settings</a>
 
-          <ul
-            aria-labelledby="dropdownSubMenu1"
-            class="dropdown-menu border-0 shadow"
-          >
-            <li><a routerLink="admin/UsersDetail" 
-               (click)="setTitle('Users')"
-                class="dropdown-item">Users
-              </a>
-               
-              </li>
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+            <li><a routerLink="admin/UsersDetail" (click)="setTitle('Users')" class="dropdown-item">Users</a></li>
 
             <li class="dropdown-divider"></li>
             <li>
-              <a
-                routerLink="admin/cashAccount"
-                (click)="setTitle('Cash Accounts')"
-                class="dropdown-item"
-                >Accounts</a
-              >
+              <a routerLink="admin/cashAccount" (click)="setTitle('Cash Accounts')" class="dropdown-item">Accounts</a>
             </li>
             <li class="dropdown-divider"></li>
             <li>
-              <a
-                routerLink="admin/branches"
-                (click)="setTitle('Branches')"
-                class="dropdown-item"
-                >Branches</a
-              >
+              <a routerLink="admin/branches" (click)="setTitle('Branches')" class="dropdown-item">Branches</a>
             </li>
             <li class="dropdown-divider"></li>
             <li>
-              <a
-                routerLink="admin/company"
-                (click)="setTitle('Company')"
-                class="dropdown-item"
-                >Company</a
-              >
+              <a routerLink="admin/company" (click)="setTitle('Company')" class="dropdown-item">Company</a>
             </li>
             <li class="dropdown-divider"></li>
             <li>
-              <a
-                routerLink="admin/ChartAccount"
-                (click)="setTitle('Chart of Account')"
-                class="dropdown-item"
-                >Chart Account</a
-              >
+              <a routerLink="admin/ChartAccount" (click)="setTitle('Chart of Account')" class="dropdown-item">Chart
+                Account</a>
             </li>
           </ul>
         </li>
+
+        
       </ul>
     </div>
 
     <!-- Right navbar links -->
 
-    <ul
-      class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto mt-3 right"
-    >
+    <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto mt-3 right">
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -714,20 +371,15 @@
           <span class="badge badge-danger navbar-badge">3</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+         
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img
-                src="assets/img/user1-128x128.jpg"
-                alt="User Avatar"
-                class="img-size-50 mr-3 img-circle"
-              />
+              <img src="assets/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle" />
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
-                  <span class="float-right text-sm text-danger"
-                    ><i class="fas fa-star"></i
-                  ></span>
+                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                 </h3>
                 <p class="text-sm">Call me whenever you can...</p>
                 <p class="text-sm text-muted">
@@ -737,21 +389,17 @@
             </div>
             <!-- Message End -->
           </a>
+
+
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img
-                src="assets/img/user8-128x128.jpg"
-                alt="User Avatar"
-                class="img-size-50 img-circle mr-3"
-              />
+              <img src="assets/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3" />
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   John Pierce
-                  <span class="float-right text-sm text-muted"
-                    ><i class="fas fa-star"></i
-                  ></span>
+                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
                 </h3>
                 <p class="text-sm">I got your message bro</p>
                 <p class="text-sm text-muted">
@@ -761,21 +409,17 @@
             </div>
             <!-- Message End -->
           </a>
+
+
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img
-                src="assets/img/user3-128x128.jpg"
-                alt="User Avatar"
-                class="img-size-50 img-circle mr-3"
-              />
+              <img src="assets/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3" />
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
-                  <span class="float-right text-sm text-warning"
-                    ><i class="fas fa-star"></i
-                  ></span>
+                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
                 </h3>
                 <p class="text-sm">The subject goes here</p>
                 <p class="text-sm text-muted">
@@ -785,10 +429,15 @@
             </div>
             <!-- Message End -->
           </a>
+
+
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+
         </div>
       </li>
+
+
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -798,6 +447,7 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-header">15 Notifications</span>
           <div class="dropdown-divider"></div>
+
           <a href="#" class="dropdown-item">
             <i class="fas fa-envelope mr-2"></i> 4 new messages
             <span class="float-right text-muted text-sm">3 mins</span>
@@ -813,27 +463,33 @@
             <span class="float-right text-muted text-sm">2 days</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer"
-            >See All Notifications</a
-          >
+
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
       <li>
 
 
+
+
         <div class="user-panel pb-3 mb-3 d-flex">
           <div class="image">
-            <img
-              
-              (mouseover)="toggleMenu()"
-              src="assets/img/user2-160x160.jpg"
-              class="img-circle elevation-2"
-              alt="User Image"
-            />
+            <img (mouseover)="toggleMenu()" src="assets/img/user2-160x160.jpg" class="img-circle elevation-2"
+              alt="User Image" />
           </div>
           <div class="info">
-            <h5 (click)="toggleMenu()" class="d-block">{{userName}}  </h5>
-            <small>({{role}})  {{branchName}}</small>
+            <h5 (click)="toggleMenu()" class="d-block">{{userName}} </h5>
+
+            <form [formGroup]="selectedbranch" >
+              <small>
+                <select class="form-control btn-mini" formControlName="bid" (change)="changebranch()">
+                  <option *ngFor="let brch of branchList" [value]="brch.id">
+                    {{brch.branchName}}
+                  </option>
+                </select>
+              </small>
+            </form>
+
           </div>
         </div>
 
@@ -859,9 +515,9 @@
               <p>Help & Support</p>
               <span>></span>
             </a>
-            
+
             <hr>
-            
+
             <a href="#" (click)="logOut()" class="sub-menu-link">
               <i class="fas fa-arrow-right"></i>
               <p>Log Out</p>
@@ -876,31 +532,31 @@
 </nav>
 
 
-  <!-- Content Header (Page header) -->
-  <div *ngIf="showNavbar" class="content-header">
-    <div class="container">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>{{ title }}</h1>
-        </div>
-        <!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v2</li>
-          </ol>
-        </div>
-        <!-- /.col -->
+<!-- Content Header (Page header) -->
+<div *ngIf="showNavbar" class="content-header">
+  <div class="container">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>{{ title }}</h1>
       </div>
-      <!-- /.row -->
+      <!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard v2</li>
+        </ol>
+      </div>
+      <!-- /.col -->
     </div>
-    <!-- /.container-fluid -->
+    <!-- /.row -->
   </div>
+  <!-- /.container-fluid -->
+</div>
 
 <script>
-  
+
   let subMenu = document.getElementById("subMenu");
-  function toggleMenu(){
+  function toggleMenu() {
     Alert("testing called");
     subMenu.classList.toggle("open-menu");
   }

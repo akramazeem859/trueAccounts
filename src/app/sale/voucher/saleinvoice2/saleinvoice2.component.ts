@@ -158,7 +158,7 @@ export class Saleinvoice2Component implements OnInit {
   }
 
   getAllstock(id:any){
-    this.service.getBranchInv(id).subscribe({
+    this.service.getBranchInvt(id).subscribe({
       next:(res)=>{
         this.stockList = res;
        
