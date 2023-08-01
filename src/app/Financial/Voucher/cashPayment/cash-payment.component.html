@@ -1,1 +1,145 @@
-<p>cash-payment works!</p>
+<div class="container">
+    <div class="row">
+        <div class="card col">
+            <div class="card-header">
+                <h3>Cash Payment Voucher</h3>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="cashPaymentForm" (ngSubmit)="submit()">
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Select Supplier</mat-label>
+                                <input type="text" aria-label="Number" matInput
+                                    formControlName="supplierId" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="getsupplier.bind(this)" >
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
+                                        {{option.supplierName}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Select Account</mat-label>
+                                <input type="text"aria-label="Number" matInput
+                                    formControlName="cashAccId" [matAutocomplete]="autoAcc">
+                                <mat-autocomplete #autoAcc="matAutocomplete" [displayWith]="getcashAcc.bind(this)" >
+                                    <mat-option *ngFor="let option of filteredOptions2 | async" [value]="option.id">
+                                        {{option.accountTitle}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Date</mat-label>
+                                <input matInput [matDatepicker]="recordDate" formControlName="dt">
+                                <mat-datepicker-toggle matIconSuffix [for]="recordDate"></mat-datepicker-toggle>
+                                <mat-datepicker #recordDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field>
+                                <mat-label>Amount</mat-label>
+                                <input type="number" matInput formControlName="amount">
+                              </mat-form-field>
+                        </div>
+
+                        <div class="col mt-3">
+                            <button type="button" style="width: 100%;" class="btn btn-primary mr-2" (click)="submit()">{{btnTitle}}</button>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-row mb-3">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Particular</mat-label>
+                            <textarea matInput formControlName="particular" placeholder="Ex. Particular..."></textarea>
+                          </mat-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card col">
+            <div class="card-header">
+                <div class="card-body">
+                    <form [formGroup]="SeachCashPaymentForm" (Submit)="seachCashPayment()">
+                    <div class="form-row mb-3">
+
+                       
+                        <div class="col">
+                           
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Select Supplier</mat-label>
+                                <input type="text" aria-label="Number" matInput
+                                    formControlName="supplierId" [matAutocomplete]="cashRecauto">
+                                <mat-autocomplete #cashRecauto="matAutocomplete" [displayWith]="getsupplier2.bind(this)" >
+                                    <mat-option *ngFor="let option of filteredOptions3 | async" [value]="option.id">
+                                        {{option.supplierName}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>From Date</mat-label>
+                                <input matInput [matDatepicker]="fromDate" formControlName="fromDate">
+                                <mat-datepicker-toggle matIconSuffix [for]="fromDate"></mat-datepicker-toggle>
+                                <mat-datepicker #fromDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>To Date</mat-label>
+                                <input matInput [matDatepicker]="toDate" formControlName="toDate">
+                                <mat-datepicker-toggle matIconSuffix [for]="toDate"></mat-datepicker-toggle>
+                                <mat-datepicker #toDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col mt-3">
+                            <button type="button" class="btn btn-primary mr-2" (click)="seachCashPayment()">Search Record</button>
+                        </div>
+                    </div>
+                    </form>
+                   
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>Sr#</th>
+
+                            <th>Date</th>
+                            <th>Code</th>
+                            <th>Type</th>
+                            <th>Account</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let cr of cashPaymentList; index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{cr.createdDate | date: "dd-MMM-yyyy-HH:mm:ss" }}</td>
+                                <td>{{cr.invoiceCode}}</td>
+                                <td>{{cr.invType}}</td>
+                                <td>{{cr.account.accountTitle}}</td>
+                                <td>{{cr.amount}}</td>
+                                <td><button class="btn btn-primary"  (click)="loadrecipt(cr)">Update</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

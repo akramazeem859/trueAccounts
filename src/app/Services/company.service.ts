@@ -36,6 +36,7 @@ import { users } from '../Models/users.model';
 import { data } from 'jquery';
 import { ledgerResult } from '../Models/ledgerResult.model';
 import { cashRecipt } from '../Models/cashRecipt.model';
+import { cashPayment } from '../Models/cashPayment.model';
 
 
 @Injectable({
@@ -133,6 +134,10 @@ export class CompanyService {
 
   getBranchCustomers(branchId:any):Observable<Customer[]>{
     return this.http.get<Customer[]>(this.baseApiUrl+'/api/Customer/branchCustomer?branchId='+branchId);
+  }
+
+  getBranchSuppliers(branchId:any):Observable<Supplier[]>{
+    return this.http.get<Supplier[]>(this.baseApiUrl+'/api/Supplier/branchSupplier?branchId='+branchId);
   }
 
   getAllSupplier():Observable<Supplier[]>{
@@ -337,8 +342,19 @@ export class CompanyService {
   addCashRecipt(obj:any):Observable<any>{
     return this.http.post<any>(this.baseApiUrl+'/api/CashRecipts', obj)
   }
+
+  addCashPayment(obj:any):Observable<any>{
+    return this.http.post<any>(this.baseApiUrl+'/api/CashPayments', obj)
+  }
+
+
+
   searchCashRecipt(obj:any):Observable<cashRecipt[]>{
     return this.http.post<cashRecipt[]>(this.baseApiUrl+'/api/CashRecipts/SearchCashRecipt', obj)
+  }
+
+  searchCashPayment(obj:any):Observable<cashPayment[]>{
+    return this.http.post<cashPayment[]>(this.baseApiUrl+'/api/CashPayments/SearchCashPayment', obj)
   }
  
 
