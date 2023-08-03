@@ -9,6 +9,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatCardModule} from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @NgModule({
@@ -22,7 +24,7 @@ exports:[
     MatPaginatorModule,
     MatSortModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
 ]
 
 })

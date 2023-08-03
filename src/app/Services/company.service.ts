@@ -37,6 +37,7 @@ import { data } from 'jquery';
 import { ledgerResult } from '../Models/ledgerResult.model';
 import { cashRecipt } from '../Models/cashRecipt.model';
 import { cashPayment } from '../Models/cashPayment.model';
+import { supplierLedger } from '../Models/supplierLedger.model';
 
 
 @Injectable({
@@ -176,6 +177,9 @@ export class CompanyService {
   getAllCustomerLedger(): Observable<customerLedger[]>{
     return this.http.get<customerLedger[]>(this.baseApiUrl + '/api/CustomerLedgers');
   }
+  getAllSupplierLedger(): Observable<supplierLedger[]>{
+    return this.http.get<supplierLedger[]>(this.baseApiUrl + '/api/SupplierLedgers');
+  }
   getallusers(): Observable<users[]>{
     return this.http.get<users[]>(this.baseApiUrl+'/api/User/getAllUser');
   }
@@ -258,6 +262,10 @@ export class CompanyService {
   }
   searchCustomerLedger(cusLReq : customerLedgerReq):Observable<customerLedger[]>{
     return this.http.post<customerLedger[]>(this.baseApiUrl+'/api/CustomerLedgers/search', cusLReq);
+  }
+
+  searchSupplierLedger(supLReq : customerLedgerReq):Observable<customerLedger[]>{
+    return this.http.post<customerLedger[]>(this.baseApiUrl+'/api/SupplierLedgers/search', supLReq);
   }
   searchLvl4Ledger(obj:any):Observable<ledgerResult[]>{
     return this.http.post<ledgerResult[]>(this.baseApiUrl+'/api/Ledger/search', obj)

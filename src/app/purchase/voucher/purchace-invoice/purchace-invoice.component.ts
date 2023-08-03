@@ -58,6 +58,7 @@ export class PurchaceInvoiceComponent implements OnInit {
   isProdAdded: boolean = false;
   tempbranchId: number;
   tempSupplier:Supplier;
+  
 
   pInvoiceDTO: pInvoiceDTO = {
     id: 0,
@@ -93,6 +94,7 @@ export class PurchaceInvoiceComponent implements OnInit {
     freight: this.builder.control(0),
     summary: this.builder.control({ value: 0, disabled: true }),
     payable: this.builder.control(0),
+    branchId: this.builder.control(0),
     detail: this.builder.array([])
   })
 
@@ -111,6 +113,7 @@ export class PurchaceInvoiceComponent implements OnInit {
     console.log(today);
 
     this.invoiceForm.get('date').setValue(today);
+
     this.getSuppliers();
     this.getProducts();
     //this.getPurchInv();
@@ -164,7 +167,7 @@ export class PurchaceInvoiceComponent implements OnInit {
 
 
   getSuppliers() {
-    this.service.getAllSupplier()
+    this.service.getBranchSuppliers(this.tempbranchId)
       .subscribe(sup => {
         this.supplierList = sup;
         this.options = sup;
@@ -416,6 +419,7 @@ export class PurchaceInvoiceComponent implements OnInit {
     console.log(this.invoiceForm.value);
     //this.invoiceForm.reset();
     let pId = 0;
+    this.invoiceForm.get('branchId').setValue(this.tempbranchId);
     this.service.addPInvoice(this.invoiceForm.value).subscribe(inv => {
       pId = inv.id;
       console.log(pId);

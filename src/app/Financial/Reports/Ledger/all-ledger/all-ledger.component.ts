@@ -122,7 +122,7 @@ export class AllLedgerComponent implements OnInit {
     if (this.level4List && this.level4List.length > 0) {
       const lvl4 = this.level4List.find((item) => item.code === lvl4Id);
       if (lvl4) {
-        return lvl4.name;
+        return '('+lvl4.code+')-' + lvl4.name;
       }
     }
     return '';

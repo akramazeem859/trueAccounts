@@ -1,1 +1,105 @@
-<p>supplierledger works!</p>
+<div class="container">
+    <div class="row">
+        <div class="card col">
+            <div class="card-header">
+                <h4>Supplier Report</h4>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="supplierLedgerForm">
+                    <div class="form-row mb-3">
+
+                        <div class="col">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Supplier</mat-label>
+                                <input type="text" placeholder="Select Supplier" aria-label="Number" matInput
+                                    formControlName="supplierId" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="getSupName.bind(this)">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.id">
+                                        {{option.supplierName}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                   
+                        <div class="col">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Date</mat-label>
+                                <input matInput [matDatepicker]="fromDate" formControlName="fromDate">
+                                <mat-datepicker-toggle matIconSuffix [for]="fromDate"></mat-datepicker-toggle>
+                                <mat-datepicker #fromDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Date</mat-label>
+                                <input matInput [matDatepicker]="toDate" formControlName="toDate">
+                                <mat-datepicker-toggle matIconSuffix [for]="toDate"></mat-datepicker-toggle>
+                                <mat-datepicker #toDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <label></label>
+                            <br>
+                            <button type="button" class="btn btn-primary mr-2" (click)="searchRecord()">Search Record</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <mat-card class="card col">
+            <mat-card-header>
+
+            </mat-card-header>
+            <mat-card-content>
+                <table matSort mat-table [dataSource]="datasource">
+                    <ng-container matColumnDef="Id">
+                        <th mat-header-cell *matHeaderCellDef>ID</th>
+                        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="DateTime">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>Date</th>
+                        <td mat-cell *matCellDef="let element">{{element.dateTime | date}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Type">
+                        <th mat-header-cell *matHeaderCellDef>Type</th>
+                        <td mat-cell *matCellDef="let element">{{element.type}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="InvCode">
+                        <th mat-header-cell *matHeaderCellDef>Inv Code</th>
+                        <td mat-cell *matCellDef="let element">{{element.invCode}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Particular">
+                        <th mat-header-cell *matHeaderCellDef>Particular</th>
+                        <td mat-cell *matCellDef="let element">{{element.particular}}</td>
+                    </ng-container>
+                   
+                    <ng-container matColumnDef="Debit">
+                        <th mat-header-cell *matHeaderCellDef>Debit</th>
+                        <td mat-cell *matCellDef="let element">{{element.debit}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Credit">
+                        <th mat-header-cell *matHeaderCellDef>Credit</th>
+                        <td mat-cell *matCellDef="let element">{{element.credit}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Balance">
+                        <th mat-header-cell *matHeaderCellDef>Balance</th>
+                        <td mat-cell *matCellDef="let element">{{element.balance }}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns:displayedColumns"></tr>
+                </table>
+            </mat-card-content>
+
+            <mat-card-footer>
+                <mat-paginator [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+            </mat-card-footer>
+        </mat-card>
+    </div>
+</div>

@@ -12,6 +12,7 @@ import { PurchaceInvoiceComponent } from './voucher/purchace-invoice/purchace-in
 
 import { SupplierlistingComponent } from './report/supplierReport/supplierlisting/supplierlisting.component';
 import { MaterialModule } from 'src/Material-Module';
+import { SupplierledgerComponent } from './report/supplierReport/supplierledger/supplierledger.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MaterialModule } from 'src/Material-Module';
     GrnComponent,
     PurchaceInvoiceComponent,
     PurchasereturnComponent,
-    SupplierlistingComponent
+    SupplierlistingComponent,
+    SupplierledgerComponent
   
   ],
   imports: [
