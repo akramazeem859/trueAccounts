@@ -231,8 +231,8 @@ export class CompanyService {
     return this.http.get<pInvoice>(this.baseApiUrl+'/api/PInvoice/' + id);
   }
 
-  getPurchInvByCode(id:any){
-    return this.http.get<pInvoice>(this.baseApiUrl+'/api/PInvoice/code/' + id);
+  getPurchInvByCode(pcode:any , bid:any){
+    return this.http.get<pInvoice>(this.baseApiUrl+'/api/PInvoice/code/?pcode=' + pcode + '&bid=' + bid);
   }
   getProdInvt(pid:number,bid:number){
     return this.http.get<number>(this.baseApiUrl+'/api/Inventory/getProdInvt?pid='+pid+'&bid='+bid);

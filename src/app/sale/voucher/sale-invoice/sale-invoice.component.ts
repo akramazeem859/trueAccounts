@@ -313,19 +313,14 @@ export class SaleInvoiceComponent implements OnInit {
     }else{
       this.isnextdisable = true;
     }
-   
   }
-
-
 
   saveInvoice() {
 
     var mydate = this.saleInvoiceForm.get("datetime").value;
 
     const formattedDate = moment(this.saleInvoiceForm.get('date').value).utcOffset(5).format();
-    console.log('formatted date :'+ formattedDate);
     this.saleInvoiceForm.get('date').setValue(formattedDate);
-    console.log('formatted date from form:'+ this.saleInvoiceForm.get('datetime').value);
 
     this.currentDate = this.datePipe.transform((mydate), 'YYYY-MM-dd hh:mm');
 

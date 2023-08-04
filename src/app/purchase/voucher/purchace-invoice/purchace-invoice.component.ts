@@ -234,12 +234,13 @@ export class PurchaceInvoiceComponent implements OnInit {
     //this.purcInvList.filter(item => item !== item);
 
     if (this.purcCode != '' || this.purcCode != undefined) {
-      this.service.getPurchInvByCode(this.purcCode)
+      this.service.getPurchInvByCode(this.purcCode, this.tempbranchId)
         .subscribe(inv => {
           this.purcInvoice = inv;
           //this.purcInvDetailList = inv.detail;
           //this.purcInvList.push(inv);
           console.log("purchase invoice id = " + this.purcInvoice.id);
+
           this.service.getAllPurcInvDetail(this.purcInvoice.id)
             .subscribe(d => {
               this.purcInvDetailList = d;
@@ -306,34 +307,50 @@ export class PurchaceInvoiceComponent implements OnInit {
     this.purcInvoice.code = this.invoiceForm.get("code").value;
 
 
-    for (let i = 0; i <= this.tempProdCount; i++) {
-      this.isProdAdded = false;
+    let tempdetail = this.invoiceForm.get('detail') as FormArray;
+    
+    this.purcInvoice.pInvDetails = [];
 
-      this.purcInvDetailList.forEach((element, index) => {
-        this.tempinvProduct = this.invoiceDetail.at(i) as FormGroup;
-        let tempprodId = this.tempinvProduct.get("productId").value;
-  
-        console.log("index count : " + i + " qunty :" + this.tempinvProduct.get("quantity").value);
-
-        if (element.productId == tempprodId) {
-          element.quantity = this.tempinvProduct.get("quantity").value;
-          element.purchasePrice = this.tempinvProduct.get("purchasePrice").value;
-          this.isProdAdded = true;
-        }
-
-      });
-
-      if (this.isProdAdded == false) {
-        console.log("isProdAdded == false called");
-        this.detail.pInvoiceId = this.purcInvoice.id;
-        this.detail.productId = this.tempinvProduct.get("productId").value;
-        this.detail.purchasePrice = this.tempinvProduct.get("purchasePrice").value;
-        this.detail.quantity = this.tempinvProduct.get("quantity").value;
-        this.purcInvDetailList.push(this.detail);
-        this.isProdAdded = false;
-      }
+    for(var i=0 ; i<tempdetail.controls.length; i++){
+      this.tempinvProduct = this.invoiceDetail.at(i) as FormGroup;
+      let detail = {
+        pInvoiceId: this.purcInvoice.id,
+        productId: this.tempinvProduct.get("productId").value,
+        purchasePrice: this.tempinvProduct.get("purchasePrice").value,
+        quantity: this.tempinvProduct.get("quantity").value
+      };
+      
+      this.purcInvoice.pInvDetails.push(detail);
     }
-    this.purcInvoice.pInvDetails = this.purcInvDetailList;
+    
+    // for (let i = 0; i <= this.tempProdCount; i++) {
+    //   this.isProdAdded = false;
+
+    //   this.purcInvDetailList.forEach((element, index) => {
+    //     this.tempinvProduct = this.invoiceDetail.at(i) as FormGroup;
+    //     let tempprodId = this.tempinvProduct.get("productId").value;
+  
+    //     console.log("index count : " + i + " qunty :" + this.tempinvProduct.get("quantity").value);
+
+    //     if (element.productId == tempprodId) {
+    //       element.quantity = this.tempinvProduct.get("quantity").value;
+    //       element.purchasePrice = this.tempinvProduct.get("purchasePrice").value;
+    //       this.isProdAdded = true;
+    //     }
+
+    //   });
+
+    //   if (this.isProdAdded == false) {
+    //     console.log("isProdAdded == false called");
+    //     this.detail.pInvoiceId = this.purcInvoice.id;
+    //     this.detail.productId = this.tempinvProduct.get("productId").value;
+    //     this.detail.purchasePrice = this.tempinvProduct.get("purchasePrice").value;
+    //     this.detail.quantity = this.tempinvProduct.get("quantity").value;
+    //     this.purcInvDetailList.push(this.detail);
+    //     this.isProdAdded = false;
+    //   }
+    // }
+    //this.purcInvoice.pInvDetails = this.purcInvDetailList;
     console.log(this.purcInvoice);
     this.service.editPurchInv(pID, this.purcInvoice)
     .subscribe(pi =>{
@@ -422,13 +439,13 @@ export class PurchaceInvoiceComponent implements OnInit {
     const formattedDate = moment(this.invoiceForm.get('date').value).utcOffset(5).format();
     console.log('formatted date :'+ formattedDate);
     this.invoiceForm.get('date').setValue(formattedDate);
-    console.log('formatted date from form:'+ this.invoiceForm.get('date').value);
+    
     //this.invoiceForm.reset();
     let pId = 0;
     var today = new Date();
 
     this.invoiceForm.get('branchId').setValue(this.tempbranchId);
-    
+    console.log(this.invoiceForm.value);
     
     
     this.service.addPInvoice(this.invoiceForm.value).subscribe(inv => {
@@ -445,8 +462,12 @@ export class PurchaceInvoiceComponent implements OnInit {
 
 
   removeRow(index: number) {
-    this.removeDetailId.push(this.purcInvDetailList[index]);
-    console.log(this.removeDetailId)
+    // this.removeDetailId.push(this.purcInvDetailList[index]);
+    // console.log(this.removeDetailId)
+    // this.invoiceDetail.removeAt(index);
+    // this.summaryCalculation();
+    // this.tempProdCount -= 1;
+
     this.invoiceDetail.removeAt(index);
     this.summaryCalculation();
     this.tempProdCount -= 1;
