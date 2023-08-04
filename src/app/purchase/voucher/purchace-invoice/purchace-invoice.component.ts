@@ -378,13 +378,13 @@ export class PurchaceInvoiceComponent implements OnInit {
     });
 
     this.invoiceForm.get("summary").setValue(sumTotal);
-    this.invoiceForm.get("paid").setValue(sumTotal);
+    this.invoiceForm.get("paid").setValue(0);
 
     let freight = this.invoiceForm.get("freight").value;
     let gTotal = + freight + sumTotal;
     
     this.invoiceForm.get("payable").setValue(gTotal);
-    this.invoiceForm.get("paid").setValue(gTotal);
+    this.invoiceForm.get("paid").setValue(0);
   }
 
 
@@ -425,13 +425,17 @@ export class PurchaceInvoiceComponent implements OnInit {
     console.log('formatted date from form:'+ this.invoiceForm.get('date').value);
     //this.invoiceForm.reset();
     let pId = 0;
-    this.invoiceForm.get('branchId').setValue(this.tempbranchId);
+    var today = new Date();
 
+    this.invoiceForm.get('branchId').setValue(this.tempbranchId);
+    
+    
     
     this.service.addPInvoice(this.invoiceForm.value).subscribe(inv => {
       pId = inv.id;
       console.log(pId);
       this.formCustomRest();
+      this.invoiceForm.get('date').setValue(today);
       this.alert.success("Record saved successfully...", "Successful")
       
     })
