@@ -15,6 +15,8 @@ import { pInvDetail } from 'src/app/Models/pInvDetail.model';
 import { cashAccount } from 'src/app/Models/cashAccount.model';
 import { Observable, count, map, startWith } from 'rxjs';
 import { Product } from 'src/app/Models/product.model';
+import * as moment from 'moment';
+
 
 
 declare var $ :any;
@@ -417,9 +419,15 @@ export class PurchaceInvoiceComponent implements OnInit {
 
   saveInvoice() {
     console.log(this.invoiceForm.value);
+    const formattedDate = moment(this.invoiceForm.get('date').value).utcOffset(5).format();
+    console.log('formatted date :'+ formattedDate);
+    this.invoiceForm.get('date').setValue(formattedDate);
+    console.log('formatted date from form:'+ this.invoiceForm.get('date').value);
     //this.invoiceForm.reset();
     let pId = 0;
     this.invoiceForm.get('branchId').setValue(this.tempbranchId);
+
+    
     this.service.addPInvoice(this.invoiceForm.value).subscribe(inv => {
       pId = inv.id;
       console.log(pId);

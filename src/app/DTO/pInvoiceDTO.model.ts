@@ -5,6 +5,7 @@ export interface pInvoiceDTO {
 
     id?:number;
     code?:string;
+    date?:string;
     payable?:number;
     paid?:number;
     supplierId?:number;

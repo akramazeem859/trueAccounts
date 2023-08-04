@@ -21,6 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SaleReciptComponent } from '../../Popups/sale-recipt/sale-recipt.component';
 import { Branch } from 'src/app/Models/branch.model';
 import { SaleService } from '../../sale.service';
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -107,7 +108,7 @@ export class SaleInvoiceComponent implements OnInit {
   public saleInvoiceForm = new FormGroup({
     code: this.builder.control("SI202302"),
     customerId: this.builder.control(null),
-    datetime: this.builder.control(null),
+    date: this.builder.control(null),
     address: this.builder.control({ value: "", disabled: true }),
     contact: this.builder.control({ value: "", disabled: true }),
     balance: this.builder.control({ value: 0, disabled: true }),
@@ -130,18 +131,18 @@ export class SaleInvoiceComponent implements OnInit {
 
     //this.getName(0);
     var today = new Date();
-    var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date + ' ' + time;
+    // var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+    // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    // var dateTime = date + ' ' + time;
 
    
-    this.newTime = time;
+    // this.newTime = time;
 
-    this.currentDate = this.datePipe.transform((new Date), 'YYYY-MM-dd hh:mm');
+    // this.currentDate = this.datePipe.transform((new Date), 'YYYY-MM-dd hh:mm');
   
 
     //console.log("current Date :" + this.currentDate);
-    this.saleInvoiceForm.get('datetime').setValue(today);
+    this.saleInvoiceForm.get('date').setValue(today);
 
    
 
@@ -321,6 +322,11 @@ export class SaleInvoiceComponent implements OnInit {
 
     var mydate = this.saleInvoiceForm.get("datetime").value;
 
+    const formattedDate = moment(this.saleInvoiceForm.get('date').value).utcOffset(5).format();
+    console.log('formatted date :'+ formattedDate);
+    this.saleInvoiceForm.get('date').setValue(formattedDate);
+    console.log('formatted date from form:'+ this.saleInvoiceForm.get('datetime').value);
+
     this.currentDate = this.datePipe.transform((mydate), 'YYYY-MM-dd hh:mm');
 
     //mydate = mydate +" "+ this.newTime;
@@ -331,6 +337,7 @@ export class SaleInvoiceComponent implements OnInit {
 
       let sId = 0;
       this.saleInvoiceForm.get('branchId').setValue(this.branchId);
+
       this.service.addSInvoice(this.saleInvoiceForm.value).subscribe(inv => {
         this.tempInvoiceCode = inv.code;
         this.saleCode = inv.code;
@@ -616,7 +623,7 @@ export class SaleInvoiceComponent implements OnInit {
     this.saleInvoice.payable = this.saleInvoiceForm.get("payable").value;
     this.saleInvoice.paid = this.saleInvoiceForm.get("paid").value;
     this.saleInvoice.customerId = this.saleInvoiceForm.get("customerId").value;
-    this.saleInvoice.datetime = this.saleInvoiceForm.get("datetime").value;
+    this.saleInvoice.datetime = this.saleInvoiceForm.get("date").value;
     this.saleInvoice.freight = this.saleInvoiceForm.get("freight").value;
     this.saleInvoice.code = this.saleInvoiceForm.get("code").value;
 
@@ -697,7 +704,7 @@ export class SaleInvoiceComponent implements OnInit {
     let summary = this.saleInvoice.payable - this.saleInvoice.freight;
     this.saleInvoiceForm.get("summary").setValue(summary);
     this.saleInvoiceForm.get("payable").setValue(this.saleInvoice.payable);
-    this.saleInvoiceForm.get("datetime").setValue(this.saleInvoice.datetime);
+    this.saleInvoiceForm.get("date").setValue(this.saleInvoice.datetime);
     this.saleInvoiceForm.get("accountId").setValue(this.saleInvoice.accountId);
 
     this.invoiceDetail = this.saleInvoiceForm.get('detail') as FormArray;
@@ -714,6 +721,8 @@ export class SaleInvoiceComponent implements OnInit {
       this.invProduct.get("total").setValue(Element.salePrice * Element.quantity);
       //Element.pInvoiceId = this.purcInvoice.id;
       //console.log(Element.pInvoiceId)
+
+      this.saleCode = this.saleInvoice.code;
     });
 
     this.tempProdCount -= 1;
