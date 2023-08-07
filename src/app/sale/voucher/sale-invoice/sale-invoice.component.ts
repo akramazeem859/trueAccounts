@@ -317,29 +317,29 @@ export class SaleInvoiceComponent implements OnInit {
 
   saveInvoice() {
 
-    var mydate = this.saleInvoiceForm.get("datetime").value;
-
     const formattedDate = moment(this.saleInvoiceForm.get('date').value).utcOffset(5).format();
     this.saleInvoiceForm.get('date').setValue(formattedDate);
 
-    this.currentDate = this.datePipe.transform((mydate), 'YYYY-MM-dd hh:mm');
 
     //mydate = mydate +" "+ this.newTime;
     //this.saleInvoiceForm.get("datetime").setValue(this.currentDate);
     console.log(this.saleInvoiceForm.value);
     //this.invoiceForm.reset();
-    if (mydate != null) {
+    if (formattedDate != null) {
 
       let sId = 0;
+      var today = new Date();
+
       this.saleInvoiceForm.get('branchId').setValue(this.branchId);
 
       this.service.addSInvoice(this.saleInvoiceForm.value).subscribe(inv => {
-        this.tempInvoiceCode = inv.code;
         this.saleCode = inv.code;
         sId = inv.id;
-        console.log("saleInvoice code :" + this.tempInvoiceCode);
         this.formCustomRest();
+        this.saleInvoiceForm.get('date').setValue(today);
+
         this.alert.success("Record saved successfully...", "Successful");
+        
         this.saleInvoiceForm.get('customerId').setValue(this.tempCustomer.id);
 
         this.PrintInvoice(this.saleCode);

@@ -435,9 +435,7 @@ export class PurchaceInvoiceComponent implements OnInit {
   }
 
   saveInvoice() {
-    console.log(this.invoiceForm.value);
     const formattedDate = moment(this.invoiceForm.get('date').value).utcOffset(5).format();
-    console.log('formatted date :'+ formattedDate);
     this.invoiceForm.get('date').setValue(formattedDate);
     
     //this.invoiceForm.reset();
@@ -445,8 +443,8 @@ export class PurchaceInvoiceComponent implements OnInit {
     var today = new Date();
 
     this.invoiceForm.get('branchId').setValue(this.tempbranchId);
+
     console.log(this.invoiceForm.value);
-    
     
     this.service.addPInvoice(this.invoiceForm.value).subscribe(inv => {
       pId = inv.id;
