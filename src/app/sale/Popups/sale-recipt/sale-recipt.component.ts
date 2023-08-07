@@ -49,4 +49,27 @@ myUAN :string ='';
 
    
   }
+
+  printReceipt() {
+    alert('function called.')
+    const printContents = document.getElementById('print-content').innerHTML;
+    const popupWin = window.open('', '_blank', 'width=300,height=300');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+        <head>
+          <style>
+            @media print {
+              @page {
+                size: 80mm 297mm; /* Set the size of the thermal paper */
+              }
+            }
+          </style>
+        </head>
+        <body onload="window.print();window.close()">${printContents}</body>
+      </html>
+    `);
+    popupWin.document.close();
+  }
+  
 }

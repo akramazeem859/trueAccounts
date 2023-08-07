@@ -2,7 +2,7 @@
   <div class="main-box">
     <h3>{{ inputdata.title }}</h3>
     <hr />
-    <div class="print-content">
+    <div id="print-content">
       <h2><b>ORANGE FOODS EXPERT</b></h2>
       <h5>
         {{tempInvoice.branch.address}}
@@ -134,7 +134,7 @@
 
 
     <div mat-dialog-actions>
-      <button class="btn btn-primary mr-2">Print</button>
+      <button (click)="printReceipt()" class="btn btn-primary mr-2">Print</button>
       <button class="btn btn-success mr-2">Save</button>
     </div>
   </div>
